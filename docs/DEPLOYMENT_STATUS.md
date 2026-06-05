@@ -19,7 +19,7 @@ Date: 2026-06-05
   - Proxied `A` record: `growagarden2.pro` -> `76.76.21.21`
   - Proxied `CNAME` record: `www.growagarden2.pro` -> `cname.vercel-dns.com`
 - Cloudflare settings:
-  - SSL mode: `flexible`
+  - SSL mode: `full`
   - Always Use HTTPS: `on`
 - Spaceship nameservers updated:
   - `kobe.ns.cloudflare.com`
@@ -34,7 +34,4 @@ Date: 2026-06-05
 - `https://www.growagarden2.pro` returns `200 OK` through Cloudflare and Vercel.
 - `https://growagarden2.pro/sitemap.xml` returns the canonical sitemap.
 - `https://growagarden2.pro/robots.txt` returns crawler rules and the sitemap URL.
-
-## Notes
-
-Cloudflare SSL mode is currently `flexible` because `full` returned Cloudflare `525` while Vercel refreshed custom-domain origin TLS. User-facing HTTPS is active at the Cloudflare edge. After Vercel origin TLS is confirmed stable behind Cloudflare, SSL mode can be switched back to `full`.
+- Fresh asset verification passed: page HTML and all referenced CSS/JS/favicon assets return `200 OK` with no redirect loop.
