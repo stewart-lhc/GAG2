@@ -11,6 +11,16 @@ Date: 2026-06-05
 - Custom domains added to Vercel:
   - `growagarden2.pro`
   - `www.growagarden2.pro`
+- Cloudflare zone created:
+  - Zone ID: `df8347a5ef8c11e092c8cd9f06f156a6`
+  - Status: `pending`
+  - Nameservers: `kobe.ns.cloudflare.com`, `stella.ns.cloudflare.com`
+- Cloudflare DNS records created:
+  - Proxied `A` record: `growagarden2.pro` -> `76.76.21.21`
+  - Proxied `CNAME` record: `www.growagarden2.pro` -> `cname.vercel-dns.com`
+- Cloudflare settings:
+  - SSL mode: `full`
+  - Always Use HTTPS: `on`
 
 ## Verification
 
@@ -20,19 +30,15 @@ Date: 2026-06-05
 
 ## Blocked External Configuration
 
-Cloudflare API token verification returned `Invalid API Token`, so the Cloudflare zone and orange-cloud DNS records could not be created from this environment.
-
 Spaceship API requires both `X-API-Key` and `X-API-Secret`. Only one Spaceship value was available, and read requests returned `401 Unauthorized`, so registrar nameservers could not be updated from this environment.
 
-## Required DNS Target
+## Required Registrar Cutover
 
-Once Cloudflare API access is available:
+Once Spaceship API access is available:
 
-- Create or use the Cloudflare zone `growagarden2.pro`.
-- Add proxied DNS records:
-  - `A` record: `@` -> `76.76.21.21`, proxied.
-  - `CNAME` record: `www` -> `cname.vercel-dns.com`, proxied.
-- Update Spaceship nameservers to the two Cloudflare nameservers assigned to the zone.
+- Update Spaceship nameservers to:
+  - `kobe.ns.cloudflare.com`
+  - `stella.ns.cloudflare.com`
 - Re-check in Vercel until both custom domains are configured.
 - Verify:
   - `https://growagarden2.pro`
