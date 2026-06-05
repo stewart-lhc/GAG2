@@ -1,0 +1,14 @@
+node_modules/
+.next/
+out/
+.vercel/
+.env*
+!.env.example
+dev-server*.log
+*.tsbuildinfo
+.playwright-mcp/
+gag2-*.png
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*

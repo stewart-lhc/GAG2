@@ -1,0 +1,33 @@
+import { JsonLd } from "@/components/JsonLd";
+import { StockTracker } from "@/components/StockTracker";
+import { pageMetadata, webAppSchema } from "@/lib/seo";
+
+export const metadata = pageMetadata(
+  "Grow a Garden 2 Stock Tracker",
+  "Filter Grow a Garden 2 stock status by shop, rarity, and verification state.",
+  "/grow-a-garden-2-stock-tracker"
+);
+
+export default function StockTrackerPage() {
+  return (
+    <>
+      <JsonLd
+        data={webAppSchema(
+          "Grow a Garden 2 Stock Tracker",
+          "A verification-first stock tracker for Grow a Garden 2 shops and events.",
+          "/grow-a-garden-2-stock-tracker"
+        )}
+      />
+      <section className="section">
+        <h1 style={{ color: "var(--ink)" }}>Grow a Garden 2 Stock Tracker</h1>
+        <p className="muted">
+          Shop tabs and stale-data handling are ready. Current GAG2 stock is shown as
+          awaiting verification until reliable sources are connected.
+        </p>
+      </section>
+      <section className="section section-tight">
+        <StockTracker />
+      </section>
+    </>
+  );
+}
