@@ -12,7 +12,8 @@ export function ToolCard({
   action: string;
 }) {
   return (
-    <article className="panel">
+    <article className="panel tool-card">
+      <div className="tool-icon" aria-hidden="true" />
       <h3>{title}</h3>
       <p>{body}</p>
       <Link className="button secondary" href={href}>

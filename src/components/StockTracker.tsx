@@ -21,6 +21,26 @@ export function StockTracker() {
 
   return (
     <div className="panel">
+      <div className="two-col" style={{ marginBottom: 18 }}>
+        <div>
+          <span className="badge badge-confirmed">Verified-only inventory</span>
+          <h2 style={{ marginTop: 14 }}>What should I watch?</h2>
+          <p className="muted">
+            Use shop tabs like a stock pit. Unknown rows stay visible so players can watch,
+            report, and wait for verified drops without treating rumors as live inventory.
+          </p>
+        </div>
+        <div className="inventory-slots">
+          <div className="inventory-slot">
+            <h3>Rare seed slot</h3>
+            <p className="muted">Alert when verified</p>
+          </div>
+          <div className="inventory-slot">
+            <h3>Defense gear</h3>
+            <p className="muted">Night protection</p>
+          </div>
+        </div>
+      </div>
       <div className="tabs" aria-label="Shop filters">
         {shops.map((shopName) => (
           <button

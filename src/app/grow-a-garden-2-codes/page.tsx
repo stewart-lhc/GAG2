@@ -25,8 +25,9 @@ export default function CodesPage() {
           }
         ])}
       />
-      <section className="section">
-        <h1 style={{ color: "var(--ink)" }}>Grow a Garden 2 Codes</h1>
+      <section className="section section-hero">
+        <p className="eyebrow">No fake codes</p>
+        <h1>Codes Check</h1>
         <p className="muted">
           Codes are only listed after verification. Empty states are intentional and safer than
           publishing fake or recycled code lists.

@@ -15,7 +15,7 @@ export function SiteHeader() {
     <header className="site-header">
       <Link className="brand" href="/" aria-label="GAG2 Tools home">
         <img src="/favicon.svg" alt="" width="32" height="32" />
-        <span>{siteConfig.shortName}</span>
+        <span>{siteConfig.shortName} Arcade</span>
       </Link>
       <nav className="top-nav" aria-label="Primary navigation">
         {navItems.map(([label, href]) => (
@@ -24,6 +24,9 @@ export function SiteHeader() {
           </Link>
         ))}
       </nav>
+      <a className="button header-cta" href={siteConfig.robloxUrl} rel="noreferrer" target="_blank">
+        Open Roblox
+      </a>
     </header>
   );
 }

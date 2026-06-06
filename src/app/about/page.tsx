@@ -10,8 +10,9 @@ export const metadata = pageMetadata(
 export default function AboutPage() {
   return (
     <>
-      <section className="section">
-        <h1 style={{ color: "var(--ink)" }}>About GAG2 Tools</h1>
+      <section className="section section-hero">
+        <p className="eyebrow">Trust loop</p>
+        <h1>About GAG2 Tools</h1>
         <p className="muted">
           This is an unofficial fan tools hub. It is built around visible verification,
           fast utility, and clear safety boundaries: no Roblox login, no item selling,

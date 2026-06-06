@@ -18,14 +18,15 @@ export default function StockTrackerPage() {
           "/grow-a-garden-2-stock-tracker"
         )}
       />
-      <section className="section">
-        <h1 style={{ color: "var(--ink)" }}>Grow a Garden 2 Stock Tracker</h1>
+      <section className="section section-hero">
+        <p className="eyebrow">Stock is a sport</p>
+        <h1>Shop Trading Floor</h1>
         <p className="muted">
           Shop tabs and stale-data handling are ready. Current GAG2 stock is shown as
           awaiting verification until reliable sources are connected.
         </p>
       </section>
-      <section className="section section-tight">
+      <section className="section section-tight market-shell">
         <StockTracker />
       </section>
     </>

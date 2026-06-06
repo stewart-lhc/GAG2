@@ -24,6 +24,11 @@ export function CalculatorTool() {
   return (
     <div className="two-col">
       <form className="panel">
+        <span className="badge badge-unknown">Player-entered values</span>
+        <h2 style={{ marginTop: 14 }}>Crop Value Math</h2>
+        <p className="muted">
+          Keep the formula visible so the result feels like a tool, not a hidden-data claim.
+        </p>
         <div className="field">
           <label htmlFor="crop">Crop</label>
           <select className="select" id="crop">
@@ -97,10 +102,8 @@ export function CalculatorTool() {
         </div>
       </form>
       <aside className="panel">
-        <p className="eyebrow" style={{ color: "var(--accent-strong)" }}>
-          Estimated result
-        </p>
-        <h2>{Math.round(result).toLocaleString()}</h2>
+        <span className="badge badge-confirmed">Estimated result</span>
+        <h2 style={{ marginTop: 14 }}>{Math.round(result).toLocaleString()}</h2>
         <p>
           Formula: base value x weight x amount x mutation multiplier. This is an alpha
           estimator for player-entered values, not a claim about hidden game data.

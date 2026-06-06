@@ -28,11 +28,11 @@ export default function ReleasePage() {
           }
         ])}
       />
-      <section className="section">
-        <p className="eyebrow" style={{ color: "var(--accent-strong)" }}>
+      <section className="section section-hero">
+        <p className="eyebrow">
           Last verified {siteConfig.lastVerified}
         </p>
-        <h1 style={{ color: "var(--ink)" }}>Grow a Garden 2 Release Status</h1>
+        <h1>Release Status</h1>
         <p className="muted">
           A Roblox experience page for Grow A Garden 2 exists, but this page does not turn
           unverified launch timing into a confirmed release-date claim.

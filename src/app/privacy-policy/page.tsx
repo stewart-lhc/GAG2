@@ -8,8 +8,9 @@ export const metadata = pageMetadata(
 
 export default function PrivacyPage() {
   return (
-    <section className="section">
-      <h1 style={{ color: "var(--ink)" }}>Privacy Policy</h1>
+    <section className="section section-hero">
+      <p className="eyebrow">No Roblox credentials</p>
+      <h1>Privacy Policy</h1>
       <p className="muted">
         This MVP does not require Roblox account credentials. Future subscriptions should collect
         only the minimum contact information needed for alerts and provide a deletion path.

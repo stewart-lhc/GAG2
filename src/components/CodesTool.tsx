@@ -13,6 +13,14 @@ export function CodesTool() {
 
   return (
     <div className="panel">
+      <div style={{ marginBottom: 18 }}>
+        <span className="badge badge-warning">No fake codes</span>
+        <h2 style={{ marginTop: 14 }}>Code Drop Board</h2>
+        <p className="muted">
+          This page is built for fast copy when verified codes exist, and for clear waiting
+          when they do not.
+        </p>
+      </div>
       <div className="stat-grid">
         <div className="stat">
           <span>Active codes</span>

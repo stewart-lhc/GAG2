@@ -8,8 +8,9 @@ export const metadata = pageMetadata(
 
 export default function TermsPage() {
   return (
-    <section className="section">
-      <h1 style={{ color: "var(--ink)" }}>Terms</h1>
+    <section className="section section-hero">
+      <p className="eyebrow">Safety boundaries</p>
+      <h1>Terms</h1>
       <p className="muted">
         Use this site as an unofficial reference. Data can be incomplete or stale, so important
         game decisions should be checked in Roblox before acting.

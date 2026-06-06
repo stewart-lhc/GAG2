@@ -5,7 +5,7 @@ export function SiteFooter() {
   return (
     <footer className="site-footer">
       <div>
-        <strong>{siteConfig.shortName}</strong>
+        <strong>{siteConfig.shortName} Arcade</strong>
         <p>
           Unofficial fan tools. Not affiliated with Roblox, Grow a Garden, Grow A Garden 2,
           or their creators. Do not enter Roblox passwords, cookies, or tokens here.

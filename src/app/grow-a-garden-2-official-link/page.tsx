@@ -11,18 +11,16 @@ export const metadata = pageMetadata(
 export default function OfficialLinkPage() {
   return (
     <>
-      <section className="section">
-        <p className="eyebrow" style={{ color: "var(--accent-strong)" }}>
-          Fake clone warning
-        </p>
-        <h1 style={{ color: "var(--ink)" }}>Grow a Garden 2 Official Link</h1>
+      <section className="section section-hero">
+        <p className="eyebrow">Fake clone warning</p>
+        <h1>Official Link Guard</h1>
         <p className="muted">
           Use the Roblox URL below and compare the place ID and creator. Avoid pages that
           ask for passwords, cookies, Robux claims, account transfers, or external downloads.
         </p>
         <div className="button-row">
           <a className="button" href={siteConfig.robloxUrl} rel="noreferrer" target="_blank">
-            Open Roblox experience page
+            Open Roblox
           </a>
           <button className="button secondary" type="button">
             Place ID: {siteConfig.robloxPlaceId}

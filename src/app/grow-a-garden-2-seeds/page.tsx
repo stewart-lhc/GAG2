@@ -9,8 +9,9 @@ export const metadata = pageMetadata(
 
 export default function SeedsPage() {
   return (
-    <section className="section">
-      <h1 style={{ color: "var(--ink)" }}>Grow a Garden 2 Seeds</h1>
+    <section className="section section-hero">
+      <p className="eyebrow">Seed database shell</p>
+      <h1>Seeds Watch</h1>
       <p className="muted">
         The seed database is prepared for verified seed names, rarity, shop source, price,
         and last verified timestamps. No seed stats are published until reliable GAG2 data is available.

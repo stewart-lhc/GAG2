@@ -9,8 +9,9 @@ export const metadata = pageMetadata(
 
 export default function GearPage() {
   return (
-    <section className="section">
-      <h1 style={{ color: "var(--ink)" }}>Grow a Garden 2 Gear</h1>
+    <section className="section section-hero">
+      <p className="eyebrow">Protection gear watch</p>
+      <h1>Gear Board</h1>
       <p className="muted">
         Gear data will be listed only after source review. For now, use the stock tracker and
         night stealing guide to understand the data fields that will be verified.

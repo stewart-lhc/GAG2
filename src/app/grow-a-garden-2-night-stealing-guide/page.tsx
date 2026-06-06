@@ -25,8 +25,9 @@ export default function NightStealingPage() {
           }
         ])}
       />
-      <section className="section">
-        <h1 style={{ color: "var(--ink)" }}>Grow a Garden 2 Night Stealing Guide</h1>
+      <section className="section section-hero">
+        <p className="eyebrow">Protect before AFK</p>
+        <h1>Night Risk Guide</h1>
         <p className="muted">
           The official Roblox description mentions night stealing. This page turns that into
           defensive planning, not exploit instructions.

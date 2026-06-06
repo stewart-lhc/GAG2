@@ -1,0 +1,887 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GAG2 Design Drafts</title>
+  <style>
+    :root {
+      --ink: #162015;
+      --soft-ink: #51604f;
+      --grass: #36a957;
+      --deep-grass: #167545;
+      --leaf: #7ed957;
+      --soil: #8e5531;
+      --soil-dark: #5c351f;
+      --sun: #f7c948;
+      --carrot: #f58b32;
+      --sky: #72bdf2;
+      --cream: #fff8df;
+      --paper: #fffdf7;
+      --line: rgba(22, 32, 21, 0.13);
+      --shadow: 0 22px 60px rgba(22, 32, 21, 0.16);
+      --radius: 8px;
+      font-family: "Trebuchet MS", "Gill Sans", Verdana, sans-serif;
+      letter-spacing: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #dfe9d5;
+      color: var(--ink);
+    }
+
+    .draft {
+      width: 1440px;
+      min-height: 1000px;
+      overflow: hidden;
+      position: relative;
+      display: none;
+    }
+
+    body[data-draft="1"] #draft-1,
+    body[data-draft="2"] #draft-2,
+    body[data-draft="3"] #draft-3 {
+      display: block;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .block-icon {
+      width: 34px;
+      height: 34px;
+      border: 3px solid rgba(0, 0, 0, 0.18);
+      border-radius: 7px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.5), transparent 45%),
+        linear-gradient(90deg, var(--grass) 0 50%, var(--soil) 50% 100%);
+      box-shadow: inset -4px -4px rgba(0,0,0,0.12);
+    }
+
+    .topbar {
+      position: relative;
+      z-index: 4;
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 54px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.34);
+      background: rgba(255, 255, 255, 0.74);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .nav span {
+      padding: 9px 12px;
+      border-radius: 8px;
+      color: rgba(22, 32, 21, 0.72);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .nav .active {
+      background: #172015;
+      color: #fff;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 10px 16px;
+      border: 2px solid rgba(0,0,0,0.12);
+      border-radius: 8px;
+      background: var(--deep-grass);
+      color: #fff;
+      font-weight: 900;
+      box-shadow: inset 0 -4px rgba(0,0,0,0.16);
+    }
+
+    .btn.secondary {
+      background: #fff;
+      color: var(--deep-grass);
+    }
+
+    .btn.orange {
+      background: var(--carrot);
+    }
+
+    .pill,
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 28px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .pill.ok {
+      background: #dff5d4;
+      color: #176b39;
+    }
+
+    .pill.wait {
+      background: #fff0c1;
+      color: #85520d;
+    }
+
+    .pill.info {
+      background: #dff1ff;
+      color: #1f5d85;
+    }
+
+    .panel {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 247, 0.94);
+      box-shadow: var(--shadow);
+    }
+
+    .panel.flat {
+      box-shadow: none;
+    }
+
+    .card-title {
+      margin: 0 0 8px;
+      font-size: 18px;
+      line-height: 1.15;
+      font-weight: 900;
+    }
+
+    .muted {
+      color: var(--soft-ink);
+      line-height: 1.5;
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .stat {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.74);
+    }
+
+    .stat span {
+      display: block;
+      color: var(--soft-ink);
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+
+    .stat strong {
+      display: block;
+      margin-top: 4px;
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .plot-pattern {
+      position: absolute;
+      inset: 0;
+      opacity: 0.4;
+      background:
+        linear-gradient(90deg, transparent 0 44px, rgba(0,0,0,0.08) 44px 48px),
+        linear-gradient(0deg, transparent 0 44px, rgba(0,0,0,0.08) 44px 48px),
+        linear-gradient(135deg, rgba(255,255,255,0.26), transparent);
+      background-size: 48px 48px, 48px 48px, cover;
+    }
+
+    .crop {
+      position: absolute;
+      border-radius: 8px;
+      transform: rotate(45deg);
+      box-shadow: inset -8px -8px rgba(0,0,0,0.12);
+    }
+
+    .avatar {
+      position: absolute;
+      width: 88px;
+      height: 120px;
+    }
+
+    .avatar::before {
+      content: "";
+      position: absolute;
+      left: 22px;
+      top: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: #ffe0b1;
+      border: 3px solid rgba(0,0,0,0.18);
+      box-shadow: inset -5px -5px rgba(0,0,0,0.09);
+    }
+
+    .avatar::after {
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: 48px;
+      width: 68px;
+      height: 72px;
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, #255edb 0 24%, #fff 24% 35%, #2c9e5d 35% 65%, #fff 65% 76%, #255edb 76%);
+      border: 3px solid rgba(0,0,0,0.18);
+      box-shadow: inset -7px -7px rgba(0,0,0,0.12);
+    }
+
+    /* Draft 1 */
+    #draft-1 {
+      background:
+        radial-gradient(circle at 82% 12%, rgba(255, 236, 138, 0.78), transparent 18%),
+        linear-gradient(180deg, #9edafa 0 28%, #bde996 28% 100%);
+    }
+
+    #draft-1 .farm-world {
+      position: absolute;
+      left: -120px;
+      right: -120px;
+      bottom: -190px;
+      height: 520px;
+      transform: perspective(700px) rotateX(52deg);
+      transform-origin: center bottom;
+      background: #a96b3b;
+      border-top: 26px solid #73c85d;
+    }
+
+    #draft-1 .hero-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      padding: 42px 54px 0;
+    }
+
+    #draft-1 .hero-copy {
+      padding: 34px;
+      min-height: 360px;
+      background: rgba(255,253,247,0.9);
+    }
+
+    #draft-1 h1 {
+      max-width: 690px;
+      margin: 14px 0 16px;
+      font-size: 66px;
+      line-height: 0.93;
+      letter-spacing: 0;
+    }
+
+    #draft-1 .lead {
+      max-width: 620px;
+      margin: 0 0 22px;
+      color: #47583f;
+      font-size: 19px;
+      line-height: 1.5;
+    }
+
+    #draft-1 .decision {
+      padding: 24px;
+      min-height: 360px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.96), rgba(235,255,224,0.92));
+    }
+
+    .join-meter {
+      display: grid;
+      grid-template-columns: 112px 1fr;
+      gap: 16px;
+      align-items: center;
+      margin: 18px 0;
+    }
+
+    .meter-ring {
+      width: 112px;
+      height: 112px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: conic-gradient(var(--grass) 0 72%, #dce8d2 72% 100%);
+      box-shadow: inset 0 0 0 10px #fff;
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .quick-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      padding: 26px 54px;
+    }
+
+    #draft-1 .quick-card {
+      min-height: 186px;
+      padding: 18px;
+      border-top: 8px solid var(--grass);
+    }
+
+    .tool-icon {
+      width: 44px;
+      height: 44px;
+      margin-bottom: 14px;
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.6), transparent),
+        var(--carrot);
+      box-shadow: inset -5px -5px rgba(0,0,0,0.15);
+    }
+
+    #draft-1 .stock-mini {
+      position: absolute;
+      left: 54px;
+      right: 54px;
+      bottom: 34px;
+      z-index: 3;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 14px;
+    }
+
+    #draft-1 .stock-mini .panel {
+      padding: 16px;
+    }
+
+    /* Draft 2 */
+    #draft-2 {
+      background:
+        radial-gradient(circle at 72% 16%, rgba(232, 231, 180, 0.28), transparent 14%),
+        linear-gradient(180deg, #102643 0, #172733 34%, #1e3327 100%);
+      color: #f6f5e9;
+    }
+
+    #draft-2 .topbar {
+      background: rgba(12, 26, 37, 0.82);
+      border-color: rgba(255,255,255,0.12);
+      color: #f6f5e9;
+    }
+
+    #draft-2 .nav span {
+      color: rgba(246,245,233,0.68);
+    }
+
+    #draft-2 .nav .active {
+      background: #f7c948;
+      color: #172015;
+    }
+
+    #draft-2 .night-field {
+      position: absolute;
+      left: -120px;
+      right: -120px;
+      bottom: -160px;
+      height: 450px;
+      transform: perspective(720px) rotateX(55deg);
+      transform-origin: center bottom;
+      background: #5b3927;
+      border-top: 28px solid #26543a;
+      filter: saturate(0.8);
+    }
+
+    #draft-2 .night-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 22px;
+      padding: 38px 54px 0;
+    }
+
+    #draft-2 .panel {
+      border-color: rgba(255,255,255,0.12);
+      background: rgba(12, 24, 31, 0.86);
+      box-shadow: 0 26px 70px rgba(0,0,0,0.32);
+    }
+
+    #draft-2 .muted {
+      color: rgba(246,245,233,0.7);
+    }
+
+    #draft-2 h1 {
+      margin: 12px 0 14px;
+      font-size: 58px;
+      line-height: 0.95;
+      color: #fffce7;
+    }
+
+    .ops-panel {
+      padding: 28px;
+    }
+
+    .timer-stack {
+      display: grid;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .timer {
+      display: grid;
+      grid-template-columns: 112px 1fr 84px;
+      gap: 14px;
+      align-items: center;
+      padding: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .timer strong {
+      color: #fff;
+    }
+
+    .bar {
+      height: 10px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .bar i {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #7ed957, #f7c948);
+    }
+
+    .watch-card {
+      padding: 24px;
+    }
+
+    .watch-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .watch-item {
+      display: grid;
+      grid-template-columns: 44px 1fr 82px;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .switch {
+      width: 54px;
+      height: 30px;
+      padding: 4px;
+      border-radius: 999px;
+      background: #2f7d4b;
+      box-shadow: inset 0 -3px rgba(0,0,0,0.18);
+    }
+
+    .switch::after {
+      content: "";
+      display: block;
+      width: 22px;
+      height: 22px;
+      margin-left: 22px;
+      border-radius: 999px;
+      background: #fff;
+    }
+
+    .risk-board {
+      position: relative;
+      z-index: 3;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+      padding: 22px 54px;
+    }
+
+    .risk-board .panel {
+      padding: 18px;
+      min-height: 145px;
+    }
+
+    .moon-avatar {
+      right: 88px;
+      bottom: 132px;
+      transform: scale(1.1);
+      filter: brightness(0.75);
+    }
+
+    .grape {
+      position: absolute;
+      right: 206px;
+      bottom: 124px;
+      width: 90px;
+      height: 118px;
+      border-radius: 40px;
+      background:
+        radial-gradient(circle at 30% 26%, #cf86ff 0 18%, transparent 19%),
+        radial-gradient(circle at 60% 32%, #b55df4 0 20%, transparent 21%),
+        radial-gradient(circle at 40% 52%, #9e43e1 0 22%, transparent 23%),
+        radial-gradient(circle at 66% 58%, #cc70ff 0 18%, transparent 19%);
+      filter: drop-shadow(0 20px 24px rgba(0,0,0,0.35));
+    }
+
+    /* Draft 3 */
+    #draft-3 {
+      background:
+        linear-gradient(90deg, rgba(28, 122, 70, 0.1) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(28, 122, 70, 0.1) 1px, transparent 1px),
+        linear-gradient(135deg, #fbf6df, #dff4c5 55%, #bfe6fa);
+      background-size: 34px 34px, 34px 34px, cover;
+    }
+
+    #draft-3 .topbar {
+      background: rgba(255, 253, 247, 0.88);
+    }
+
+    #draft-3 .showcase {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 38px;
+      padding: 44px 70px;
+    }
+
+    #draft-3 h1 {
+      margin: 16px 0;
+      font-size: 60px;
+      line-height: 0.94;
+    }
+
+    .phone-row {
+      display: flex;
+      gap: 22px;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .phone {
+      width: 286px;
+      min-height: 612px;
+      padding: 14px;
+      border: 12px solid #172015;
+      border-radius: 34px;
+      background: #fffdf7;
+      box-shadow: 0 30px 80px rgba(22, 32, 21, 0.24);
+    }
+
+    .phone.small {
+      margin-top: 46px;
+      transform: scale(0.92);
+    }
+
+    .phone-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .mini-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .mini-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 5px;
+      background: linear-gradient(90deg, var(--grass), var(--soil));
+    }
+
+    .phone-card {
+      margin-bottom: 10px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .hero-phone {
+      overflow: hidden;
+      min-height: 148px;
+      color: #fff;
+      background:
+        linear-gradient(180deg, rgba(13,34,20,0.18), rgba(13,34,20,0.76)),
+        linear-gradient(135deg, #56bd66, #94633b);
+    }
+
+    .hero-phone h2 {
+      margin: 42px 0 8px;
+      font-size: 26px;
+      line-height: 0.96;
+    }
+
+    .compact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .compact {
+      min-height: 84px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f7fbea;
+    }
+
+    .compact b {
+      display: block;
+      font-size: 18px;
+    }
+
+    .bottom-nav {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
+      margin-top: 12px;
+      padding: 8px;
+      border-radius: 12px;
+      background: #172015;
+      color: rgba(255,255,255,0.74);
+      text-align: center;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .bottom-nav span::before {
+      content: "";
+      display: block;
+      width: 22px;
+      height: 22px;
+      margin: 0 auto 4px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.25);
+    }
+
+    .bottom-nav .active {
+      color: #7ed957;
+    }
+
+    .ux-notes {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .ux-notes .panel {
+      padding: 16px;
+      box-shadow: none;
+    }
+
+    .sparkline {
+      height: 58px;
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, transparent 0 16%, #7ed957 17% 22%, transparent 23% 38%, #f7c948 39% 44%, transparent 45% 61%, #f58b32 62% 67%, transparent 68%),
+        #eef8dd;
+    }
+  </style>
+  <script>
+    const params = new URLSearchParams(location.search);
+    document.documentElement.dataset.ready = "true";
+    document.addEventListener("DOMContentLoaded", () => {
+      document.body.dataset.draft = params.get("draft") || "1";
+    });
+  </script>
+</head>
+<body data-draft="1">
+  <section class="draft" id="draft-1" aria-label="Design draft 1">
+    <div class="farm-world"><div class="plot-pattern"></div></div>
+    <div class="crop" style="left:110px; bottom:140px; width:54px; height:54px; background:#7ed957;"></div>
+    <div class="crop" style="left:270px; bottom:210px; width:62px; height:62px; background:#f58b32;"></div>
+    <div class="crop" style="right:180px; bottom:182px; width:72px; height:72px; background:#ca6df2;"></div>
+    <div class="avatar" style="right:110px; bottom:228px;"></div>
+    <header class="topbar">
+      <div class="brand"><span class="block-icon"></span><span>GAG2 Tools</span></div>
+      <nav class="nav">
+        <span class="active">Command</span><span>Official Link</span><span>Stock</span><span>Codes</span><span>Calculator</span><span>Night Guide</span>
+      </nav>
+      <span class="btn secondary">Report update</span>
+    </header>
+    <div class="hero-grid">
+      <main class="panel hero-copy">
+        <span class="pill ok">Official Link Verified</span>
+        <span class="pill info">Last checked Jun 6</span>
+        <h1>GAG2 Player Command Center</h1>
+        <p class="lead">Open the safe Roblox page, check whether it is worth joining now, watch shops, copy verified codes, and run crop math without fake data.</p>
+        <div style="display:flex; gap:12px; align-items:center;">
+          <span class="btn">Open Official Roblox Page</span>
+          <span class="btn secondary">Copy Place ID</span>
+        </div>
+        <div class="stat-row" style="margin-top:24px;">
+          <div class="stat"><span>Playing</span><strong>224</strong></div>
+          <div class="stat"><span>Visits</span><strong>492K</strong></div>
+          <div class="stat"><span>Creator</span><strong>@BMWLux</strong></div>
+          <div class="stat"><span>Status</span><strong>Unknown</strong></div>
+        </div>
+      </main>
+      <aside class="panel decision">
+        <span class="pill wait">Launch facts mixed</span>
+        <h2 style="margin:14px 0 4px; font-size:34px;">Should I join now?</h2>
+        <p class="muted">The official page exists, but release schedule and stock cycle still need verification.</p>
+        <div class="join-meter">
+          <div class="meter-ring">72%</div>
+          <div>
+            <h3 class="card-title">Worth checking if you want official status</h3>
+            <p class="muted" style="margin:0;">Best next action: open official link, then set stock and code alerts.</p>
+          </div>
+        </div>
+        <div class="stat-row" style="grid-template-columns:1fr 1fr;">
+          <div class="stat"><span>Safe CTA</span><strong>Ready</strong></div>
+          <div class="stat"><span>Fake clone guard</span><strong>On</strong></div>
+        </div>
+      </aside>
+    </div>
+    <div class="quick-grid">
+      <article class="panel quick-card"><div class="tool-icon"></div><h3 class="card-title">Stock Watch</h3><p class="muted">Seed, Gear, Egg, Event, Weather tabs with unknown states and alert intent.</p><span class="tag" style="background:#e8f7de;">Watch shops</span></article>
+      <article class="panel quick-card"><div class="tool-icon" style="background:#f7c948;"></div><h3 class="card-title">Codes Check</h3><p class="muted">No recycled GAG1 codes. Show active count, last checked, and copy action.</p><span class="tag" style="background:#fff1bd;">0 active verified</span></article>
+      <article class="panel quick-card"><div class="tool-icon" style="background:#72bdf2;"></div><h3 class="card-title">Value Calculator</h3><p class="muted">Player-entered base value, weight, amount, and mutation multiplier.</p><span class="tag" style="background:#e3f2ff;">Run estimate</span></article>
+      <article class="panel quick-card"><div class="tool-icon" style="background:#ca6df2;"></div><h3 class="card-title">Night Risk</h3><p class="muted">Decide whether to harvest, protect, or stay before leaving at night.</p><span class="tag" style="background:#f1ddff;">Check risk</span></article>
+    </div>
+    <div class="stock-mini">
+      <div class="panel"><span class="pill ok">Confirmed source</span><h3 class="card-title" style="margin-top:10px;">Roblox page + public API</h3><p class="muted" style="margin:0;">Place ID and creator visible before any gameplay claim.</p></div>
+      <div class="panel"><span class="pill wait">Stock cycle</span><h3 class="card-title" style="margin-top:10px;">Awaiting verification</h3><p class="muted" style="margin:0;">Empty state still offers watch, report, and subscribe.</p></div>
+      <div class="panel"><span class="pill info">Player flow</span><h3 class="card-title" style="margin-top:10px;">10-second actions</h3><p class="muted" style="margin:0;">Open, watch, copy, calculate, protect.</p></div>
+    </div>
+  </section>
+
+  <section class="draft" id="draft-2" aria-label="Design draft 2">
+    <div class="night-field"><div class="plot-pattern"></div></div>
+    <div class="grape"></div>
+    <div class="avatar moon-avatar"></div>
+    <header class="topbar">
+      <div class="brand"><span class="block-icon"></span><span>GAG2 Night Ops</span></div>
+      <nav class="nav">
+        <span>Release</span><span>Official</span><span class="active">Stock Radar</span><span>Codes</span><span>Calculator</span><span>Risk</span>
+      </nav>
+      <span class="btn orange">Set alert</span>
+    </header>
+    <div class="night-grid">
+      <main class="panel ops-panel">
+        <span class="pill wait">No unverified stock claims</span>
+        <h1>Night Stock Radar</h1>
+        <p class="muted" style="font-size:18px; max-width:520px;">A darker, game-session layout for players who keep one tab open while farming, trading, and guarding high-value crops.</p>
+        <div class="timer-stack">
+          <div class="timer"><strong>Seed Shop</strong><div class="bar"><i style="width:64%;"></i></div><span>3:12</span></div>
+          <div class="timer"><strong>Gear Shop</strong><div class="bar"><i style="width:42%;"></i></div><span>8:44</span></div>
+          <div class="timer"><strong>Pet Eggs</strong><div class="bar"><i style="width:78%;"></i></div><span>21:05</span></div>
+          <div class="timer"><strong>Weather</strong><div class="bar"><i style="width:25%;"></i></div><span>Unknown</span></div>
+        </div>
+      </main>
+      <aside class="panel watch-card">
+        <div style="display:flex; justify-content:space-between; gap:12px; align-items:center;">
+          <div><span class="pill ok">Watchlist</span><h2 style="margin:12px 0 0; font-size:34px;">Alert me when it matters</h2></div>
+          <span class="btn secondary">Report stock</span>
+        </div>
+        <div class="watch-list">
+          <div class="watch-item"><div class="tool-icon" style="margin:0;background:#7ed957;"></div><div><strong>Rare seed slot</strong><div class="muted">Seed Shop / High priority</div></div><div class="switch"></div></div>
+          <div class="watch-item"><div class="tool-icon" style="margin:0;background:#72bdf2;"></div><div><strong>Protection gear</strong><div class="muted">Gear Shop / Night defense</div></div><div class="switch"></div></div>
+          <div class="watch-item"><div class="tool-icon" style="margin:0;background:#f7c948;"></div><div><strong>Egg rotation</strong><div class="muted">Pet Egg Shop / 30 min</div></div><div class="switch"></div></div>
+          <div class="watch-item"><div class="tool-icon" style="margin:0;background:#ca6df2;"></div><div><strong>Night event</strong><div class="muted">Weather / Needs source</div></div><span class="pill wait">Unknown</span></div>
+        </div>
+      </aside>
+    </div>
+    <div class="risk-board">
+      <article class="panel"><span class="pill ok">Trust layer</span><h3 class="card-title" style="margin-top:12px;">Confirmed / Unknown labels stay visible</h3><p class="muted">Players can act without confusing rumors for official facts.</p></article>
+      <article class="panel"><span class="pill info">Session UX</span><h3 class="card-title" style="margin-top:12px;">Timers, toggles, and watchlist first</h3><p class="muted">Designed for one-tab farming, not long article reading.</p></article>
+      <article class="panel"><span class="pill wait">Risk meter</span><h3 class="card-title" style="margin-top:12px;">Protect before AFK</h3><p class="muted">High value + leaving at night pushes harvest/protect advice.</p></article>
+    </div>
+  </section>
+
+  <section class="draft" id="draft-3" aria-label="Design draft 3">
+    <header class="topbar">
+      <div class="brand"><span class="block-icon"></span><span>GAG2 Pocket Tools</span></div>
+      <nav class="nav">
+        <span class="active">Mobile</span><span>Official</span><span>Stock</span><span>Codes</span><span>Calc</span><span>Night</span>
+      </nav>
+      <span class="btn">Install PWA</span>
+    </header>
+    <div class="showcase">
+      <div>
+        <span class="pill ok">Mobile-first player companion</span>
+        <h1>One-thumb tools for GAG players</h1>
+        <p class="muted" style="font-size:19px; max-width:520px;">This direction treats the site like a Roblox session sidekick: quick status, stock alerts, code copy, calculator, and night risk with bottom navigation.</p>
+        <div class="ux-notes">
+          <div class="panel"><h3 class="card-title">Fast first action</h3><p class="muted">Official link and current status appear above the fold. No marketing hero delay.</p></div>
+          <div class="panel"><h3 class="card-title">Better empty states</h3><p class="muted">Unknown stock turns into watch, report, and subscribe actions.</p></div>
+          <div class="panel"><h3 class="card-title">Thumb controls</h3><p class="muted">Tabs, toggles, copy buttons, and calculator fields are reachable with one hand.</p></div>
+          <div class="panel"><h3 class="card-title">Creator-friendly</h3><p class="muted">Verified stats, source labels, and shareable results are screenshot-ready.</p></div>
+        </div>
+      </div>
+      <div class="phone-row">
+        <div class="phone small">
+          <div class="phone-top"><span class="mini-brand"><i class="mini-icon"></i>GAG2</span><span class="pill ok">Safe</span></div>
+          <div class="phone-card hero-phone"><span class="pill ok">Official verified</span><h2>Open the real GAG2 page</h2><span class="btn" style="width:100%; min-height:38px;">Open Roblox</span></div>
+          <div class="compact-grid">
+            <div class="compact"><span class="muted">Playing</span><b>224</b></div>
+            <div class="compact"><span class="muted">Visits</span><b>492K</b></div>
+          </div>
+          <div class="phone-card"><h3 class="card-title">Fake clone guard</h3><p class="muted" style="margin:0;">Creator, Place ID, Universe ID, last checked.</p></div>
+          <div class="bottom-nav"><span class="active">Home</span><span>Stock</span><span>Codes</span><span>Calc</span><span>Risk</span></div>
+        </div>
+        <div class="phone">
+          <div class="phone-top"><span class="mini-brand"><i class="mini-icon"></i>Stock</span><span class="pill wait">Unknown</span></div>
+          <div class="phone-card">
+            <h2 style="margin:0 0 6px; font-size:28px;">Shop Watch</h2>
+            <p class="muted" style="margin:0;">Track without pretending unverified inventory is real.</p>
+          </div>
+          <div class="compact-grid">
+            <div class="compact"><span class="muted">Seed</span><b>3:12</b></div>
+            <div class="compact"><span class="muted">Gear</span><b>8:44</b></div>
+            <div class="compact"><span class="muted">Egg</span><b>21:05</b></div>
+            <div class="compact"><span class="muted">Event</span><b>Watch</b></div>
+          </div>
+          <div class="phone-card"><h3 class="card-title">Rare seed alert</h3><div class="sparkline"></div><div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;"><span class="muted">Push when verified</span><div class="switch"></div></div></div>
+          <div class="phone-card"><h3 class="card-title">Codes</h3><p class="muted" style="margin:0 0 8px;">0 active verified today.</p><span class="btn secondary" style="width:100%;">Notify me</span></div>
+          <div class="bottom-nav"><span>Home</span><span class="active">Stock</span><span>Codes</span><span>Calc</span><span>Risk</span></div>
+        </div>
+        <div class="phone small">
+          <div class="phone-top"><span class="mini-brand"><i class="mini-icon"></i>Calc</span><span class="pill info">Alpha</span></div>
+          <div class="phone-card"><h2 style="margin:0; font-size:28px;">Crop Value</h2><p class="muted" style="margin:6px 0 0;">Base x weight x amount x mutation.</p></div>
+          <div class="phone-card"><span class="muted">Base value</span><strong style="display:block; font-size:24px;">100</strong></div>
+          <div class="phone-card"><span class="muted">Weight</span><strong style="display:block; font-size:24px;">1.25 kg</strong></div>
+          <div class="phone-card" style="background:#172015;color:#fff;"><span style="color:#bde996;">Estimate</span><strong style="display:block; font-size:34px;">250</strong><p style="margin:6px 0 0;color:rgba(255,255,255,0.7);">Keep formula visible.</p></div>
+          <div class="phone-card"><h3 class="card-title">Night risk</h3><p class="muted" style="margin:0;">Medium: protect before leaving.</p></div>
+          <div class="bottom-nav"><span>Home</span><span>Stock</span><span>Codes</span><span class="active">Calc</span><span>Risk</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

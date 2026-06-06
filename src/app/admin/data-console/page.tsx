@@ -9,8 +9,9 @@ export const metadata = pageMetadata(
 
 export default function DataConsolePage() {
   return (
-    <section className="section">
-      <h1 style={{ color: "var(--ink)" }}>Admin Data Console Blueprint</h1>
+    <section className="section section-hero">
+      <p className="eyebrow">Verification queue</p>
+      <h1>Data Console Blueprint</h1>
       <p className="muted">
         Static MVP view for the data model. Production should protect this route and persist
         changes to a database or CMS.

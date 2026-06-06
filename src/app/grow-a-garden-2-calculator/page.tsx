@@ -32,8 +32,9 @@ export default function CalculatorPage() {
           }
         ])}
       />
-      <section className="section">
-        <h1 style={{ color: "var(--ink)" }}>Grow a Garden 2 Calculator</h1>
+      <section className="section section-hero">
+        <p className="eyebrow">Crop math alpha</p>
+        <h1>Value Calculator</h1>
         <p className="muted">
           Estimate crop value with transparent inputs. Verified crop presets can be added after
           in-game testing or reliable source review.

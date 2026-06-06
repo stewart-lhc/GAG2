@@ -21,6 +21,11 @@ export function NightRiskTool() {
   return (
     <div className="two-col">
       <div className="panel">
+        <span className="badge badge-warning">Protect before AFK</span>
+        <h2 style={{ marginTop: 14 }}>Night Risk Meter</h2>
+        <p className="muted">
+          Decide whether to harvest, protect, or stay before leaving your garden at night.
+        </p>
         <div className="field">
           <label htmlFor="crop-value">Crop value estimate</label>
           <input
@@ -58,10 +63,8 @@ export function NightRiskTool() {
         </div>
       </div>
       <aside className="panel">
-        <p className="eyebrow" style={{ color: "var(--accent-strong)" }}>
-          Risk estimate
-        </p>
-        <h2>{risk.label}</h2>
+        <span className="badge badge-rumor">Risk estimate</span>
+        <h2 style={{ marginTop: 14 }}>{risk.label}</h2>
         <p>{risk.advice}</p>
         <p className="muted">
           This mini tool is strategic guidance only. It does not encourage harassment,
