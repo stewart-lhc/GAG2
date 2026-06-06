@@ -12,21 +12,30 @@ const navItems = [
 
 export function SiteHeader() {
   return (
-    <header className="site-header">
-      <Link className="brand" href="/" aria-label="GAG2 Tools home">
-        <img src="/favicon.svg" alt="" width="32" height="32" />
-        <span>{siteConfig.shortName} Arcade</span>
-      </Link>
-      <nav className="top-nav" aria-label="Primary navigation">
-        {navItems.map(([label, href]) => (
-          <Link key={href} href={href}>
-            {label}
-          </Link>
-        ))}
+    <>
+      <header className="site-header">
+        <Link className="brand" href="/" aria-label="GAG2 Tools home">
+          <img src="/favicon.svg" alt="" width="32" height="32" />
+          <span>{siteConfig.shortName} Arcade</span>
+        </Link>
+        <nav className="top-nav" aria-label="Primary navigation">
+          {navItems.map(([label, href]) => (
+            <Link key={href} href={href}>
+              {label}
+            </Link>
+          ))}
+        </nav>
+        <a className="button header-cta" href={siteConfig.robloxUrl} rel="noreferrer" target="_blank">
+          Open Roblox
+        </a>
+      </header>
+      <nav className="mobile-bottom-nav" aria-label="Mobile primary navigation">
+        <Link href="/">Home</Link>
+        <Link href="/grow-a-garden-2-stock-tracker">Stock</Link>
+        <Link href="/grow-a-garden-2-codes">Codes</Link>
+        <Link href="/grow-a-garden-2-calculator">Calc</Link>
+        <Link href="/grow-a-garden-2-night-stealing-guide">Risk</Link>
       </nav>
-      <a className="button header-cta" href={siteConfig.robloxUrl} rel="noreferrer" target="_blank">
-        Open Roblox
-      </a>
-    </header>
+    </>
   );
 }
