@@ -18,12 +18,12 @@ export default function StockTrackerPage() {
           "/grow-a-garden-2-stock-tracker"
         )}
       />
-      <section className="section section-hero">
+      <section className="section section-hero tool-hero">
         <p className="eyebrow">Stock is a sport</p>
         <h1>Shop Trading Floor</h1>
         <p className="muted">
-          Shop tabs and stale-data handling are ready. Current GAG2 stock is shown as
-          awaiting verification until reliable sources are connected.
+          Filter shops, rarity, and verification state first. Unknown stock stays visible,
+          but never treated as live inventory.
         </p>
       </section>
       <section className="section section-tight market-shell">

@@ -32,12 +32,12 @@ export default function CalculatorPage() {
           }
         ])}
       />
-      <section className="section section-hero">
+      <section className="section section-hero tool-hero">
         <p className="eyebrow">Crop math alpha</p>
         <h1>Value Calculator</h1>
         <p className="muted">
-          Estimate crop value with transparent inputs. Verified crop presets can be added after
-          in-game testing or reliable source review.
+          Estimate crop value from visible inputs. Verified presets can be added after
+          reliable source review.
         </p>
       </section>
       <section className="section section-tight">

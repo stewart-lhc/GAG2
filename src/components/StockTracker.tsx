@@ -24,10 +24,10 @@ export function StockTracker() {
       <div className="two-col" style={{ marginBottom: 18 }}>
         <div>
           <span className="badge badge-confirmed">Verified-only inventory</span>
-          <h2 style={{ marginTop: 14 }}>What should I watch?</h2>
+          <h2 style={{ marginTop: 14 }}>Stock Filters</h2>
           <p className="muted">
-            Use shop tabs like a stock pit. Unknown rows stay visible so players can watch,
-            report, and wait for verified drops without treating rumors as live inventory.
+            Filter by shop, rarity, or search. Unknown rows stay visible without being
+            treated as live inventory.
           </p>
         </div>
         <div className="inventory-slots">

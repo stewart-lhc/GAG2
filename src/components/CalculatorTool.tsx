@@ -23,7 +23,7 @@ export function CalculatorTool() {
 
   return (
     <div className="two-col">
-      <form className="panel">
+      <form className="panel" onSubmit={(event) => event.preventDefault()}>
         <span className="badge badge-unknown">Player-entered values</span>
         <h2 style={{ marginTop: 14 }}>Crop Value Math</h2>
         <p className="muted">
@@ -101,7 +101,7 @@ export function CalculatorTool() {
           ) : null}
         </div>
       </form>
-      <aside className="panel">
+      <aside className="panel result-panel">
         <span className="badge badge-confirmed">Estimated result</span>
         <h2 style={{ marginTop: 14 }}>{Math.round(result).toLocaleString()}</h2>
         <p>

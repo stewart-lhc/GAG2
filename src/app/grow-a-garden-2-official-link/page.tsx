@@ -22,9 +22,9 @@ export default function OfficialLinkPage() {
           <a className="button" href={siteConfig.robloxUrl} rel="noreferrer" target="_blank">
             Open Roblox
           </a>
-          <button className="button secondary" type="button">
+          <span className="button secondary code-chip" aria-label={`Roblox place ID ${siteConfig.robloxPlaceId}`}>
             Place ID: {siteConfig.robloxPlaceId}
-          </button>
+          </span>
         </div>
       </section>
       <section className="section section-tight">

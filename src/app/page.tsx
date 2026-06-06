@@ -15,9 +15,8 @@ export default function Home() {
             </span>
             <h1 className="hero-title">Grow Smarter Than Rumors</h1>
             <p className="lead">
-              A loud, game-like command page for GAG2 players: safe Roblox link, stock
-              watch, code checks, crop value math, and night stealing decisions in one first
-              screen.
+              Open the verified Roblox page, then check stock, codes, crop value, and night
+              risk before you join.
             </p>
             <div className="button-row">
               <a className="button" href={siteConfig.robloxUrl} rel="noreferrer" target="_blank">
@@ -32,12 +31,12 @@ export default function Home() {
             <span className="badge badge-warning">Clone guard on</span>
             <h2 style={{ marginTop: 14 }}>Should I jump in?</h2>
             <div className="decision-strip">
-              <div className="meter-ring">72%</div>
+              <div className="meter-ring">Link OK</div>
               <div>
-                <h3>Check official status now</h3>
+                <h3>Verify before joining</h3>
                 <p className="muted">
-                  The page exists. Release timing and shop cycles stay marked Unknown until
-                  verified.
+                  The page exists. Release timing and shop cycles stay marked Unknown until a
+                  reliable source confirms them.
                 </p>
               </div>
             </div>
@@ -71,24 +70,28 @@ export default function Home() {
             action="Check release"
             body="Confirmed, rumor, and unknown sections for release-date and availability searches."
             href="/grow-a-garden-2-release-date"
+            icon="REL"
             title="Release Hub"
           />
           <ToolCard
             action="Filter inventory"
             body="Shop tabs, stale states, and report-ready rows for verified stock once data is available."
             href="/grow-a-garden-2-stock-tracker"
+            icon="STK"
             title="Stock Tracker"
           />
           <ToolCard
             action="Review codes"
             body="Active and expired code handling with no recycled or unverified code claims."
             href="/grow-a-garden-2-codes"
+            icon="CODE"
             title="Codes"
           />
           <ToolCard
             action="Estimate value"
             body="Alpha calculator for user-entered base value, weight, amount, and mutation multiplier."
             href="/grow-a-garden-2-calculator"
+            icon="CALC"
             title="Calculator Alpha"
           />
         </div>
