@@ -33,6 +33,22 @@ growagarden2.pro 当前已经有可信 MVP 骨架：Release、Official Link、St
 4. 用 Night Stealing Planner 做出 GAG2 差异化。
 5. 用 SEO 页面矩阵抢占上线前后高意图流量。
 
+执行结论：方向成立，但 P0 必须收窄成「Snapshot 驱动的玩家控制台 MVP」。先把站点变成每天会变化、能解释数据来源、能引导玩家下一步动作的可信面板，再扩展 stock 社区上报、后台审核、通知和长尾 SEO 页面。
+
+### 1.1 当前执行版优先级
+
+| 优先级 | 模块 | 执行口径 |
+|---|---|---|
+| P0 | Live Roblox Snapshot 自动化 | 先用 JSON snapshot / build-time refresh，解决 `site.ts` 静态值过期问题；暂不要求数据库。 |
+| P0 | Home Player Command Center | 首页首屏展示官方链接、playing、visits、favorites、Roblox updated、last synced、stale 状态。 |
+| P0 | Official Link Guard | 官方 URL、Place ID、Universe ID、creator、last synced 在首页、Release、Official Link 页保持一致。 |
+| P0 | Change Since Last Visit | 用 localStorage 记录上次访问 snapshot，二次访问展示变化摘要。 |
+| P0 | Watch Intent | Stock / Codes 先做本地 watch intent，不宣称未验证 stock 或 code。 |
+| P0 | 最小 Analytics | 只记录 official link click、watch save、code alert intent、night planner calculate、returning change view。 |
+| P0-lite | Night Stealing Planner | 保留为 30 秒规则评估器，明确 fan-made，不做复杂机制承诺。 |
+| P1 | Player Count History / Community Stock Report / Admin | 等 P0 的 snapshot 和 watch intent 跑通后再做。 |
+| P1 | SEO 页面矩阵扩展 | 先做深 5 个核心页，再扩 seeds/gears/guilds 等薄内容风险较高的页面。 |
+
 ---
 
 ## 2. 产品目标
@@ -76,21 +92,32 @@ growagarden2.pro 当前已经有可信 MVP 骨架：Release、Official Link、St
 
 ## 4. MVP 范围
 
-### 4.1 P0 必做
+### 4.1 P0 必做：Snapshot 驱动的玩家控制台
 
 | 模块 | 目标 |
 |---|---|
-| Live Roblox Snapshot | 展示实时玩家数、访问量、收藏量、Roblox updated time、last synced |
-| 首页首屏改版 | 从营销文案改为玩家决策面板 |
-| Stock Watchlist Mode | 即使 stock 未完全验证，也能让玩家选择关注项 |
-| Codes Verified + Scam Filter | 不只显示 0 codes，要解释 fake code 风险并收集提醒意图 |
-| Calculator Save/Share/Compare | 从一次性工具变成可保存、可分享、可比较工具 |
-| Night Stealing Planner v1 | 做出 GAG2 差异化工具 |
-| Change Since Last Visit | 回访时展示上次以来数据变化 |
-| SEO 基础 | sitemap、robots、canonical、metadata、structured data、核心落地页 |
-| Analytics | 埋点核心行为，衡量粘性和转化 |
+| Live Roblox Snapshot 自动化 | 展示实时玩家数、访问量、收藏量、Roblox updated time、last synced；先解决静态快照过期 |
+| 首页首屏改版 | 从营销文案改为玩家决策面板，首屏回答「现在是否值得打开 Roblox」 |
+| Official Link Guard | 官方 Roblox 链接、Place ID、Universe ID、creator、last synced 在核心页面一致展示 |
+| Change Since Last Visit | 回访时展示上次以来 playing / visits / favorites / Roblox updated 变化 |
+| Stock Watch Intent | stock 未验证前，先让玩家选择关注类别并保存到 localStorage |
+| Codes Alert Intent + Scam Filter | 没有 verified code 时，解释 fake code 风险并收集 first-code alert 意图 |
+| Night Stealing Planner Lite | 30 秒规则评估器，输出风险和 AFK checklist，明确 fan-made |
+| SEO 基础 | sitemap、robots、canonical、metadata、structured data、5 个核心落地页 |
+| 最小 Analytics | 埋点核心动作，衡量工具是否产生回访和点击 |
 
-### 4.2 P1 两周内做
+### 4.2 P0 暂不做或只预留入口
+
+| 模块 | 原因 |
+|---|---|
+| Calculator Save/Share/Compare 完整版 | 计算器可保留当前 alpha；保存、比较、分享放到第二轮，避免 P0 过宽 |
+| 完整数据库模型 | P0 先用 JSON snapshot + localStorage；数据库等数据流验证后再上 |
+| Admin review flow | 需要和 stock report / codes report 一起设计，P0 先不做 |
+| Community Stock Report | 可信成本高，先预留入口，不让单人提交直接影响前台 verified 状态 |
+| Browser Notification / Discord Alert | 先收集意图，不直接做通知基础设施 |
+| Programmatic SEO Pages | 没有 verified 数据前容易变薄内容，先做深核心页 |
+
+### 4.3 P1 两周内做
 
 | 模块 | 目标 |
 |---|---|
@@ -98,9 +125,10 @@ growagarden2.pro 当前已经有可信 MVP 骨架：Release、Official Link、St
 | Community Stock Report | 玩家提交 stock，使用 Reported / Cross-checked / Verified 分层 |
 | Browser Notification / Discord Alert | 稀有 stock、codes、更新提醒 |
 | Update Changelog | 自动记录 Roblox updated time 和站内数据变更 |
-| Programmatic SEO Pages | seeds、gears、guilds、night stealing、fake games、player count 等专题 |
+| Calculator Save/Share/Compare | 保存最近计算、复制结果、比较两条结果 |
+| Programmatic SEO Pages | seeds、gears、guilds、fake games、vs GAG 等专题；必须有 verified/unknown 分层 |
 
-### 4.3 暂不做
+### 4.4 暂不做
 
 | 功能 | 原因 |
 |---|---|
@@ -149,11 +177,11 @@ growagarden2.pro 当前已经有可信 MVP 骨架：Release、Official Link、St
 
 ### API/数据建议
 
-1. 后端 cron 每 3–10 分钟拉取 Roblox public games API。
-2. 写入 `roblox_snapshots` 表或轻量 KV。
-3. 前端读取 `/api/roblox/snapshot`。
-4. 页面展示 `Source: Roblox public API`。
-5. 保留 7–30 天历史快照用于趋势图。
+1. P0 先新增刷新脚本，拉取 Roblox public games API 和 votes API。
+2. 写入 `data/snapshots/roblox-game.json`，前端从该文件读取。
+3. 页面展示 `Source: Roblox public API`、`last synced`、`stale`。
+4. API 拉取失败时保留最近一次成功 snapshot，不覆盖为失败值。
+5. P1 再迁移到 KV/DB，并保留 7–30 天历史快照用于趋势图。
 
 ### 验收标准
 
@@ -687,22 +715,21 @@ P1，但 P0 需要预留入口。
 
 ### Day 1–2：可信数据与 SEO 基础
 
-- [ ] Roblox snapshot cron。
-- [ ] 首页 Live Snapshot 卡片。
+- [ ] 新增 Roblox snapshot refresh 脚本，写入 `data/snapshots/roblox-game.json`。
+- [ ] `src/data/site.ts` 改为消费 snapshot 文件并保留 stale fallback。
+- [ ] 首页 Live Snapshot 卡片展示 playing / visits / favorites / updated / last synced。
 - [ ] Release / Official Link 页面同步显示 snapshot。
-- [ ] sitemap.xml。
-- [ ] robots.txt。
-- [ ] canonical / metadata。
-- [ ] 基础埋点。
+- [ ] sitemap、robots、canonical、metadata 做一次一致性检查。
+- [ ] 基础埋点先覆盖 official link click 和 live status view。
 
 ### Day 3–5：玩家动作闭环
 
-- [ ] Stock Watchlist localStorage。
-- [ ] Codes scam filter + alert intent。
-- [ ] Calculator save/copy/compare。
-- [ ] Night Planner v1。
-- [ ] Change Since Last Visit。
+- [ ] Change Since Last Visit localStorage。
+- [ ] Stock Watch Intent localStorage。
+- [ ] Codes scam filter + first-code alert intent。
+- [ ] Night Planner Lite 的 AFK checklist copy。
 - [ ] 首页 Watchlist 和变化摘要。
+- [ ] 最小 Analytics 扩展到 watch save、code alert intent、night planner calculate。
 
 ### Week 2：增长与社区
 
@@ -712,6 +739,7 @@ P1，但 P0 需要预留入口。
 - [ ] Fake games 页面。
 - [ ] GAG2 vs GAG 页面。
 - [ ] Guilds / gears / seeds 专题页。
+- [ ] Calculator save/copy/compare。
 - [ ] Browser notification 或 Discord alert 原型。
 
 ---
@@ -754,13 +782,13 @@ P1，但 P0 需要预留入口。
 
 ### Backend
 
-- [ ] 新增 Roblox snapshot fetcher。
-- [ ] 新增 snapshot API。
-- [ ] 新增 snapshot storage。
-- [ ] 新增 codes data model。
-- [ ] 新增 stock report model。
-- [ ] 新增 admin review API。
-- [ ] 新增 analytics event API 或接入现有 analytics。
+- [ ] 新增 Roblox snapshot refresh 脚本。
+- [ ] 新增 JSON snapshot storage。
+- [ ] 新增 stale fallback 读取逻辑。
+- [ ] 新增最小 analytics event API 或接入现有 analytics。
+- [ ] P1 再新增 codes data model。
+- [ ] P1 再新增 stock report model。
+- [ ] P1 再新增 admin review API。
 
 ### Frontend
 
@@ -768,11 +796,11 @@ P1，但 P0 需要预留入口。
 - [ ] 首页 Official Link CTA。
 - [ ] 首页 Watchlist 摘要。
 - [ ] Change Since Last Visit 组件。
-- [ ] Stock Watchlist 组件。
-- [ ] Codes scam filter 区块。
-- [ ] Calculator save/copy/compare。
-- [ ] Night Planner v1。
-- [ ] Player Count 页面 v1。
+- [ ] Stock Watch Intent 组件。
+- [ ] Codes scam filter + alert intent 区块。
+- [ ] Night Planner Lite checklist copy。
+- [ ] P1 再做 Calculator save/copy/compare。
+- [ ] P1 再做 Player Count 页面 v1。
 
 ### SEO
 
@@ -783,7 +811,8 @@ P1，但 P0 需要预留入口。
 - [ ] OG/Twitter cards。
 - [ ] Breadcrumb structured data。
 - [ ] FAQ structured data only where applicable。
-- [ ] 新增 10 个核心专题页面。
+- [ ] 先做深 5 个核心页面：Home、Release、Official Link、Stock、Codes/Night。
+- [ ] P1 再新增 10 个专题页面。
 
 ### Content
 
@@ -811,9 +840,11 @@ P1，但 P0 需要预留入口。
 
 优先级最高的 4 件事：
 
-1. Live Roblox API Snapshot。
-2. Personal Stock / Code Watchlist。
-3. Change Since Last Visit。
-4. Night Stealing Planner。
+1. Live Roblox API Snapshot 自动化，先消除 `site.ts` 静态快照过期。
+2. Home Player Command Center，统一官方链接、实时状态、last synced、stale 表达。
+3. Change Since Last Visit + Watch Intent，用 localStorage 建立回访闭环。
+4. Night Stealing Planner Lite，保留差异化但控制成 fan-made 规则工具。
 
-这四件事完成后，growagarden2.pro 才会从「我搜到一次的页面」升级为「我玩之前会回来看的工具站」。
+这四件事完成后，growagarden2.pro 才会从「我搜到一次的页面」升级为「我玩之前会回来看的工具站」。后续再做数据库、社区上报、后台审核、通知和长尾 SEO。
+
+Implementation note: P0 Snapshot Command Center shipped with file-based Roblox snapshot refresh, local since-last-visit tracking, local watch intent, and minimal event capture. Database, community reports, notifications, and history charts remain P1.

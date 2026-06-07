@@ -1,4 +1,6 @@
+import { RobloxSnapshotCard } from "@/components/RobloxSnapshotCard";
 import { SourceList } from "@/components/SourceList";
+import { TrackedExternalLink } from "@/components/TrackedExternalLink";
 import { siteConfig } from "@/data/site";
 import { pageMetadata } from "@/lib/seo";
 
@@ -19,9 +21,14 @@ export default function OfficialLinkPage() {
           ask for passwords, cookies, Robux claims, account transfers, or external downloads.
         </p>
         <div className="button-row">
-          <a className="button" href={siteConfig.robloxUrl} rel="noreferrer" target="_blank">
+          <TrackedExternalLink
+            className="button"
+            eventName="official_link_click"
+            href={siteConfig.robloxUrl}
+            position="official_link_hero"
+          >
             Open Roblox
-          </a>
+          </TrackedExternalLink>
           <span className="button secondary code-chip" aria-label={`Roblox place ID ${siteConfig.robloxPlaceId}`}>
             Place ID: {siteConfig.robloxPlaceId}
           </span>
@@ -46,6 +53,9 @@ export default function OfficialLinkPage() {
             <strong>{siteConfig.lastVerified}</strong>
           </div>
         </div>
+      </section>
+      <section className="section section-tight">
+        <RobloxSnapshotCard snapshot={siteConfig.apiSnapshot} />
       </section>
       <section className="section section-tight">
         <h2>Clone Checks</h2>

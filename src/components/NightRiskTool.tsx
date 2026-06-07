@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { trackEvent } from "@/lib/clientAnalytics";
 
 export function NightRiskTool() {
   const [value, setValue] = useState(1000);
@@ -17,6 +18,22 @@ export function NightRiskTool() {
     if (score >= 1) return { label: "Medium", advice: "Check defenses and avoid leaving high-value crops exposed." };
     return { label: "Low", advice: "Risk looks lower, but the exact GAG2 rules still need verification." };
   }, [away, defense, value]);
+
+  useEffect(() => {
+    trackEvent("night_planner_calculate", { risk: risk.label, value });
+  }, [risk.label, value]);
+
+  async function copyChecklist() {
+    const checklist = [
+      "Harvest high-value crops before leaving.",
+      "Check defense gear confidence.",
+      "Check guild protection if available.",
+      "Avoid scripts, account sharing, or exploit tools."
+    ].join("\n");
+
+    await navigator.clipboard.writeText(checklist);
+    trackEvent("afk_checklist_copy", { risk: risk.label });
+  }
 
   return (
     <div className="two-col">
@@ -70,6 +87,9 @@ export function NightRiskTool() {
           This mini tool is strategic guidance only. It does not encourage harassment,
           account sharing, scripts, or platform rule bypassing.
         </p>
+        <button className="button secondary" onClick={copyChecklist} type="button">
+          Copy AFK checklist
+        </button>
       </aside>
     </div>
   );

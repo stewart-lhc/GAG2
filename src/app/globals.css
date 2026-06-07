@@ -831,6 +831,30 @@ tbody tr:nth-child(even) {
   gap: 12px;
 }
 
+.watch-option {
+  align-items: flex-start;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  cursor: pointer;
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+}
+
+.watch-option input {
+  margin-top: 3px;
+}
+
+.watch-option strong,
+.watch-option .muted {
+  color: var(--ink);
+  text-shadow: none;
+}
+
+.watch-option .muted {
+  color: var(--muted);
+}
+
 .inventory-slot {
   min-height: 132px;
   padding: 14px;

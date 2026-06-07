@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
+import { RobloxSnapshotCard } from "@/components/RobloxSnapshotCard";
 import { SourceList } from "@/components/SourceList";
 import { StatusBadge } from "@/components/StatusBadge";
+import { TrackedExternalLink } from "@/components/TrackedExternalLink";
 import { describedMechanics, releaseFacts, siteConfig } from "@/data/site";
 import { faqSchema, pageMetadata } from "@/lib/seo";
 
@@ -38,13 +40,21 @@ export default function ReleasePage() {
           unverified launch timing into a confirmed release-date claim.
         </p>
         <div className="button-row">
-          <a className="button" href={siteConfig.robloxUrl} rel="noreferrer" target="_blank">
+          <TrackedExternalLink
+            className="button"
+            eventName="official_link_click"
+            href={siteConfig.robloxUrl}
+            position="release_hero"
+          >
             Open Roblox page
-          </a>
+          </TrackedExternalLink>
           <Link className="button secondary" href="/grow-a-garden-2-official-link">
             Check official link details
           </Link>
         </div>
+      </section>
+      <section className="section section-tight">
+        <RobloxSnapshotCard snapshot={siteConfig.apiSnapshot} />
       </section>
       <section className="section section-tight">
         <div className="grid">

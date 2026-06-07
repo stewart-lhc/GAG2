@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { WatchIntentPanel } from "@/components/WatchIntentPanel";
 import { stockItems } from "@/data/site";
 
 const shops = ["All", "Seed Shop", "Gear Shop", "Pet Egg Shop", "Event Shop", "Weather"];
@@ -40,6 +41,39 @@ export function StockTracker() {
             <p className="muted">Night protection</p>
           </div>
         </div>
+      </div>
+      <div style={{ marginBottom: 18 }}>
+        <WatchIntentPanel
+          items={[
+            {
+              id: "rare_seed",
+              label: "Rare seed",
+              description: "Track rare or event seed availability."
+            },
+            {
+              id: "defense_gear",
+              label: "Defense gear",
+              description: "Watch for gear useful before night."
+            },
+            {
+              id: "pet_egg",
+              label: "Pet egg",
+              description: "Track egg shop changes once verified."
+            },
+            {
+              id: "event_shop",
+              label: "Event shop",
+              description: "Watch limited event stock."
+            },
+            {
+              id: "weather_event",
+              label: "Weather/Event",
+              description: "Watch special weather or event states."
+            }
+          ]}
+          storageKey="gag2:stock-watch-intent"
+          title="Your Stock Watchlist Intent"
+        />
       </div>
       <div className="tabs" aria-label="Shop filters">
         {shops.map((shopName) => (

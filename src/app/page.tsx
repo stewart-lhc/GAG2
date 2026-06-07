@@ -1,6 +1,9 @@
 import Link from "next/link";
+import { ChangeSinceLastVisit } from "@/components/ChangeSinceLastVisit";
+import { RobloxSnapshotCard } from "@/components/RobloxSnapshotCard";
 import { StatusBadge } from "@/components/StatusBadge";
 import { ToolCard } from "@/components/ToolCard";
+import { TrackedExternalLink } from "@/components/TrackedExternalLink";
 import { releaseFacts, siteConfig } from "@/data/site";
 
 export default function Home() {
@@ -19,45 +22,21 @@ export default function Home() {
               risk before you join.
             </p>
             <div className="button-row">
-              <a className="button" href={siteConfig.robloxUrl} rel="noreferrer" target="_blank">
+              <TrackedExternalLink
+                className="button"
+                eventName="official_link_click"
+                href={siteConfig.robloxUrl}
+                position="home_hero"
+              >
                 Enter safe page
-              </a>
+              </TrackedExternalLink>
               <Link className="button blue" href="/grow-a-garden-2-stock-tracker">
                 Watch stock
               </Link>
             </div>
           </div>
-          <div className="panel command-board">
-            <span className="badge badge-warning">Clone guard on</span>
-            <h2 style={{ marginTop: 14 }}>Should I jump in?</h2>
-            <div className="decision-strip">
-              <div className="meter-ring">Link OK</div>
-              <div>
-                <h3>Verify before joining</h3>
-                <p className="muted">
-                  The page exists. Release timing and shop cycles stay marked Unknown until a
-                  reliable source confirms them.
-                </p>
-              </div>
-            </div>
-            <div className="stat-grid">
-              <div className="stat">
-                <span>Playing</span>
-                <strong>{siteConfig.apiSnapshot.playing.toLocaleString()}</strong>
-              </div>
-              <div className="stat">
-                <span>Visits</span>
-                <strong>{Math.round(siteConfig.apiSnapshot.visits / 1000)}K</strong>
-              </div>
-              <div className="stat">
-                <span>Creator</span>
-                <strong>{siteConfig.creator}</strong>
-              </div>
-              <div className="stat">
-                <span>Source</span>
-                <strong>API</strong>
-              </div>
-            </div>
+          <div className="command-board">
+            <RobloxSnapshotCard compact snapshot={siteConfig.apiSnapshot} />
           </div>
         </div>
       </section>
@@ -129,6 +108,7 @@ export default function Home() {
               </div>
             </div>
           </aside>
+          <ChangeSinceLastVisit snapshot={siteConfig.apiSnapshot} />
         </div>
       </section>
 

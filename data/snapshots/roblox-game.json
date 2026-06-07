@@ -1,0 +1,24 @@
+{
+  "placeId": "95204935687527",
+  "universeId": "10004943774",
+  "name": "Grow A Garden 2",
+  "creator": {
+    "id": 71552399,
+    "name": "BMWLux",
+    "type": "User",
+    "hasVerifiedBadge": true
+  },
+  "playing": 118,
+  "visits": 770639,
+  "favorites": 6686,
+  "maxPlayers": 50,
+  "upVotes": 5827,
+  "downVotes": 2342,
+  "createdAt": "2026-04-07T22:13:54.584Z",
+  "robloxUpdatedAt": "2026-06-06T04:51:00.7576573Z",
+  "fetchedAt": "2026-06-07T03:54:37.657Z",
+  "sourceUrl": "https://games.roblox.com/v1/games?universeIds=10004943774",
+  "votesSourceUrl": "https://games.roblox.com/v1/games/votes?universeIds=10004943774",
+  "fetchStatus": "success",
+  "staleAfterMinutes": 90
+}
