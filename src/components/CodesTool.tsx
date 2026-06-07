@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { WatchIntentPanel } from "@/components/WatchIntentPanel";
 import { codes } from "@/data/site";
 
 export function CodesTool() {
@@ -37,10 +38,35 @@ export function CodesTool() {
       </div>
 
       {codes.active.length === 0 ? (
-        <p className="callout" style={{ marginTop: 18 }}>
-          No verified active Grow a Garden 2 code has been found yet. This page will not
-          publish unverified codes or reuse Grow a Garden 1 codes as GAG2 rewards.
-        </p>
+        <>
+          <p className="callout" style={{ marginTop: 18 }}>
+            No verified active Grow a Garden 2 code has been found yet. This page will not
+            publish unverified codes or reuse Grow a Garden 1 codes as GAG2 rewards.
+          </p>
+          <div style={{ marginBottom: 18 }}>
+            <WatchIntentPanel
+              items={[
+                {
+                  id: "first_verified_code",
+                  label: "First verified GAG2 code",
+                  description: "Save intent for the first real code drop."
+                },
+                {
+                  id: "expired_code_updates",
+                  label: "Expired code updates",
+                  description: "Track when old codes are rejected or expire."
+                },
+                {
+                  id: "fake_code_warnings",
+                  label: "Fake code warnings",
+                  description: "Track scams, surveys, scripts, and fake Robux claims."
+                }
+              ]}
+              storageKey="gag2:codes-watch-intent"
+              title="Code Alert Intent"
+            />
+          </div>
+        </>
       ) : (
         <div className="grid" style={{ marginTop: 18 }}>
           {codes.active.map((item) => (

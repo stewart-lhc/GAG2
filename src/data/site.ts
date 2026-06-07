@@ -1,3 +1,5 @@
+import { robloxSnapshot } from "@/data/robloxSnapshot";
+
 export type StatusTone = "confirmed" | "unknown" | "rumor" | "warning";
 
 export const siteConfig = {
@@ -11,14 +13,7 @@ export const siteConfig = {
   creator: "@BMWLux",
   creatorId: "71552399",
   lastVerified: "2026-06-05",
-  apiSnapshot: {
-    playing: 224,
-    visits: 492751,
-    favorites: 4369,
-    maxPlayers: 50,
-    created: "2026-04-07T22:13:54.584Z",
-    updated: "2026-06-03T22:07:33.024Z"
-  }
+  apiSnapshot: robloxSnapshot
 };
 
 export const sourceList = [
