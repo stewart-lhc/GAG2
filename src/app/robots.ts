@@ -10,6 +10,20 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: "*",
         allow: "/",
         disallow: ["/admin/"]
+      },
+      {
+        userAgent: [
+          "Googlebot",
+          "Bingbot",
+          "GPTBot",
+          "ChatGPT-User",
+          "PerplexityBot",
+          "ClaudeBot",
+          "anthropic-ai",
+          "Applebot"
+        ],
+        allow: "/",
+        disallow: ["/admin/"]
       }
     ],
     sitemap: new URL("/sitemap.xml", siteConfig.siteUrl).toString()

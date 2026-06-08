@@ -1,7 +1,7 @@
 import { CodesTool } from "@/components/CodesTool";
 import { JsonLd } from "@/components/JsonLd";
 import { codes } from "@/data/site";
-import { faqSchema, pageMetadata } from "@/lib/seo";
+import { breadcrumbSchema, faqSchema, pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata(
   "Grow a Garden 2 Codes",
@@ -25,12 +25,27 @@ export default function CodesPage() {
           }
         ])}
       />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Codes", path: "/grow-a-garden-2-codes" }
+        ])}
+      />
       <section className="section section-hero">
         <p className="eyebrow">No fake codes</p>
         <h1>Codes Check</h1>
         <p className="muted">
           Codes are only listed after verification. Empty states are intentional and safer than
           publishing fake or recycled code lists.
+        </p>
+      </section>
+      <section className="section section-tight">
+        <p className="eyebrow">Answer first</p>
+        <h2>Are There Active Grow a Garden 2 Codes?</h2>
+        <p className="lead">
+          As of {codes.lastChecked}, this hub has not verified any active Grow a Garden 2
+          codes. The page avoids recycled Grow a Garden 1 codes and does not publish copied
+          code lists unless a reliable GAG2 source confirms them.
         </p>
       </section>
       <section className="section section-tight">

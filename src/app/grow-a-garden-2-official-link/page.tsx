@@ -2,7 +2,8 @@ import { RobloxSnapshotCard } from "@/components/RobloxSnapshotCard";
 import { SourceList } from "@/components/SourceList";
 import { TrackedExternalLink } from "@/components/TrackedExternalLink";
 import { siteConfig } from "@/data/site";
-import { pageMetadata } from "@/lib/seo";
+import { breadcrumbSchema, faqSchema, pageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/JsonLd";
 
 export const metadata = pageMetadata(
   "Grow a Garden 2 Official Link Check",
@@ -13,6 +14,26 @@ export const metadata = pageMetadata(
 export default function OfficialLinkPage() {
   return (
     <>
+      <JsonLd
+        data={faqSchema([
+          {
+            question: "What is the safest Grow a Garden 2 link?",
+            answer:
+              "Use the Roblox experience URL tracked on this page, then compare the place ID and creator before joining. Avoid pages asking for passwords, cookies, account transfers, downloads, or free Robux claims."
+          },
+          {
+            question: "How can I spot a fake Grow a Garden 2 clone?",
+            answer:
+              "Treat mismatched place IDs, mismatched creator names, external login prompts, item-selling claims, script downloads, and free Robux offers as warnings before joining or sharing a link."
+          }
+        ])}
+      />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Official Link Check", path: "/grow-a-garden-2-official-link" }
+        ])}
+      />
       <section className="section section-hero">
         <p className="eyebrow">Fake clone warning</p>
         <h1>Official Link Guard</h1>
@@ -33,6 +54,15 @@ export default function OfficialLinkPage() {
             Place ID: {siteConfig.robloxPlaceId}
           </span>
         </div>
+      </section>
+      <section className="section section-tight">
+        <p className="eyebrow">Answer first</p>
+        <h2>Safe Link Rule</h2>
+        <p className="lead">
+          The safest Grow a Garden 2 link is the Roblox experience URL that matches this
+          page's tracked place ID and creator details. If another page changes those identity
+          signals or asks for credentials, downloads, or account transfers, treat it as unsafe.
+        </p>
       </section>
       <section className="section section-tight">
         <div className="stat-grid">

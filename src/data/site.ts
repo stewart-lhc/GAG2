@@ -7,6 +7,8 @@ export const siteConfig = {
   shortName: "GAG2 Tools",
   gameName: "Grow A Garden 2",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://growagarden2.pro",
+  description:
+    "Unofficial Grow a Garden 2 player command center for safe Roblox link checks, release status, stock watch states, codes, crop value estimates, and night stealing risk.",
   robloxPlaceId: "95204935687527",
   robloxUniverseId: "10004943774",
   robloxUrl: "https://www.roblox.com/games/95204935687527/Grow-A-Garden-2",
@@ -159,17 +161,79 @@ export const codes = {
   }>
 };
 
-export const routes = [
-  { path: "/", title: "Grow a Garden 2 Tools Hub", priority: 1 },
-  { path: "/grow-a-garden-2-release-date", title: "Grow a Garden 2 Release Status", priority: 0.9 },
-  { path: "/grow-a-garden-2-official-link", title: "Grow a Garden 2 Official Link", priority: 0.9 },
-  { path: "/grow-a-garden-2-stock-tracker", title: "Grow a Garden 2 Stock Tracker", priority: 0.9 },
-  { path: "/grow-a-garden-2-codes", title: "Grow a Garden 2 Codes", priority: 0.9 },
-  { path: "/grow-a-garden-2-calculator", title: "Grow a Garden 2 Calculator", priority: 0.9 },
-  { path: "/grow-a-garden-2-night-stealing-guide", title: "Grow a Garden 2 Night Stealing Guide", priority: 0.8 },
-  { path: "/grow-a-garden-2-seeds", title: "Grow a Garden 2 Seeds", priority: 0.7 },
-  { path: "/grow-a-garden-2-gear", title: "Grow a Garden 2 Gear", priority: 0.7 },
-  { path: "/about", title: "About GAG2 Tools", priority: 0.5 },
-  { path: "/privacy-policy", title: "Privacy Policy", priority: 0.3 },
-  { path: "/terms", title: "Terms", priority: 0.3 }
+export type SiteRoute = {
+  path: string;
+  title: string;
+  priority: number;
+  lastModified: string;
+  changeFrequency?: "daily" | "weekly";
+};
+
+export const routes: SiteRoute[] = [
+  {
+    path: "/",
+    title: "Grow a Garden 2 Tools Hub",
+    priority: 1,
+    lastModified: "2026-06-08",
+    changeFrequency: "daily"
+  },
+  {
+    path: "/grow-a-garden-2-release-date",
+    title: "Grow a Garden 2 Release Status",
+    priority: 0.9,
+    lastModified: "2026-06-08",
+    changeFrequency: "daily"
+  },
+  {
+    path: "/grow-a-garden-2-official-link",
+    title: "Grow a Garden 2 Official Link",
+    priority: 0.9,
+    lastModified: "2026-06-08",
+    changeFrequency: "daily"
+  },
+  {
+    path: "/grow-a-garden-2-stock-tracker",
+    title: "Grow a Garden 2 Stock Tracker",
+    priority: 0.9,
+    lastModified: "2026-06-08",
+    changeFrequency: "daily"
+  },
+  {
+    path: "/grow-a-garden-2-codes",
+    title: "Grow a Garden 2 Codes",
+    priority: 0.9,
+    lastModified: "2026-06-08",
+    changeFrequency: "daily"
+  },
+  {
+    path: "/grow-a-garden-2-calculator",
+    title: "Grow a Garden 2 Calculator",
+    priority: 0.9,
+    lastModified: "2026-06-08",
+    changeFrequency: "daily"
+  },
+  {
+    path: "/grow-a-garden-2-night-stealing-guide",
+    title: "Grow a Garden 2 Night Stealing Guide",
+    priority: 0.8,
+    lastModified: "2026-06-08",
+    changeFrequency: "daily"
+  },
+  {
+    path: "/grow-a-garden-2-seeds",
+    title: "Grow a Garden 2 Seeds",
+    priority: 0.7,
+    lastModified: "2026-06-08",
+    changeFrequency: "weekly"
+  },
+  {
+    path: "/grow-a-garden-2-gear",
+    title: "Grow a Garden 2 Gear",
+    priority: 0.7,
+    lastModified: "2026-06-08",
+    changeFrequency: "weekly"
+  },
+  { path: "/about", title: "About GAG2 Tools", priority: 0.5, lastModified: "2026-06-05", changeFrequency: "weekly" },
+  { path: "/privacy-policy", title: "Privacy Policy", priority: 0.3, lastModified: "2026-06-05", changeFrequency: "weekly" },
+  { path: "/terms", title: "Terms", priority: 0.3, lastModified: "2026-06-05", changeFrequency: "weekly" }
 ];

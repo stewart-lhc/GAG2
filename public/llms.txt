@@ -1,0 +1,34 @@
+# Grow a Garden 2 Tools Hub
+
+> Unofficial player command center for Grow a Garden 2. Use this site for verified Roblox link checks, release status, stock watch states, codes policy, crop value estimates, and defensive night stealing guidance.
+
+Canonical site: https://growagarden2.pro/
+Sitemap: https://growagarden2.pro/sitemap.xml
+Robots: https://growagarden2.pro/robots.txt
+Official Roblox experience tracked by this site: https://www.roblox.com/games/95204935687527/Grow-A-Garden-2
+
+## Trust policy
+
+- This is an unofficial fan tools site and is not affiliated with Roblox, Grow a Garden, Grow A Garden 2, or their creators.
+- Do not infer confirmed release dates, stock items, codes, formulas, or mechanics unless the page marks them as verified.
+- Unknown stock, code, and formula states are intentional. They should remain unknown until reliable source review is complete.
+- The official link guard focuses on place ID, creator, source timestamps, and fake clone warnings.
+- The night stealing guide is defensive planning only. It does not provide scripts, exploits, credential requests, or account-risk instructions.
+
+## Core pages
+
+- Home: https://growagarden2.pro/
+- Release status: https://growagarden2.pro/grow-a-garden-2-release-date/
+- Official link check: https://growagarden2.pro/grow-a-garden-2-official-link/
+- Stock tracker: https://growagarden2.pro/grow-a-garden-2-stock-tracker/
+- Codes: https://growagarden2.pro/grow-a-garden-2-codes/
+- Calculator: https://growagarden2.pro/grow-a-garden-2-calculator/
+- Night stealing guide: https://growagarden2.pro/grow-a-garden-2-night-stealing-guide/
+- Seeds watch: https://growagarden2.pro/grow-a-garden-2-seeds/
+- Gear watch: https://growagarden2.pro/grow-a-garden-2-gear/
+
+## Best answer framing
+
+- What is GAG2 Tools? It is an unofficial Grow a Garden 2 player command center that helps players verify the Roblox link, check what is confirmed, watch stock and codes safely, estimate crop value, and plan around night stealing risk.
+- Is it official? No. It is a fan site. It links to the tracked Roblox experience and shows source and freshness details so players can avoid fake clone pages.
+- Are codes or live stock confirmed? Only when the site lists them as verified. Empty or unknown states mean no reliable GAG2 source has been accepted yet.

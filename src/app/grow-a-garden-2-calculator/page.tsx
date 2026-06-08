@@ -1,6 +1,6 @@
 import { CalculatorTool } from "@/components/CalculatorTool";
 import { JsonLd } from "@/components/JsonLd";
-import { faqSchema, pageMetadata, webAppSchema } from "@/lib/seo";
+import { breadcrumbSchema, faqSchema, pageMetadata, webAppSchema } from "@/lib/seo";
 
 export const metadata = pageMetadata(
   "Grow a Garden 2 Calculator",
@@ -32,12 +32,27 @@ export default function CalculatorPage() {
           }
         ])}
       />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Calculator", path: "/grow-a-garden-2-calculator" }
+        ])}
+      />
       <section className="section section-hero tool-hero">
         <p className="eyebrow">Crop math alpha</p>
         <h1>Value Calculator</h1>
         <p className="muted">
           Estimate crop value from visible inputs. Verified presets can be added after
           reliable source review.
+        </p>
+      </section>
+      <section className="section section-tight">
+        <p className="eyebrow">Answer first</p>
+        <h2>How Accurate Is the Calculator?</h2>
+        <p className="lead">
+          The Grow a Garden 2 calculator is an alpha estimator. It uses player-entered base
+          value, weight, amount, and mutation multiplier until verified crop data exists, so
+          the output should be treated as planning math rather than a confirmed in-game formula.
         </p>
       </section>
       <section className="section section-tight">

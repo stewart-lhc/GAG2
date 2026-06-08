@@ -5,7 +5,7 @@ import { SourceList } from "@/components/SourceList";
 import { StatusBadge } from "@/components/StatusBadge";
 import { TrackedExternalLink } from "@/components/TrackedExternalLink";
 import { describedMechanics, releaseFacts, siteConfig } from "@/data/site";
-import { faqSchema, pageMetadata } from "@/lib/seo";
+import { breadcrumbSchema, faqSchema, pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata(
   "Grow a Garden 2 Release Date and Status",
@@ -30,6 +30,12 @@ export default function ReleasePage() {
           }
         ])}
       />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Release Status", path: "/grow-a-garden-2-release-date" }
+        ])}
+      />
       <section className="section section-hero">
         <p className="eyebrow">
           Last verified {siteConfig.lastVerified}
@@ -52,6 +58,16 @@ export default function ReleasePage() {
             Check official link details
           </Link>
         </div>
+      </section>
+      <section className="section section-tight">
+        <p className="eyebrow">Answer first</p>
+        <h2>Is Grow a Garden 2 Out?</h2>
+        <p className="lead">
+          This page does not treat an exact Grow a Garden 2 release date as confirmed unless
+          it is backed by official Roblox or creator-visible sources. Players should use this
+          hub to check what exists, what changed, and what remains unknown before sharing a
+          launch claim.
+        </p>
       </section>
       <section className="section section-tight">
         <RobloxSnapshotCard snapshot={siteConfig.apiSnapshot} />

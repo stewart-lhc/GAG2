@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "refresh:roblox": "node scripts/refresh-roblox-snapshot.mjs"
+    "refresh:roblox": "node scripts/refresh-roblox-snapshot.mjs",
+    "submit:indexnow": "node scripts/submit-indexnow.mjs"
   },
   "dependencies": {
     "next": "^16.2.4",

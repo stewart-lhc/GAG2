@@ -1,6 +1,6 @@
 import { JsonLd } from "@/components/JsonLd";
 import { NightRiskTool } from "@/components/NightRiskTool";
-import { faqSchema, pageMetadata } from "@/lib/seo";
+import { breadcrumbSchema, faqSchema, pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata(
   "Grow a Garden 2 Night Stealing Guide",
@@ -25,12 +25,28 @@ export default function NightStealingPage() {
           }
         ])}
       />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Night Stealing Guide", path: "/grow-a-garden-2-night-stealing-guide" }
+        ])}
+      />
       <section className="section section-hero">
         <p className="eyebrow">Protect before AFK</p>
         <h1>Night Risk Guide</h1>
         <p className="muted">
           The official Roblox description mentions night stealing. This page turns that into
           defensive planning, not exploit instructions.
+        </p>
+      </section>
+      <section className="section section-tight">
+        <p className="eyebrow">Answer first</p>
+        <h2>What Is Night Stealing Risk?</h2>
+        <p className="lead">
+          Night stealing risk means players should protect high-value crops before leaving a
+          garden unattended. The official description mentions night stealing, but exact
+          timers, protections, and penalties remain unknown here until in-game verification
+          confirms them.
         </p>
       </section>
       <section className="section section-tight">
