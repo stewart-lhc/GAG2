@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { restockCycleRecords } from "@/data/game/restock-cycles";
+import type { RestockCycleRecord } from "@/data/game/restock-cycles";
+import type { RestockCalculationResult } from "@/lib/calculators/restock";
 import { calculateNextRestock } from "@/lib/calculators/restock";
 import styles from "./SeedRestockTimer.module.css";
 
@@ -26,6 +28,46 @@ export function formatShortLocalTime(isoTimestamp: string | null, locale?: strin
   return new Intl.DateTimeFormat(locale, { hour: "numeric", minute: "2-digit" }).format(date);
 }
 
+type RestockRow = {
+  cycle: RestockCycleRecord;
+  result: RestockCalculationResult | null;
+  next: string | null;
+  remaining: number | null;
+};
+
+/**
+ * Build the three cards for both the server render and the live browser timer.
+ *
+ * The server intentionally receives `null`: it can render the card names and
+ * fixed intervals without baking a future timestamp into the exported HTML.
+ * The effect below supplies the device clock after hydration, so the first
+ * client render is byte-for-byte compatible with the server render.
+ */
+export function buildRestockRows(now: Date | null): RestockRow[] {
+  return restockCycleRecords.map((cycle) => {
+    if (!now || !Number.isFinite(now.getTime())) {
+      return { cycle, result: null, next: null, remaining: null };
+    }
+
+    const result = calculateNextRestock(cycle, now);
+    const next = result.nextRestockAt;
+    const nextMs = next ? Date.parse(next) : NaN;
+    const remaining = Number.isFinite(nextMs)
+      ? Math.max(0, (nextMs - now.getTime()) / 1000)
+      : null;
+
+    return { cycle, result, next, remaining };
+  });
+}
+
+/** Keep interval copy safe if a future data record is malformed. */
+export function formatIntervalMinutes(intervalSeconds: number): string {
+  if (!Number.isFinite(intervalSeconds) || intervalSeconds <= 0 || intervalSeconds % 60 !== 0) {
+    return "Timing unavailable";
+  }
+  return `Every ${intervalSeconds / 60} min`;
+}
+
 export function SeedRestockTimer() {
   const [now, setNow] = useState<Date | null>(null);
 
@@ -35,28 +77,18 @@ export function SeedRestockTimer() {
     return () => window.clearInterval(timer);
   }, []);
 
-  const rows = useMemo(() => now ? restockCycleRecords.map((cycle) => {
-    const result = calculateNextRestock(cycle, now);
-    const next = result.nextRestockAt;
-    const nextMs = next ? Date.parse(next) : NaN;
-    return {
-      cycle,
-      result,
-      next,
-      remaining: Number.isFinite(nextMs) ? Math.max(0, (nextMs - now.getTime()) / 1000) : null
-    };
-  }) : [], [now]);
+  const rows = useMemo(() => buildRestockRows(now), [now]);
 
   return (
     <div className={styles.timer}>
       <p className={styles.intro}>
         Use the timer to know when to check the game again. It shows the next shop refresh, not which items will appear.
       </p>
-      {rows.length === 0 ? <p className={styles.loading}>Getting the next check time…</p> : null}
       <div className={styles.grid}>
         {rows.map(({ cycle, result, next, remaining }) => {
           const label = labels[cycle.entityOrShopId] ?? { name: cycle.entityOrShopId, icon: "⏱️" };
-          const available = result.status === "scheduled" && next !== null;
+          const available = result?.status === "scheduled" && next !== null && remaining !== null;
+          const interval = formatIntervalMinutes(cycle.intervalSeconds);
           return (
             <article className={styles.card} key={cycle.id}>
               <header className={styles.cardHeader}>
@@ -71,8 +103,8 @@ export function SeedRestockTimer() {
                 <strong className={styles.countdown}>{available ? formatCountdown(remaining) : "—:—"}</strong>
               </div>
               <div className={styles.cardFooter}>
-                <span>Every {cycle.intervalSeconds / 60} min</span>
-                <span>{available ? `Next at ${formatShortLocalTime(next)}` : "Check the game for timing"}</span>
+                <span>{interval}</span>
+                <span>{available ? `Next at ${formatShortLocalTime(next)}` : "Timer starts on your device"}</span>
               </div>
             </article>
           );
