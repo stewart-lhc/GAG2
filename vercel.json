@@ -33,7 +33,7 @@
     },
     {
       "src": "^(?:/((?!\\.well-known(?:/.*)?)(?:[^/]+/)*[^/\\.]+))$",
-      "headers": { "Location": "/$1" },
+      "headers": { "Location": "/$1/" },
       "status": 308,
       "missing": [{ "type": "header", "key": "x-nextjs-data" }]
     },
