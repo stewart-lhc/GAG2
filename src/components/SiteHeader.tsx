@@ -6,7 +6,6 @@ const navItems = [
   ["Trading", "/grow-a-garden-2-trading-calculator"],
   ["Values", "/grow-a-garden-2-value-list"],
   ["Mutations", "/grow-a-garden-2-mutation-calculator"],
-  ["Pets", "/grow-a-garden-2-pet-calculator"],
   ["Restock", "/grow-a-garden-2-seed-restock-time"]
 ];
 

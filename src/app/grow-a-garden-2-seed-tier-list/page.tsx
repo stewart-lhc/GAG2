@@ -6,7 +6,10 @@ import { breadcrumbSchema, faqSchema, pageMetadata } from "@/lib/seo";
 const path="/grow-a-garden-2-seed-tier-list";
 const title="Grow a Garden 2 Seed Tier List: Method & Launch Rankings";
 const description="A Grow a Garden 2 seed ranking based on farming income, access, and usefulness; newer seeds stay separate.";
-export const metadata:Metadata=pageMetadata(title,description,path);
+export const metadata:Metadata={
+  ...pageMetadata(title,description,path),
+  robots: { index: false, follow: true }
+};
 const tiers=[
   ["S","Ghost Pepper; Dragon's Breath; Venus Fly Trap; Moon Bloom; Venom Spitter","Top launch income or exceptional defensive utility"],
   ["A","Poison Ivy; Poison Apple; Pomegranate; Sunflower; Mushroom","Strong value or accessible launch ROI"],

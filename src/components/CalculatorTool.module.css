@@ -23,9 +23,8 @@
   text-shadow: 3px 3px 0 rgba(140, 255, 79, 0.62);
 }
 
-.heading small {
-  display: block;
-  margin-top: 7px;
+.headingSubtext {
+  margin: 7px 0 0;
   color: #41513f;
   font-family: var(--font-builder-sans);
   font-size: 12px;
@@ -205,6 +204,42 @@
   font-weight: 800;
 }
 
+.resultSummary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 10px;
+  margin: 14px 0 0;
+}
+
+.resultSummary div {
+  min-width: 0;
+}
+
+.resultSummary dt {
+  color: #53604f;
+  font-size: 10px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.resultSummary dd {
+  margin: 1px 0 0;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.disclosure {
+  margin-top: 12px;
+  color: #41513f;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.disclosure p {
+  margin: 4px 0 0;
+}
+
 .actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -310,7 +345,7 @@
   .shell { gap: 10px; }
   .topbar { gap: 9px; padding: 11px; border-width: 3px; box-shadow: 5px 5px 0 var(--ink); }
   .heading { font-size: 30px; }
-  .heading small { font-size: 10px; }
+  .headingSubtext { font-size: 10px; }
   .controls { grid-template-columns: 1fr 1fr; padding: 10px; border-width: 3px; box-shadow: 5px 5px 0 var(--ink); }
   .plantField, .fieldWide { grid-column: 1 / -1; }
   .result, .cart, .details { border-width: 3px; box-shadow: 5px 5px 0 var(--ink); }

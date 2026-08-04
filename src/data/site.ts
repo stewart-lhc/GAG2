@@ -230,13 +230,6 @@ export const routes: SiteRoute[] = [
     changeFrequency: "weekly"
   },
   {
-    path: "/grow-a-garden-2-pet-calculator",
-    title: "Grow a Garden 2 Pet Variant Calculator",
-    priority: 0.8,
-    lastModified: "2026-08-04",
-    changeFrequency: "weekly"
-  },
-  {
     path: "/grow-a-garden-2-pet-weight-guide",
     title: "Grow a Garden 2 Pet Variants and Weight Guide",
     priority: 0.7,
@@ -261,13 +254,6 @@ export const routes: SiteRoute[] = [
     path: "/grow-a-garden-2-gear",
     title: "Grow a Garden 2 Gear",
     priority: 0.8,
-    lastModified: "2026-08-04",
-    changeFrequency: "weekly"
-  },
-  {
-    path: "/grow-a-garden-2-seed-tier-list",
-    title: "Grow a Garden 2 Seed Tier List",
-    priority: 0.7,
     lastModified: "2026-08-04",
     changeFrequency: "weekly"
   },

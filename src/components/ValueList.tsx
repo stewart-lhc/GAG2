@@ -119,7 +119,7 @@ export function ValueList() {
             </thead>
             <tbody>
               {filteredRows.map(({ entity, observation, evidence }) => (
-                <tr key={`${entity.id}-${observation.valueType}`}>
+                <tr id={`value-row-${entity.id}-${observation.valueType}`} key={`${entity.id}-${observation.valueType}`}>
                   <td>{entity.name}</td>
                   <td>{entity.entityType}</td>
                   <td>{observation.valueType === "base_value" ? "Base sell value" : observation.valueType === "relative_trade_value" ? "Trade reference" : observation.valueType === "weight" ? "Weight" : observation.valueType.replaceAll("_", " ")}</td>

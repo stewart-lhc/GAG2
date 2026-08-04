@@ -4,12 +4,16 @@ import { useMemo, useState } from "react";
 import { PlantPicker } from "./PlantPicker";
 import styles from "./CalculatorTool.module.css";
 import {
+  CORE_CALCULATOR_DATA_VERSION,
+  CORE_CALCULATOR_FORMULA_VERSION,
   calculateCropValue,
   calculateWeightFromValue,
   formatCropValue,
   formatWeight,
   type CoreCalculatorField
 } from "@/lib/calculators/core";
+import { evidenceRecords } from "@/data/game/evidence";
+import { gameDataManifest } from "@/data/game/manifest";
 
 export type CalculatorPlant = {
   id: string;
@@ -31,6 +35,8 @@ type CartEntry = { id: string; plantName: string; quantity: number; unitValue: n
 
 const inputDefaults = { weight: "1", targetValue: "1000", quantity: "1", fruitStockMultiplier: "1", mutationId: "none", friendCount: "0", decayPercent: "0" };
 const asNumber = (value: string) => (value.trim() === "" ? Number.NaN : Number(value));
+const mechanicsEvidence = evidenceRecords.find((evidence) => evidence.id === "fandom-mechanics-r6865");
+const mechanicsVerifiedOn = mechanicsEvidence?.verifiedAt.slice(0, 10) ?? "Not recorded";
 
 function errorFor(errors: Partial<Record<CoreCalculatorField | "result", string>>, field: CoreCalculatorField) {
   return errors[field];
@@ -106,11 +112,23 @@ export function CalculatorTool({ plants, mutations, sourceLabel, sourceUrl }: Ca
 
   const targetField = mode === "value" ? "weight" : "targetValue";
   const targetError = errorFor(errors, targetField);
+  const inputSummary = [
+    ["Plant", selectedPlant?.name ?? "Not selected"],
+    [mode === "value" ? "Weight" : "Target", mode === "value" ? `${inputs.weight || "—"} kg` : `${inputs.targetValue || "—"} Sheckles`],
+    ["Quantity", inputs.quantity || "—"],
+    ["Fruit Price", `${inputs.fruitStockMultiplier || "—"}×`],
+    ["Mutation", selectedMutation?.name ?? "None"],
+    ["Friends", inputs.friendCount || "0"],
+    ["Decay", `${inputs.decayPercent || "0"}%`]
+  ];
 
   return (
     <section aria-label="Grow a Garden 2 calculator" className={styles.shell}>
       <div className={styles.topbar}>
-        <h1 className={styles.heading}>Garden Calculator<small>Pick a plant. See the payout.</small></h1>
+        <div>
+          <h1 className={styles.heading}>Grow a Garden 2 Calculator</h1>
+          <p className={styles.headingSubtext}>Pick a plant. See the payout.</p>
+        </div>
         <div aria-label="Calculation mode" className={styles.modes}>
           <button aria-pressed={mode === "value"} className={`${styles.mode} ${mode === "value" ? styles.modeActive : ""}`} onClick={() => setMode("value")} type="button">Plant value</button>
           <button aria-pressed={mode === "weight"} className={`${styles.mode} ${mode === "weight" ? styles.modeActive : ""}`} onClick={() => setMode("weight")} type="button">Find weight</button>
@@ -164,6 +182,15 @@ export function CalculatorTool({ plants, mutations, sourceLabel, sourceUrl }: Ca
           <h2 className={styles.answer}>{activeResult.ok ? (mode === "value" && valueResult.ok ? formatCropValue(valueResult.value) : weightResult.ok ? `${formatWeight(weightResult.weight)} kg` : "—") : "Check it"}</h2>
           <p className={styles.answerCaption}>{mode === "value" ? "Sheckles for these plants" : "for your chosen Sheckles"}</p>
           {errors.result ? <p className={styles.error} role="alert">{errors.result}</p> : null}
+          <dl className={styles.resultSummary}>
+            {inputSummary.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}
+          </dl>
+          <div className={styles.disclosure}>
+            <p><strong>Formula:</strong> {CORE_CALCULATOR_FORMULA_VERSION}</p>
+            <p><strong>Data:</strong> {CORE_CALCULATOR_DATA_VERSION} · {gameDataManifest.gameVersion}</p>
+            <p><strong>Verified:</strong> {mechanicsVerifiedOn} · community cross-checked source revision</p>
+            <p><strong>Confidence and limits:</strong> The estimate uses versioned community data, not a live game feed or a trade guarantee. Re-check the bonuses shown in your own game after updates.</p>
+          </div>
           <div className={styles.actions}>
             <button className={`${styles.action} ${styles.actionBlue}`} disabled={!activeResult.ok} onClick={copyResult} type="button">Copy</button>
             {mode === "value" ? <button className={styles.action} disabled={!valueResult.ok} onClick={addToList} type="button">Add harvest</button> : <button className={`${styles.action} ${styles.actionSoft}`} onClick={reset} type="button">Reset</button>}
