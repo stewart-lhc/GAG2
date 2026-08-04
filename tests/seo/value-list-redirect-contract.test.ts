@@ -15,25 +15,23 @@ describe("Value List schema and short-route redirects", () => {
 
   it("redirects each exact short alias, with or without a slash, to its canonical trailing-slash route", async () => {
     const config = JSON.parse(await readFile(path.join(root, "vercel.json"), "utf8")) as {
-      redirects: Array<{ source: string; destination: string; permanent: boolean }>;
+      routes: Array<{ src: string; headers?: { Location?: string }; status?: number }>;
     };
-    const expected = [
-      ["/trading-calculator", "/grow-a-garden-2-trading-calculator/"],
-      ["/trading-calculator/", "/grow-a-garden-2-trading-calculator/"],
-      ["/value-list", "/grow-a-garden-2-value-list/"],
-      ["/value-list/", "/grow-a-garden-2-value-list/"],
-      ["/mutation-calculator", "/grow-a-garden-2-mutation-calculator/"],
-      ["/mutation-calculator/", "/grow-a-garden-2-mutation-calculator/"],
-      ["/seed-restock-time", "/grow-a-garden-2-seed-restock-time/"],
-      ["/seed-restock-time/", "/grow-a-garden-2-seed-restock-time/"]
-    ] as const;
+    const route = (src: string, location: string) => ({
+      src,
+      headers: { Location: location },
+      status: 308
+    });
+    expect(config.routes).toContainEqual(route("^/trading-calculator/?$", "/grow-a-garden-2-trading-calculator/"));
+    expect(config.routes).toContainEqual(route("^/value-list/?$", "/grow-a-garden-2-value-list/"));
+    expect(config.routes).toContainEqual(route("^/mutation-calculator/?$", "/grow-a-garden-2-mutation-calculator/"));
+    expect(config.routes).toContainEqual(route("^/seed-restock-time/?$", "/grow-a-garden-2-seed-restock-time/"));
 
-    for (const [source, destination] of expected) {
-      expect(config.redirects).toContainEqual({ source, destination, permanent: true });
-    }
-    expect(config.redirects.filter(({ source }) => source.includes(":path*"))).toEqual([
-      { source: "/grow-a-garden-2-calculator/:path*", destination: "/", permanent: true },
-      { source: "/grow-a-garden-2-calculator/:path*/", destination: "/", permanent: true }
+    const legacyRoutes = config.routes.filter(({ src }) => src.startsWith("^/grow-a-garden-2-calculator"));
+    expect(legacyRoutes).toEqual([
+      route("^/grow-a-garden-2-calculator/?$", "/"),
+      route("^/grow-a-garden-2-calculator(?:/.*)?/?$", "/")
     ]);
+    expect(config.routes.some(({ src }) => src === "^/.*$" || src === "/.*")).toBe(false);
   });
 });

@@ -1,65 +1,35 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "redirects": [
+  "routes": [
     {
-      "source": "/trading-calculator",
-      "destination": "/grow-a-garden-2-trading-calculator/",
-      "permanent": true
+      "src": "^/trading-calculator/?$",
+      "headers": { "Location": "/grow-a-garden-2-trading-calculator/" },
+      "status": 308
     },
     {
-      "source": "/trading-calculator/",
-      "destination": "/grow-a-garden-2-trading-calculator/",
-      "permanent": true
+      "src": "^/value-list/?$",
+      "headers": { "Location": "/grow-a-garden-2-value-list/" },
+      "status": 308
     },
     {
-      "source": "/value-list",
-      "destination": "/grow-a-garden-2-value-list/",
-      "permanent": true
+      "src": "^/mutation-calculator/?$",
+      "headers": { "Location": "/grow-a-garden-2-mutation-calculator/" },
+      "status": 308
     },
     {
-      "source": "/value-list/",
-      "destination": "/grow-a-garden-2-value-list/",
-      "permanent": true
+      "src": "^/seed-restock-time/?$",
+      "headers": { "Location": "/grow-a-garden-2-seed-restock-time/" },
+      "status": 308
     },
     {
-      "source": "/mutation-calculator",
-      "destination": "/grow-a-garden-2-mutation-calculator/",
-      "permanent": true
+      "src": "^/grow-a-garden-2-calculator/?$",
+      "headers": { "Location": "/" },
+      "status": 308
     },
     {
-      "source": "/mutation-calculator/",
-      "destination": "/grow-a-garden-2-mutation-calculator/",
-      "permanent": true
-    },
-    {
-      "source": "/seed-restock-time",
-      "destination": "/grow-a-garden-2-seed-restock-time/",
-      "permanent": true
-    },
-    {
-      "source": "/seed-restock-time/",
-      "destination": "/grow-a-garden-2-seed-restock-time/",
-      "permanent": true
-    },
-    {
-      "source": "/grow-a-garden-2-calculator",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/grow-a-garden-2-calculator/",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/grow-a-garden-2-calculator/:path*",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/grow-a-garden-2-calculator/:path*/",
-      "destination": "/",
-      "permanent": true
+      "src": "^/grow-a-garden-2-calculator(?:/.*)?/?$",
+      "headers": { "Location": "/" },
+      "status": 308
     }
   ]
 }
