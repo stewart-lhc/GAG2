@@ -1,189 +1,138 @@
 import Link from "next/link";
-import { ChangeSinceLastVisit } from "@/components/ChangeSinceLastVisit";
+import { CalculatorTool, type CalculatorMutation, type CalculatorPlant } from "@/components/CalculatorTool";
 import { JsonLd } from "@/components/JsonLd";
-import { RobloxSnapshotCard } from "@/components/RobloxSnapshotCard";
-import { StatusBadge } from "@/components/StatusBadge";
-import { ToolCard } from "@/components/ToolCard";
-import { TrackedExternalLink } from "@/components/TrackedExternalLink";
-import { releaseFacts, siteConfig } from "@/data/site";
-import { faqSchema, pageMetadata, websiteSchema } from "@/lib/seo";
+import { getSelectableMutations, getSelectablePlants } from "@/data/game/entities";
+import { faqSchema, pageMetadata, webAppSchema, websiteSchema } from "@/lib/seo";
 
-export const metadata = pageMetadata(
-  "Grow a Garden 2 Tools Hub",
-  "Verify the Grow a Garden 2 Roblox link, check release status, watch stock and codes, estimate crop value, and plan around night stealing risk.",
-  "/"
-);
+const title = "Grow a Garden 2 Calculator - Free Plant Value, Mutation & Trade Tool";
+const description =
+  "Check Grow a Garden 2 plant value, target weight, mutations, Fruit Price and friend boosts in one free calculator.";
+
+export const metadata = pageMetadata(title, description, "/");
+
+const sourceUrl = "https://growagarden2.fandom.com/wiki/Mechanics";
+const sourceLabel = "the Grow A Garden 2 community guide";
+
+const plants: CalculatorPlant[] = getSelectablePlants().map((plant) => ({
+  id: plant.id,
+  name: plant.name,
+  category: plant.multiHarvest ? "Multi Harvest" : "Single Harvest",
+  baseValue: plant.baseSellValue,
+  baseWeight: plant.baseWeightKg,
+  singleHarvest: !plant.multiHarvest,
+  minimumValue: plant.minimumSellValue,
+  sizeExponent: plant.sizeExponentOverride,
+  sellTimeMultiplier: plant.sellTimeMultiplier,
+  sourceUrl: plant.sourceUrl
+}));
+
+const mutations: CalculatorMutation[] = getSelectableMutations().map((mutation) => ({
+  id: mutation.id,
+  name: mutation.name,
+  multiplier: mutation.multiplier,
+  sourceUrl: mutation.sourceUrl
+}));
+
+const faqs = [
+  {
+    question: "How does the Grow a Garden 2 Calculator estimate plant value?",
+    answer:
+      "Pick your plant, enter its weight and quantity, then choose the bonuses you can actually see in your game. The calculator gives you a quick Sheckles estimate."
+  },
+  {
+    question: "Can a crop use more than one mutation in Grow a Garden 2?",
+    answer:
+      "No. Pick the one mutation currently on the plant."
+  },
+  {
+    question: "What does Value to Weight calculate?",
+    answer:
+      "Set the Sheckles you want, then it tells you roughly how heavy the plant needs to be with your selected bonuses."
+  },
+  {
+    question: "Is this an official Grow a Garden 2 tool?",
+    answer:
+      "No. It is a free fan-made helper. Game updates can change plant values and bonuses."
+  }
+];
+
+const itemListSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Grow a Garden 2 plants available in the calculator",
+  numberOfItems: plants.length,
+  itemListElement: plants.map((plant, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: plant.name
+  }))
+};
 
 export default function Home() {
   return (
     <>
       <JsonLd data={websiteSchema()} />
-      <JsonLd
-        data={faqSchema([
-          {
-            question: "What is GAG2 Tools?",
-            answer:
-              "GAG2 Tools is an unofficial Grow a Garden 2 player command center for checking the Roblox link, release status, stock watch states, codes, crop value estimates, and night stealing risk."
-          },
-          {
-            question: "Is GAG2 Tools an official Grow a Garden 2 site?",
-            answer:
-              "No. GAG2 Tools is an unofficial fan tools site. It links to the tracked Roblox experience and shows source and freshness details so players can avoid fake clone pages."
-          }
-        ])}
-      />
-      <section className="hero">
-        <div className="hero-layout">
-          <div className="hero-copy">
-            <span className="pill pill-green">Official link verified</span>
-            <span className="pill pill-yellow" style={{ marginLeft: 10 }}>
-              Player first
-            </span>
-            <h1 className="hero-title">Grow Smarter Than Rumors</h1>
-            <p className="lead">
-              Open the verified Roblox page, then check stock, codes, crop value, and night
-              risk before you join.
-            </p>
-            <div className="button-row">
-              <TrackedExternalLink
-                className="button"
-                eventName="official_link_click"
-                href={siteConfig.robloxUrl}
-                position="home_hero"
-              >
-                Enter safe page
-              </TrackedExternalLink>
-              <Link className="button blue" href="/grow-a-garden-2-stock-tracker">
-                Watch stock
-              </Link>
-            </div>
-          </div>
-          <div className="command-board">
-            <RobloxSnapshotCard compact snapshot={siteConfig.apiSnapshot} />
-          </div>
+      <JsonLd data={webAppSchema("Grow a Garden 2 Calculator", description, "/")} />
+      <JsonLd data={faqSchema(faqs)} />
+      {plants.length > 0 ? <JsonLd data={itemListSchema} /> : null}
+
+      <section className="section section-tight" id="calculator" style={{ paddingTop: 18 }}>
+        <CalculatorTool
+          mutations={mutations}
+          plants={plants}
+          sourceLabel={sourceLabel}
+          sourceUrl={sourceUrl}
+        />
+      </section>
+
+      <section className="section section-tight">
+        <p className="eyebrow">Quick player notes</p>
+        <h2>Make a better call before you sell</h2>
+        <div className="panel" style={{ maxWidth: 1050 }}>
+          <p>
+            Start with the plant in your backpack, not a long spreadsheet. Put in its weight and how many you have, then match the Fruit Price bonus, mutation, friends and decay from your server. The total is there before you decide whether to sell, keep growing or trade.
+          </p>
+          <p>
+            Use Plant Value when you know the weight. Use Find Weight when you have a Sheckles goal. Add several picks to your harvest list for a quick total. This is an estimate, not a live shop or a trade promise—always check the bonus your own game is showing.
+          </p>
         </div>
       </section>
 
       <section className="section section-tight">
-        <p className="eyebrow">Direct answers</p>
-        <h2>Grow a Garden 2 Checks Players Ask First</h2>
+        <p className="eyebrow">More player tools</p>
+        <h2>Keep your next move simple</h2>
         <div className="grid">
           <article className="panel">
-            <h3>What is GAG2 Tools?</h3>
-            <p>
-              GAG2 Tools is an unofficial Grow a Garden 2 player command center. It helps
-              players verify the Roblox page, separate confirmed facts from unknowns, watch
-              stock and codes safely, estimate crop values, and plan around night stealing risk.
-            </p>
+            <h3>Trading Calculator</h3>
+            <p>Put both offers side by side before you accept.</p>
+            <Link className="button" href="/grow-a-garden-2-trading-calculator">Open trading calculator</Link>
           </article>
           <article className="panel">
-            <h3>Is it official?</h3>
-            <p>
-              No. This is a fan tools site, not a Roblox or Grow a Garden 2 property. The
-              official-link page points players to the tracked Roblox experience and shows
-              place ID, creator, and freshness signals before they join.
-            </p>
+            <h3>Mutation Calculator</h3>
+            <p>See what one mutation changes for a plant you are holding.</p>
+            <Link className="button" href="/grow-a-garden-2-mutation-calculator">Open mutation calculator</Link>
           </article>
           <article className="panel">
-            <h3>Where should players go safely?</h3>
-            <p>
-              Players should use the verified Roblox link on this site, then compare the place
-              ID and creator before joining. Pages asking for passwords, cookies, Robux claims,
-              account transfers, or external downloads should be treated as unsafe clones.
-            </p>
+            <h3>Value List</h3>
+            <p>Find a plant quickly when you only need a starting point.</p>
+            <Link className="button" href="/grow-a-garden-2-value-list">Open value list</Link>
           </article>
           <article className="panel">
-            <h3>What is verified today?</h3>
-            <p>
-              The site currently treats the tracked Roblox experience, configured place ID,
-              creator, and public source list as verified. Exact release timing, live stock,
-              active codes, and final crop formulas stay unknown until reliable GAG2 sources
-              confirm them.
-            </p>
+            <h3>Pet Calculator</h3>
+            <p>Look up what a pet can help with in your garden.</p>
+            <Link className="button" href="/grow-a-garden-2-pet-calculator">Open pet calculator</Link>
           </article>
         </div>
       </section>
 
       <section className="section section-tight">
-        <p className="eyebrow">First-screen rule</p>
-        <h2>Open, Watch, Copy, Calculate, Protect</h2>
+        <p className="eyebrow">Before you sell</p>
+        <h2>Things worth knowing</h2>
         <div className="grid">
-          <ToolCard
-            action="Check release"
-            body="Confirmed, rumor, and unknown sections for release-date and availability searches."
-            href="/grow-a-garden-2-release-date"
-            icon="REL"
-            title="Release Hub"
-          />
-          <ToolCard
-            action="Filter inventory"
-            body="Shop tabs, stale states, and report-ready rows for verified stock once data is available."
-            href="/grow-a-garden-2-stock-tracker"
-            icon="STK"
-            title="Stock Tracker"
-          />
-          <ToolCard
-            action="Review codes"
-            body="Active and expired code handling with no recycled or unverified code claims."
-            href="/grow-a-garden-2-codes"
-            icon="CODE"
-            title="Codes"
-          />
-          <ToolCard
-            action="Estimate value"
-            body="Alpha calculator for user-entered base value, weight, amount, and mutation multiplier."
-            href="/grow-a-garden-2-calculator"
-            icon="CALC"
-            title="Calculator Alpha"
-          />
-        </div>
-      </section>
-
-      <section className="section section-tight">
-        <div className="two-col">
-          <div>
-            <p className="eyebrow">Trust loop</p>
-            <h2>Unknown Has Actions</h2>
-            <p className="lead">
-              GAG2 data can be incomplete. The UI still gives players a useful next move:
-              verify the official page, watch a shop, report stock, or run a defensive risk
-              check.
-            </p>
-          </div>
-          <aside className="panel">
-            <h3>Roblox API Snapshot</h3>
-            <div className="stat-grid">
-              <div className="stat">
-                <span>Place ID</span>
-                <strong>{siteConfig.robloxPlaceId}</strong>
-              </div>
-              <div className="stat">
-                <span>Universe ID</span>
-                <strong>{siteConfig.robloxUniverseId}</strong>
-              </div>
-              <div className="stat">
-                <span>Max players</span>
-                <strong>{siteConfig.apiSnapshot.maxPlayers}</strong>
-              </div>
-              <div className="stat">
-                <span>Verified</span>
-                <strong>{siteConfig.lastVerified}</strong>
-              </div>
-            </div>
-          </aside>
-          <ChangeSinceLastVisit snapshot={siteConfig.apiSnapshot} />
-        </div>
-      </section>
-
-      <section className="section section-tight">
-        <p className="eyebrow">Launch facts</p>
-        <h2>Confirmed vs Unknown</h2>
-        <div className="grid">
-          {releaseFacts.map((fact) => (
-            <article className="panel" key={fact.label}>
-              <StatusBadge tone={fact.status} />
-              <h3 style={{ marginTop: 14 }}>{fact.label}</h3>
-              <p>{fact.detail}</p>
+          {faqs.map((faq) => (
+            <article className="panel" key={faq.question}>
+              <h3>{faq.question}</h3>
+              <p>{faq.answer}</p>
             </article>
           ))}
         </div>

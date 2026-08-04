@@ -1,56 +1,18 @@
+import Link from "next/link";
 import { CodesTool } from "@/components/CodesTool";
 import { JsonLd } from "@/components/JsonLd";
-import { codes } from "@/data/site";
 import { breadcrumbSchema, faqSchema, pageMetadata } from "@/lib/seo";
-
-export const metadata = pageMetadata(
-  "Grow a Garden 2 Codes",
-  "Verified Grow a Garden 2 codes, expired code handling, and safe redeem guidance.",
-  "/grow-a-garden-2-codes"
-);
-
-export default function CodesPage() {
-  return (
-    <>
-      <JsonLd
-        data={faqSchema([
-          {
-            question: "Are there active Grow a Garden 2 codes?",
-            answer: `As of ${codes.lastChecked}, this hub has not verified any active Grow a Garden 2 codes.`
-          },
-          {
-            question: "Can Grow a Garden 1 codes be used for Grow a Garden 2?",
-            answer:
-              "This hub does not assume Grow a Garden 1 codes work in Grow a Garden 2 unless a verified source confirms it."
-          }
-        ])}
-      />
-      <JsonLd
-        data={breadcrumbSchema([
-          { name: "Home", path: "/" },
-          { name: "Codes", path: "/grow-a-garden-2-codes" }
-        ])}
-      />
-      <section className="section section-hero">
-        <p className="eyebrow">No fake codes</p>
-        <h1>Codes Check</h1>
-        <p className="muted">
-          Codes are only listed after verification. Empty states are intentional and safer than
-          publishing fake or recycled code lists.
-        </p>
-      </section>
-      <section className="section section-tight">
-        <p className="eyebrow">Answer first</p>
-        <h2>Are There Active Grow a Garden 2 Codes?</h2>
-        <p className="lead">
-          As of {codes.lastChecked}, this hub has not verified any active Grow a Garden 2
-          codes. The page avoids recycled Grow a Garden 1 codes and does not publish copied
-          code lists unless a reliable GAG2 source confirms them.
-        </p>
-      </section>
-      <section className="section section-tight">
-        <CodesTool />
-      </section>
-    </>
-  );
-}
+const path="/grow-a-garden-2-codes";
+export const metadata=pageMetadata("Grow a Garden 2 Codes","Copy recently reported Grow a Garden 2 codes and redeem them in the game.",path);
+const faqs=[
+ {question:"Which codes are listed as active?",answer:"TEAMGREENBEAN, WATERYOPLANTS, and REMEMBERTODRINKWATER are listed as active by recent guides."},
+ {question:"Were these codes tested in game?",answer:"No. Redeem them in game; an invalid message means the code has expired."},
+ {question:"Can a code expire suddenly?",answer:"Yes. Codes can expire without notice. Stop trying when the game rejects one."}
+];
+export default function CodesPage(){return <>
+ <JsonLd data={faqSchema(faqs)}/><JsonLd data={breadcrumbSchema([{name:"Home",path:"/"},{name:"Codes",path}])}/>
+ <section className="section section-hero"><p className="eyebrow">Recently reported active</p><h1>Grow a Garden 2 Codes</h1><p className="lead">Copy a code, open Settings in the game, and paste it in. Codes expire, so the in-game message is final.</p><div className="button-row"><Link className="button" href="/">Open calculator</Link><Link className="button secondary" href="/grow-a-garden-2-seeds">See seed prices</Link></div></section>
+ <section className="section section-tight"><CodesTool/></section>
+ <section className="section section-tight"><details className="source-details"><summary>Where do these numbers come from?</summary><ul><li><a href="https://www.gamesradar.com/games/simulation/grow-a-garden-2-codes/" target="_blank" rel="noreferrer">GamesRadar code roundup</a></li><li><a href="https://www.pcgamer.com/roblox/grow-a-garden-2-codes/" target="_blank" rel="noreferrer">PC Gamer code roundup</a></li><li><a href="https://robloxden.com/game-codes/grow-a-garden-2" target="_blank" rel="noreferrer">RobloxDen code list</a></li></ul></details></section>
+ <section className="section section-tight"><h2>Common questions</h2><div className="grid">{faqs.map(f=><article className="panel" key={f.question}><h3>{f.question}</h3><p>{f.answer}</p></article>)}</div></section>
+ </>}

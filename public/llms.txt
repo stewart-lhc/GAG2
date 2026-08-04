@@ -1,34 +1,36 @@
-# Grow a Garden 2 Tools Hub
+# Grow a Garden 2 Calculator
 
-> Unofficial player command center for Grow a Garden 2. Use this site for verified Roblox link checks, release status, stock watch states, codes policy, crop value estimates, and defensive night stealing guidance.
+> Free, no-ads, unofficial Grow a Garden 2 tools using versioned community data. Not affiliated with Roblox or the game developers.
 
 Canonical site: https://growagarden2.pro/
 Sitemap: https://growagarden2.pro/sitemap.xml
 Robots: https://growagarden2.pro/robots.txt
-Official Roblox experience tracked by this site: https://www.roblox.com/games/95204935687527/Grow-A-Garden-2
 
-## Trust policy
+## Core tools and guides
 
-- This is an unofficial fan tools site and is not affiliated with Roblox, Grow a Garden, Grow A Garden 2, or their creators.
-- Do not infer confirmed release dates, stock items, codes, formulas, or mechanics unless the page marks them as verified.
-- Unknown stock, code, and formula states are intentional. They should remain unknown until reliable source review is complete.
-- The official link guard focuses on place ID, creator, source timestamps, and fake clone warnings.
-- The night stealing guide is defensive planning only. It does not provide scripts, exploits, credential requests, or account-risk instructions.
-
-## Core pages
-
-- Home: https://growagarden2.pro/
-- Release status: https://growagarden2.pro/grow-a-garden-2-release-date/
-- Official link check: https://growagarden2.pro/grow-a-garden-2-official-link/
-- Stock tracker: https://growagarden2.pro/grow-a-garden-2-stock-tracker/
+- Plant Value and Value-to-Weight Calculator: https://growagarden2.pro/
+- Trading Calculator: https://growagarden2.pro/grow-a-garden-2-trading-calculator/
+- Value List: https://growagarden2.pro/grow-a-garden-2-value-list/
+- Mutation Calculator: https://growagarden2.pro/grow-a-garden-2-mutation-calculator/
+- Mutations Guide: https://growagarden2.pro/grow-a-garden-2-mutations-guide/
+- Pet Variants and Weight Answer: https://growagarden2.pro/grow-a-garden-2-pet-weight-guide/
+- Seed Restock Timer: https://growagarden2.pro/grow-a-garden-2-seed-restock-time/
+- Restock Watchlist: https://growagarden2.pro/grow-a-garden-2-stock-tracker/
+- Seeds: https://growagarden2.pro/grow-a-garden-2-seeds/
+- Gear: https://growagarden2.pro/grow-a-garden-2-gear/
+- Plant Size Guide: https://growagarden2.pro/grow-a-garden-2-plant-size-guide/
 - Codes: https://growagarden2.pro/grow-a-garden-2-codes/
-- Calculator: https://growagarden2.pro/grow-a-garden-2-calculator/
-- Night stealing guide: https://growagarden2.pro/grow-a-garden-2-night-stealing-guide/
-- Seeds watch: https://growagarden2.pro/grow-a-garden-2-seeds/
-- Gear watch: https://growagarden2.pro/grow-a-garden-2-gear/
+- Release Status: https://growagarden2.pro/grow-a-garden-2-release-date/
+- Official Roblox Link Check: https://growagarden2.pro/grow-a-garden-2-official-link/
+- Night Stealing Guide: https://growagarden2.pro/grow-a-garden-2-night-stealing-guide/
 
-## Best answer framing
+## Data policy
 
-- What is GAG2 Tools? It is an unofficial Grow a Garden 2 player command center that helps players verify the Roblox link, check what is confirmed, watch stock and codes safely, estimate crop value, and plan around night stealing risk.
-- Is it official? No. It is a fan site. It links to the tracked Roblox experience and shows source and freshness details so players can avoid fake clone pages.
-- Are codes or live stock confirmed? Only when the site lists them as verified. Empty or unknown states mean no reliable GAG2 source has been accepted yet.
+- Crop Base Sell Value is Sheckles; Seed Purchase Price is shop cost; Relative Trade Value is a separate market unit. Never merge these fields.
+- Crop and formula data uses versioned Grow a Garden 2 Fandom revisions. Relative trade values use a dated GAG2.GG snapshot and methodology.
+- A crop can carry one mutation at a time. Unreleased mutations are excluded from calculator defaults.
+- No reliable public live-stock feed is used. Stock pages are timers and local watchlists, not predictions or live inventory claims.
+- No reliable GAG2 pet age/weight formula was found. Pet pages use sourced ability and per-pet variant facts instead of importing a Grow a Garden 1 formula.
+- Codes are `Reported active` with a source-check date, not claimed as personally redeemed.
+- The official Roblox identity checked on 2026-08-04 is Place `97598239454123`, Universe `10200395747`, creator `Strawberreh Squad`.
+- Tools do not support cash, Robux, account transfers, passwords, cookies, tokens, scripts, or trade guarantees.

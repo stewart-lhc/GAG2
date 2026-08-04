@@ -1,0 +1,29 @@
+{
+  "name": "GAG2 Calculator",
+  "short_name": "GAG2",
+  "description": "Unofficial Grow a Garden 2 player calculator and guide tools.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff8d7",
+  "theme_color": "#8cff4f",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/maskable-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

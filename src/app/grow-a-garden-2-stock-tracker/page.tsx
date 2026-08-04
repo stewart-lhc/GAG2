@@ -1,63 +1,22 @@
+import type { Metadata } from "next";
+import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { StockTracker } from "@/components/StockTracker";
 import { breadcrumbSchema, faqSchema, pageMetadata, webAppSchema } from "@/lib/seo";
-
-export const metadata = pageMetadata(
-  "Grow a Garden 2 Stock Tracker",
-  "Filter Grow a Garden 2 stock status by shop, rarity, and verification state.",
-  "/grow-a-garden-2-stock-tracker"
-);
-
-export default function StockTrackerPage() {
-  return (
-    <>
-      <JsonLd
-        data={webAppSchema(
-          "Grow a Garden 2 Stock Tracker",
-          "A verification-first stock tracker for Grow a Garden 2 shops and events.",
-          "/grow-a-garden-2-stock-tracker"
-        )}
-      />
-      <JsonLd
-        data={faqSchema([
-          {
-            question: "Is Grow a Garden 2 live stock verified?",
-            answer:
-              "No live Grow a Garden 2 stock cycle is treated as verified on this page yet. Unknown rows remain visible so players can watch the right shops without inventing stock claims."
-          },
-          {
-            question: "Why does the stock tracker show unknown states?",
-            answer:
-              "Unknown states prevent fake stock data from spreading. The tracker is prepared for verified shop, rarity, price, refresh, and source fields once reliable GAG2 data is available."
-          }
-        ])}
-      />
-      <JsonLd
-        data={breadcrumbSchema([
-          { name: "Home", path: "/" },
-          { name: "Stock Tracker", path: "/grow-a-garden-2-stock-tracker" }
-        ])}
-      />
-      <section className="section section-hero tool-hero">
-        <p className="eyebrow">Stock is a sport</p>
-        <h1>Shop Trading Floor</h1>
-        <p className="muted">
-          Filter shops, rarity, and verification state first. Unknown stock stays visible,
-          but never treated as live inventory.
-        </p>
-      </section>
-      <section className="section section-tight">
-        <p className="eyebrow">Answer first</p>
-        <h2>Can Players Trust This Stock?</h2>
-        <p className="lead">
-          Grow a Garden 2 live stock is not marked as verified here until a reliable source is
-          accepted. The tracker keeps shop rows, watch actions, and source fields visible, but
-          it does not turn unknown inventory into fake live stock.
-        </p>
-      </section>
-      <section className="section section-tight market-shell">
-        <StockTracker />
-      </section>
-    </>
-  );
-}
+const path="/grow-a-garden-2-stock-tracker";
+const title="Grow a Garden 2 Restock Watchlist & Timer";
+const description="Use a five-minute shop reminder and keep a personal list of seeds and gear to check in game.";
+export const metadata:Metadata=pageMetadata(title,description,path);
+const faqs=[
+ {question:"How often do shops change?",answer:"Seed and gear shops usually change every five minutes."},
+ {question:"Can this show current stock?",answer:"No. This is a reminder and personal list; open the game to see stock."},
+ {question:"Will the reminder match my timezone?",answer:"Yes. The next check is converted to your local time."}
+];
+export default function StockTrackerPage(){return <>
+ <JsonLd data={webAppSchema(title,"A five-minute restock reminder and personal item watchlist for Grow a Garden 2.",path)}/><JsonLd data={faqSchema(faqs)}/><JsonLd data={breadcrumbSchema([{name:"Home",path:"/"},{name:"Restock Watchlist",path}])}/>
+ <section className="section section-hero"><p className="eyebrow">Restock reminder and watchlist</p><h1>Grow a Garden 2 Restock Watchlist</h1><p className="lead">Get a five-minute reminder to check the shop and keep the seeds and gear you care about in one list. It cannot see your current inventory.</p><div className="button-row"><Link className="button blue" href="/grow-a-garden-2-seeds">See seeds</Link><Link className="button secondary" href="/grow-a-garden-2-gear">See gear</Link><Link className="button secondary" href="/grow-a-garden-2-seed-restock-time">See restock timing</Link></div></section>
+ <section className="section section-tight"><StockTracker/></section>
+ <section className="section section-tight"><h2>What this page does</h2><div className="grid"><article className="panel"><h3>Reminds you</h3><p>Know when to open the in-game shop.</p></article><article className="panel"><h3>Keeps your list</h3><p>Your watchlist stays on this device for next time.</p></article><article className="panel"><h3>Fruit Stock is separate</h3><p>Fruit Price Stock follows a ten-minute cycle and is not mixed into the seed or gear timer.</p></article></div></section>
+ <section className="section section-tight"><details className="source-details"><summary>Where do these numbers come from?</summary><ul><li><a href="https://growagarden2.fandom.com/wiki/Seed_Shop" target="_blank" rel="noreferrer">Seed Shop timing reference</a></li><li><a href="https://growagarden2.fandom.com/wiki/Mechanics" target="_blank" rel="noreferrer">Shop and Fruit Stock reference</a></li><li><a href="https://gag.gg/seed-restock/" target="_blank" rel="noreferrer">Five-minute boundary reference</a></li></ul></details></section>
+ <section className="section section-tight"><h2>Restock FAQ</h2><div className="grid">{faqs.map(f=><article className="panel" key={f.question}><h3>{f.question}</h3><p>{f.answer}</p></article>)}</div></section>
+ </>}

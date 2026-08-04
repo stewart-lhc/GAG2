@@ -1,0 +1,11 @@
+model = "gpt-5.6-sol"
+model_reasoning_effort = "medium"
+
+[agents]
+# 只有所有权不重叠、依赖已满足的工作项才允许并行。
+max_threads = 4
+# 只允许主线程直接派生 agent，避免递归 fan-out。
+max_depth = 1
+# spawn_agents_on_csv 每个 worker 的默认最长运行时间为 30 分钟。
+job_max_runtime_seconds = 1800
+interrupt_message = true

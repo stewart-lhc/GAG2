@@ -1,151 +1,26 @@
 "use client";
-
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { WatchIntentPanel } from "@/components/WatchIntentPanel";
-import { stockItems } from "@/data/site";
 
-const shops = ["All", "Seed Shop", "Gear Shop", "Pet Egg Shop", "Event Shop", "Weather"];
+const seedWatch=["Moon Bloom","Dragon's Breath","Star Fruit","Atlantic Giant Pumpkin","Sun Bloom","Hypno Bloom"];
+const gearWatch=["Super Sprinkler","Super Watering Can","Legendary Sprinkler","Grappling Hook","Harp"];
+const INTERVAL=5*60*1000;
 
-export function StockTracker() {
-  const [shop, setShop] = useState("All");
-  const [query, setQuery] = useState("");
-  const [rarity, setRarity] = useState("All");
+function nextBoundary(now:number){return Math.ceil((now+1)/INTERVAL)*INTERVAL}
+function formatCountdown(ms:number){const seconds=Math.max(0,Math.ceil(ms/1000));return `${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,"0")}`}
 
-  const filtered = useMemo(() => {
-    return stockItems.filter((item) => {
-      const matchesShop = shop === "All" || item.shop === shop;
-      const matchesRarity = rarity === "All" || item.rarity === rarity;
-      const matchesQuery = item.name.toLowerCase().includes(query.toLowerCase());
-      return matchesShop && matchesRarity && matchesQuery;
-    });
-  }, [shop, query, rarity]);
-
-  return (
-    <div className="panel">
-      <div className="two-col" style={{ marginBottom: 18 }}>
-        <div>
-          <span className="badge badge-confirmed">Verified-only inventory</span>
-          <h2 style={{ marginTop: 14 }}>Stock Filters</h2>
-          <p className="muted">
-            Filter by shop, rarity, or search. Unknown rows stay visible without being
-            treated as live inventory.
-          </p>
-        </div>
-        <div className="inventory-slots">
-          <div className="inventory-slot">
-            <h3>Rare seed slot</h3>
-            <p className="muted">Alert when verified</p>
-          </div>
-          <div className="inventory-slot">
-            <h3>Defense gear</h3>
-            <p className="muted">Night protection</p>
-          </div>
-        </div>
-      </div>
-      <div style={{ marginBottom: 18 }}>
-        <WatchIntentPanel
-          items={[
-            {
-              id: "rare_seed",
-              label: "Rare seed",
-              description: "Track rare or event seed availability."
-            },
-            {
-              id: "defense_gear",
-              label: "Defense gear",
-              description: "Watch for gear useful before night."
-            },
-            {
-              id: "pet_egg",
-              label: "Pet egg",
-              description: "Track egg shop changes once verified."
-            },
-            {
-              id: "event_shop",
-              label: "Event shop",
-              description: "Watch limited event stock."
-            },
-            {
-              id: "weather_event",
-              label: "Weather/Event",
-              description: "Watch special weather or event states."
-            }
-          ]}
-          storageKey="gag2:stock-watch-intent"
-          title="Your Stock Watchlist Intent"
-        />
-      </div>
-      <div className="tabs" aria-label="Shop filters">
-        {shops.map((shopName) => (
-          <button
-            className={`tab ${shop === shopName ? "active" : ""}`}
-            key={shopName}
-            onClick={() => setShop(shopName)}
-            type="button"
-          >
-            {shopName}
-          </button>
-        ))}
-      </div>
-      <div className="grid" style={{ marginTop: 16 }}>
-        <div className="field">
-          <label htmlFor="stock-search">Search inventory</label>
-          <input
-            className="input"
-            id="stock-search"
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="Seed, gear, egg, event"
-            value={query}
-          />
-        </div>
-        <div className="field">
-          <label htmlFor="rarity-filter">Rarity</label>
-          <select
-            className="select"
-            id="rarity-filter"
-            onChange={(event) => setRarity(event.target.value)}
-            value={rarity}
-          >
-            {["All", "Unknown", "Common", "Uncommon", "Rare", "Legendary"].map((value) => (
-              <option key={value}>{value}</option>
-            ))}
-          </select>
-        </div>
-      </div>
-      <div className="table-wrap" style={{ marginTop: 16 }}>
-        <table>
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Shop</th>
-              <th>Status</th>
-              <th>Refresh</th>
-              <th>Verified</th>
-              <th>Confidence</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map((item) => (
-              <tr key={item.id}>
-                <td>
-                  <strong>{item.name}</strong>
-                  <br />
-                  <span className="muted">{item.price}</span>
-                </td>
-                <td>{item.shop}</td>
-                <td>{item.status}</td>
-                <td>{item.refreshEta}</td>
-                <td>{item.lastVerified}</td>
-                <td>{item.confidence}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <p className="callout" style={{ marginTop: 16 }}>
-        No GAG2 stock cycle is treated as confirmed yet. This tracker is ready for verified
-        inventory entries and intentionally shows unknown states until then.
-      </p>
-    </div>
-  );
+export function StockTracker(){
+ const [now,setNow]=useState<number|null>(null);
+ const [query,setQuery]=useState("");
+ useEffect(()=>{const tick=()=>setNow(Date.now());tick();const id=window.setInterval(tick,1000);return()=>window.clearInterval(id)},[]);
+ const next=now===null?null:nextBoundary(now);
+ const rows=useMemo(()=>[
+  ...seedWatch.map(name=>({name,shop:"Seed Shop"})),...gearWatch.map(name=>({name,shop:"Gear Shop"}))
+ ].filter(row=>row.name.toLowerCase().includes(query.toLowerCase())),[query]);
+ return <div className="panel">
+  <div className="two-col"><div><span className="badge badge-warning">Reminder to check in game</span><h2 style={{marginTop:14}}>Next shop check</h2><p className="muted">Shops usually change every 5 minutes. The countdown tells you when to look; it does not show the current inventory.</p></div><div className="stat-grid"><div className="stat"><span>Time left</span><strong>{now===null||next===null?"--:--":formatCountdown(next-now)}</strong></div><div className="stat"><span>Change rate</span><strong>5 min</strong></div></div></div>
+  <div style={{marginTop:18}}><WatchIntentPanel items={[{id:"rare_seed",label:"Rare seed",description:"Remember which rare seed to check at the next boundary."},{id:"premium_gear",label:"High-tier gear",description:"Remember which gear to check in game."}]} storageKey="gag2:stock-watch-intent" title="Local restock watch intent"/></div>
+  <div className="field" style={{marginTop:18}}><label htmlFor="watch-search">Filter watchlist</label><input className="input" id="watch-search" value={query} onChange={e=>setQuery(e.target.value)} placeholder="Moon Bloom, sprinkler..."/></div>
+  <div className="table-wrap" style={{marginTop:16}}><table><thead><tr><th>Item</th><th>Shop</th><th>Current stock</th><th>Use</th></tr></thead><tbody>{rows.map(row=><tr key={`${row.shop}-${row.name}`}><th scope="row">{row.name}</th><td>{row.shop}</td><td>Unknown — check in game</td><td>Watchlist only</td></tr>)}</tbody></table></div>
+ </div>
 }

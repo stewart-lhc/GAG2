@@ -38,10 +38,11 @@ export function NightRiskTool() {
   return (
     <div className="two-col">
       <div className="panel">
-        <span className="badge badge-warning">Protect before AFK</span>
+        <span className="badge badge-warning">Fan-made planning tool</span>
         <h2 style={{ marginTop: 14 }}>Night Risk Meter</h2>
         <p className="muted">
-          Decide whether to harvest, protect, or stay before leaving your garden at night.
+          Enter your own estimate to decide whether to harvest, protect, or stay before leaving
+          your garden at night. This does not measure a live game risk.
         </p>
         <div className="field">
           <label htmlFor="crop-value">Crop value estimate</label>
@@ -80,12 +81,14 @@ export function NightRiskTool() {
         </div>
       </div>
       <aside className="panel">
-        <span className="badge badge-rumor">Risk estimate</span>
+        <span className="badge badge-rumor">Fan-made risk estimate</span>
         <h2 style={{ marginTop: 14 }}>{risk.label}</h2>
         <p>{risk.advice}</p>
         <p className="muted">
-          This mini tool is strategic guidance only. It does not encourage harassment,
-          account sharing, scripts, or platform rule bypassing.
+          Your result uses the crop-value range, away choice, and defense confidence above to make
+          a simple planning score. Exact timers, protections, theft rules, and penalties are still
+          Unknown until verified in game. This mini tool does not encourage harassment, account
+          sharing, scripts, or platform rule bypassing.
         </p>
         <button className="button secondary" onClick={copyChecklist} type="button">
           Copy AFK checklist

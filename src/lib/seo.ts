@@ -3,7 +3,7 @@ import { siteConfig } from "@/data/site";
 
 export function canonicalUrl(path = "/") {
   const cleanPath = path === "/" ? "/" : `/${path.replace(/^\/|\/$/g, "")}/`;
-  return new URL(cleanPath, siteConfig.siteUrl).toString();
+  return new URL(cleanPath, new URL(siteConfig.siteUrl).origin).toString();
 }
 
 function assetUrl(path: string) {
@@ -28,7 +28,9 @@ export function pageMetadata(title: string, description: string, path = "/"): Me
   const url = canonicalUrl(path);
 
   return {
-    title,
+    // Page titles are already complete search snippets. Keep the root layout from
+    // appending an obsolete site-name template to every route.
+    title: { absolute: title },
     description,
     verification: verificationMetadata(),
     alternates: {
@@ -44,7 +46,7 @@ export function pageMetadata(title: string, description: string, path = "/"): Me
           url: assetUrl("/og-default.jpg"),
           width: 1200,
           height: 630,
-          alt: "Grow A Garden 2 Tools Hub"
+          alt: "Grow a Garden 2 Calculator"
         }
       ],
       type: "website"
@@ -53,7 +55,14 @@ export function pageMetadata(title: string, description: string, path = "/"): Me
       card: "summary_large_image",
       title,
       description,
-      images: [assetUrl("/og-default.jpg")]
+      images: [
+        {
+          url: assetUrl("/twitter-card.jpg"),
+          width: 1200,
+          height: 630,
+          alt: "Grow a Garden 2 Calculator — unofficial player tool"
+        }
+      ]
     }
   };
 }
