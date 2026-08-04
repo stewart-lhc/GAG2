@@ -1,25 +1,47 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "redirects": [
+  "routes": [
     {
-      "source": "/grow-a-garden-2-calculator",
-      "destination": "/",
-      "permanent": true
+      "src": "^/trading-calculator/?$",
+      "headers": { "Location": "/grow-a-garden-2-trading-calculator/" },
+      "status": 308
     },
     {
-      "source": "/grow-a-garden-2-calculator/",
-      "destination": "/",
-      "permanent": true
+      "src": "^/value-list/?$",
+      "headers": { "Location": "/grow-a-garden-2-value-list/" },
+      "status": 308
     },
     {
-      "source": "/grow-a-garden-2-calculator/:path*",
-      "destination": "/",
-      "permanent": true
+      "src": "^/mutation-calculator/?$",
+      "headers": { "Location": "/grow-a-garden-2-mutation-calculator/" },
+      "status": 308
     },
     {
-      "source": "/grow-a-garden-2-calculator/:path*/",
-      "destination": "/",
-      "permanent": true
+      "src": "^/seed-restock-time/?$",
+      "headers": { "Location": "/grow-a-garden-2-seed-restock-time/" },
+      "status": 308
+    },
+    {
+      "src": "^/grow-a-garden-2-calculator/?$",
+      "headers": { "Location": "/" },
+      "status": 308
+    },
+    {
+      "src": "^/grow-a-garden-2-calculator(?:/.*)?/?$",
+      "headers": { "Location": "/" },
+      "status": 308
+    },
+    {
+      "src": "^(?:/((?!\\.well-known(?:/.*)?)(?:[^/]+/)*[^/\\.]+))$",
+      "headers": { "Location": "/$1" },
+      "status": 308,
+      "missing": [{ "type": "header", "key": "x-nextjs-data" }]
+    },
+    {
+      "src": "^(?:/((?!\\.well-known(?:/.*)?)(?:[^/]+/)*[^/]+\\.\\w+))/$",
+      "headers": { "Location": "/$1" },
+      "status": 308,
+      "missing": [{ "type": "header", "key": "x-nextjs-data" }]
     }
   ]
 }
