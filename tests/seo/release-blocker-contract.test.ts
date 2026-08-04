@@ -48,13 +48,12 @@ describe("release blocker SEO and disclosure contract", () => {
 
   it("keeps both the exact legacy calculator path and its subpaths on a permanent redirect", async () => {
     const config = JSON.parse(await source("vercel.json")) as {
-      redirects: Array<{ source: string; destination: string; permanent: boolean }>;
+      routes: Array<{ src: string; headers?: { Location?: string }; status?: number }>;
     };
-    expect(config.redirects).toEqual(expect.arrayContaining([
-      { source: "/grow-a-garden-2-calculator", destination: "/", permanent: true },
-      { source: "/grow-a-garden-2-calculator/", destination: "/", permanent: true },
-      { source: "/grow-a-garden-2-calculator/:path*", destination: "/", permanent: true },
-      { source: "/grow-a-garden-2-calculator/:path*/", destination: "/", permanent: true }
+    const rootRedirect = { headers: { Location: "/" }, status: 308 };
+    expect(config.routes).toEqual(expect.arrayContaining([
+      { src: "^/grow-a-garden-2-calculator/?$", ...rootRedirect },
+      { src: "^/grow-a-garden-2-calculator(?:/.*)?/?$", ...rootRedirect }
     ]));
   });
 });

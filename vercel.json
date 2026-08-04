@@ -30,6 +30,18 @@
       "src": "^/grow-a-garden-2-calculator(?:/.*)?/?$",
       "headers": { "Location": "/" },
       "status": 308
+    },
+    {
+      "src": "^(?:/((?!\\.well-known(?:/.*)?)(?:[^/]+/)*[^/\\.]+))$",
+      "headers": { "Location": "/$1" },
+      "status": 308,
+      "missing": [{ "type": "header", "key": "x-nextjs-data" }]
+    },
+    {
+      "src": "^(?:/((?!\\.well-known(?:/.*)?)(?:[^/]+/)*[^/]+\\.\\w+))/$",
+      "headers": { "Location": "/$1" },
+      "status": 308,
+      "missing": [{ "type": "header", "key": "x-nextjs-data" }]
     }
   ]
 }

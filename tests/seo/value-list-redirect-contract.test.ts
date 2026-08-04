@@ -32,6 +32,11 @@ describe("Value List schema and short-route redirects", () => {
       route("^/grow-a-garden-2-calculator/?$", "/"),
       route("^/grow-a-garden-2-calculator(?:/.*)?/?$", "/")
     ]);
+    expect(config.routes).toContainEqual(expect.objectContaining({
+      src: "^(?:/((?!\\.well-known(?:/.*)?)(?:[^/]+/)*[^/\\.]+))$",
+      status: 308,
+      headers: { Location: "/$1" }
+    }));
     expect(config.routes.some(({ src }) => src === "^/.*$" || src === "/.*")).toBe(false);
   });
 });
