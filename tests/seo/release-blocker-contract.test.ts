@@ -45,4 +45,14 @@ describe("release blocker SEO and disclosure contract", () => {
     expect(page).toContain("<h2>Fruit Price</h2>");
     expect(list).toContain("id={`value-row-${entity.id}-${observation.valueType}`}");
   });
+
+  it("keeps both the exact legacy calculator path and its subpaths on a permanent redirect", async () => {
+    const config = JSON.parse(await source("vercel.json")) as {
+      redirects: Array<{ source: string; destination: string; permanent: boolean }>;
+    };
+    expect(config.redirects).toEqual(expect.arrayContaining([
+      { source: "/grow-a-garden-2-calculator", destination: "/", permanent: true },
+      { source: "/grow-a-garden-2-calculator/:path*", destination: "/", permanent: true }
+    ]));
+  });
 });
