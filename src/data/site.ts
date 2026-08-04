@@ -3,18 +3,18 @@ import { robloxSnapshot } from "@/data/robloxSnapshot";
 export type StatusTone = "confirmed" | "unknown" | "rumor" | "warning";
 
 export const siteConfig = {
-  name: "Grow a Garden 2 Tools Hub",
-  shortName: "GAG2 Tools",
+  name: "Grow a Garden 2 Calculator",
+  shortName: "GAG2 Calculator",
   gameName: "Grow A Garden 2",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://growagarden2.pro",
   description:
-    "Unofficial Grow a Garden 2 player command center for safe Roblox link checks, release status, stock watch states, codes, crop value estimates, and night stealing risk.",
-  robloxPlaceId: "95204935687527",
-  robloxUniverseId: "10004943774",
-  robloxUrl: "https://www.roblox.com/games/95204935687527/Grow-A-Garden-2",
-  creator: "@BMWLux",
-  creatorId: "71552399",
-  lastVerified: "2026-06-05",
+    "Free, no-ads Grow a Garden 2 plant value, mutation, trade, restock, codes, and guide tools built from versioned community data.",
+  robloxPlaceId: "97598239454123",
+  robloxUniverseId: "10200395747",
+  robloxUrl: "https://www.roblox.com/games/97598239454123/Grow-a-Garden-2",
+  creator: "Strawberreh Squad",
+  creatorId: "432538536",
+  lastVerified: "2026-08-04",
   apiSnapshot: robloxSnapshot
 };
 
@@ -23,15 +23,15 @@ export const sourceList = [
     id: "roblox-page",
     label: "Roblox experience page",
     href: siteConfig.robloxUrl,
-    sourceType: "Official platform page",
+    sourceType: "Official Roblox experience page",
     confidence: "High",
     lastVerified: siteConfig.lastVerified
   },
   {
     id: "roblox-api",
     label: "Roblox public game API",
-    href: "https://games.roblox.com/v1/games?universeIds=10004943774",
-    sourceType: "Official public API",
+    href: "https://games.roblox.com/v1/games?universeIds=10200395747",
+    sourceType: "Official Roblox Games API",
     confidence: "High",
     lastVerified: siteConfig.lastVerified
   }
@@ -39,27 +39,29 @@ export const sourceList = [
 
 export const releaseFacts = [
   {
-    label: "Experience page exists",
+    label: "Official experience is publicly listed",
     status: "confirmed" as StatusTone,
-    detail: "Roblox lists Grow A Garden 2 at the configured place URL.",
-    sourceId: "roblox-page"
+    detail:
+      "Roblox's official experience page and Games API returned the same root place and universe during the latest verification.",
+    sourceId: "roblox-api"
   },
   {
     label: "Creator",
     status: "confirmed" as StatusTone,
-    detail: "The Roblox page shows the creator as @BMWLux.",
+    detail:
+      "Roblox lists the verified group Strawberreh Squad as the experience creator.",
     sourceId: "roblox-page"
   },
   {
     label: "Public availability",
-    status: "unknown" as StatusTone,
-    detail: "Roblox page availability can change. The hub should re-check status before making release claims.",
+    status: "confirmed" as StatusTone,
+    detail: "The official page and Games API were publicly reachable on 2026-08-04. Availability can still change after that check.",
     sourceId: "roblox-page"
   },
   {
-    label: "Exact release schedule",
-    status: "unknown" as StatusTone,
-    detail: "No exact final release date is treated as confirmed in this MVP.",
+    label: "Experience creation date",
+    status: "confirmed" as StatusTone,
+    detail: "The official Games API reports that this experience was created on 2026-05-21.",
     sourceId: "roblox-page"
   }
 ];
@@ -144,8 +146,30 @@ export const stockItems: StockItem[] = [
 ];
 
 export const codes = {
-  lastChecked: "2026-06-05",
-  active: [] as Array<{
+  lastChecked: "2026-07-25",
+  active: [
+    {
+      code: "TEAMGREENBEAN",
+      reward: "3× Green Bean Seeds",
+      firstSeen: "2026-06-20",
+      lastChecked: "2026-07-25",
+      source: "https://growagarden2.fandom.com/wiki/Codes"
+    },
+    {
+      code: "WATERYOPLANTS",
+      reward: "10× Common Watering Cans",
+      firstSeen: "2026-06-20",
+      lastChecked: "2026-07-25",
+      source: "https://growagarden2.fandom.com/wiki/Codes"
+    },
+    {
+      code: "REMEMBERTODRINKWATER",
+      reward: "1× Common Watering Can",
+      firstSeen: "2026-06-20",
+      lastChecked: "2026-07-25",
+      source: "https://growagarden2.fandom.com/wiki/Codes"
+    }
+  ] as Array<{
     code: string;
     reward: string;
     firstSeen: string;
@@ -172,68 +196,124 @@ export type SiteRoute = {
 export const routes: SiteRoute[] = [
   {
     path: "/",
-    title: "Grow a Garden 2 Tools Hub",
+    title: "Grow a Garden 2 Calculator",
     priority: 1,
-    lastModified: "2026-06-08",
+    lastModified: "2026-08-04",
     changeFrequency: "daily"
+  },
+  {
+    path: "/grow-a-garden-2-trading-calculator",
+    title: "Grow a Garden 2 Trading Calculator",
+    priority: 0.9,
+    lastModified: "2026-08-04",
+    changeFrequency: "weekly"
+  },
+  {
+    path: "/grow-a-garden-2-value-list",
+    title: "Grow a Garden 2 Value List",
+    priority: 0.9,
+    lastModified: "2026-08-04",
+    changeFrequency: "weekly"
+  },
+  {
+    path: "/grow-a-garden-2-mutation-calculator",
+    title: "Grow a Garden 2 Mutation Calculator",
+    priority: 0.9,
+    lastModified: "2026-08-04",
+    changeFrequency: "weekly"
+  },
+  {
+    path: "/grow-a-garden-2-mutations-guide",
+    title: "Grow a Garden 2 Mutations Guide",
+    priority: 0.8,
+    lastModified: "2026-08-04",
+    changeFrequency: "weekly"
+  },
+  {
+    path: "/grow-a-garden-2-pet-calculator",
+    title: "Grow a Garden 2 Pet Variant Calculator",
+    priority: 0.8,
+    lastModified: "2026-08-04",
+    changeFrequency: "weekly"
+  },
+  {
+    path: "/grow-a-garden-2-pet-weight-guide",
+    title: "Grow a Garden 2 Pet Variants and Weight Guide",
+    priority: 0.7,
+    lastModified: "2026-08-04",
+    changeFrequency: "weekly"
+  },
+  {
+    path: "/grow-a-garden-2-seed-restock-time",
+    title: "Grow a Garden 2 Seed Restock Time",
+    priority: 0.9,
+    lastModified: "2026-08-04",
+    changeFrequency: "daily"
+  },
+  {
+    path: "/grow-a-garden-2-seeds",
+    title: "Grow a Garden 2 Seeds",
+    priority: 0.8,
+    lastModified: "2026-08-04",
+    changeFrequency: "weekly"
+  },
+  {
+    path: "/grow-a-garden-2-gear",
+    title: "Grow a Garden 2 Gear",
+    priority: 0.8,
+    lastModified: "2026-08-04",
+    changeFrequency: "weekly"
+  },
+  {
+    path: "/grow-a-garden-2-seed-tier-list",
+    title: "Grow a Garden 2 Seed Tier List",
+    priority: 0.7,
+    lastModified: "2026-08-04",
+    changeFrequency: "weekly"
+  },
+  {
+    path: "/grow-a-garden-2-plant-size-guide",
+    title: "Grow a Garden 2 Plant Size Guide",
+    priority: 0.7,
+    lastModified: "2026-08-04",
+    changeFrequency: "weekly"
   },
   {
     path: "/grow-a-garden-2-release-date",
     title: "Grow a Garden 2 Release Status",
     priority: 0.9,
-    lastModified: "2026-06-08",
+    lastModified: "2026-08-04",
     changeFrequency: "daily"
   },
   {
     path: "/grow-a-garden-2-official-link",
-    title: "Grow a Garden 2 Official Link",
+    title: "Grow a Garden 2 Link Check",
     priority: 0.9,
-    lastModified: "2026-06-08",
+    lastModified: "2026-08-04",
     changeFrequency: "daily"
   },
   {
     path: "/grow-a-garden-2-stock-tracker",
     title: "Grow a Garden 2 Stock Tracker",
     priority: 0.9,
-    lastModified: "2026-06-08",
+    lastModified: "2026-08-04",
     changeFrequency: "daily"
   },
   {
     path: "/grow-a-garden-2-codes",
     title: "Grow a Garden 2 Codes",
     priority: 0.9,
-    lastModified: "2026-06-08",
-    changeFrequency: "daily"
-  },
-  {
-    path: "/grow-a-garden-2-calculator",
-    title: "Grow a Garden 2 Calculator",
-    priority: 0.9,
-    lastModified: "2026-06-08",
+    lastModified: "2026-08-04",
     changeFrequency: "daily"
   },
   {
     path: "/grow-a-garden-2-night-stealing-guide",
     title: "Grow a Garden 2 Night Stealing Guide",
     priority: 0.8,
-    lastModified: "2026-06-08",
-    changeFrequency: "daily"
-  },
-  {
-    path: "/grow-a-garden-2-seeds",
-    title: "Grow a Garden 2 Seeds",
-    priority: 0.7,
-    lastModified: "2026-06-08",
+    lastModified: "2026-08-04",
     changeFrequency: "weekly"
   },
-  {
-    path: "/grow-a-garden-2-gear",
-    title: "Grow a Garden 2 Gear",
-    priority: 0.7,
-    lastModified: "2026-06-08",
-    changeFrequency: "weekly"
-  },
-  { path: "/about", title: "About GAG2 Tools", priority: 0.5, lastModified: "2026-06-05", changeFrequency: "weekly" },
-  { path: "/privacy-policy", title: "Privacy Policy", priority: 0.3, lastModified: "2026-06-05", changeFrequency: "weekly" },
-  { path: "/terms", title: "Terms", priority: 0.3, lastModified: "2026-06-05", changeFrequency: "weekly" }
+  { path: "/about", title: "About Grow a Garden 2 Calculator", priority: 0.5, lastModified: "2026-08-04", changeFrequency: "weekly" },
+  { path: "/privacy-policy", title: "Privacy Policy", priority: 0.3, lastModified: "2026-08-04", changeFrequency: "weekly" },
+  { path: "/terms", title: "Terms", priority: 0.3, lastModified: "2026-08-04", changeFrequency: "weekly" }
 ];

@@ -1,93 +1,20 @@
 "use client";
-
 import { useState } from "react";
-import { WatchIntentPanel } from "@/components/WatchIntentPanel";
-import { codes } from "@/data/site";
 
-export function CodesTool() {
-  const [copied, setCopied] = useState<string | null>(null);
+const reportedCodes=[
+ {code:"TEAMGREENBEAN",reward:"3× Green Bean Seeds"},
+ {code:"WATERYOPLANTS",reward:"10× Common Watering Cans"},
+ {code:"REMEMBERTODRINKWATER",reward:"1× Common Watering Can"}
+];
 
-  async function copyCode(code: string) {
-    await navigator.clipboard.writeText(code);
-    setCopied(code);
-  }
-
-  return (
-    <div className="panel">
-      <div style={{ marginBottom: 18 }}>
-        <span className="badge badge-warning">No fake codes</span>
-        <h2 style={{ marginTop: 14 }}>Code Drop Board</h2>
-        <p className="muted">
-          This page is built for fast copy when verified codes exist, and for clear waiting
-          when they do not.
-        </p>
-      </div>
-      <div className="stat-grid">
-        <div className="stat">
-          <span>Active codes</span>
-          <strong>{codes.active.length}</strong>
-        </div>
-        <div className="stat">
-          <span>Expired codes</span>
-          <strong>{codes.expired.length}</strong>
-        </div>
-        <div className="stat">
-          <span>Last checked</span>
-          <strong>{codes.lastChecked}</strong>
-        </div>
-      </div>
-
-      {codes.active.length === 0 ? (
-        <>
-          <p className="callout" style={{ marginTop: 18 }}>
-            No verified active Grow a Garden 2 code has been found yet. This page will not
-            publish unverified codes or reuse Grow a Garden 1 codes as GAG2 rewards.
-          </p>
-          <div style={{ marginBottom: 18 }}>
-            <WatchIntentPanel
-              items={[
-                {
-                  id: "first_verified_code",
-                  label: "First verified GAG2 code",
-                  description: "Save intent for the first real code drop."
-                },
-                {
-                  id: "expired_code_updates",
-                  label: "Expired code updates",
-                  description: "Track when old codes are rejected or expire."
-                },
-                {
-                  id: "fake_code_warnings",
-                  label: "Fake code warnings",
-                  description: "Track scams, surveys, scripts, and fake Robux claims."
-                }
-              ]}
-              storageKey="gag2:codes-watch-intent"
-              title="Code Alert Intent"
-            />
-          </div>
-        </>
-      ) : (
-        <div className="grid" style={{ marginTop: 18 }}>
-          {codes.active.map((item) => (
-            <article className="flat-panel" key={item.code}>
-              <h3>{item.code}</h3>
-              <p>{item.reward}</p>
-              <button className="button" onClick={() => copyCode(item.code)} type="button">
-                {copied === item.code ? "Copied" : "Copy code"}
-              </button>
-            </article>
-          ))}
-        </div>
-      )}
-
-      <div className="flat-panel">
-        <h3>How to redeem when codes exist</h3>
-        <p>
-          Open the official Roblox experience, find the in-game code or settings menu, paste the
-          code exactly, and submit once. Never enter Roblox credentials on third-party sites.
-        </p>
-      </div>
-    </div>
-  );
+export function CodesTool(){
+ const [copied,setCopied]=useState<string|null>(null);
+ async function copyCode(code:string){await navigator.clipboard.writeText(code);setCopied(code)}
+ return <div className="panel">
+  <span className="badge badge-warning">Reported active · not in-game tested by this site</span>
+  <h2 style={{marginTop:14}}>Reported active codes</h2>
+  <p className="muted">Three independent editorial/code trackers still listed these codes as active on July 24–25, 2026. Codes can expire without notice.</p>
+  <div className="grid">{reportedCodes.map(item=><article className="flat-panel" key={item.code}><h3>{item.code}</h3><p>{item.reward}</p><button className="button" type="button" onClick={()=>copyCode(item.code)}>{copied===item.code?"Copied":"Copy code"}</button></article>)}</div>
+  <div className="flat-panel" style={{marginTop:18}}><h3>How to redeem</h3><ol><li>Open the official Grow a Garden 2 Roblox experience.</li><li>Open Settings from the top-left cog.</li><li>Paste the case-sensitive code into the code box and press Claim.</li></ol><p className="muted">Never enter Roblox credentials on a third-party code page.</p></div>
+ </div>
 }

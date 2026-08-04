@@ -13,23 +13,23 @@ export const metadata = pageMetadata(
   "/grow-a-garden-2-release-date"
 );
 
+const faqItems = [
+  {
+    question: "Is Grow a Garden 2 released?",
+    answer:
+      "Yes. Roblox lists the experience as created on May 21, 2026, and the public game page was available when we checked it on August 4, 2026."
+  },
+  {
+    question: "Where should I play Grow a Garden 2?",
+    answer:
+      "Use the Roblox experience link on this site, then verify creator Strawberreh Squad and place ID 97598239454123 before joining."
+  }
+];
+
 export default function ReleasePage() {
   return (
     <>
-      <JsonLd
-        data={faqSchema([
-          {
-            question: "Is the Grow a Garden 2 release date confirmed?",
-            answer:
-              "This hub does not treat an exact final release date as confirmed unless it is supported by official Roblox or creator sources."
-          },
-          {
-            question: "Where should I play Grow a Garden 2?",
-            answer:
-              "Use the configured Roblox experience link and verify the creator and place ID before joining."
-          }
-        ])}
-      />
+      <JsonLd data={faqSchema(faqItems)} />
       <JsonLd
         data={breadcrumbSchema([
           { name: "Home", path: "/" },
@@ -38,12 +38,11 @@ export default function ReleasePage() {
       />
       <section className="section section-hero">
         <p className="eyebrow">
-          Last verified {siteConfig.lastVerified}
+          Checked {siteConfig.lastVerified}
         </p>
         <h1>Release Status</h1>
         <p className="muted">
-          A Roblox experience page for Grow A Garden 2 exists, but this page does not turn
-          unverified launch timing into a confirmed release-date claim.
+          Direct answer: Grow a Garden 2 is released. Roblox lists May 21, 2026 as the creation date, and the official game page was available when checked on August 4, 2026.
         </p>
         <div className="button-row">
           <TrackedExternalLink
@@ -52,21 +51,19 @@ export default function ReleasePage() {
             href={siteConfig.robloxUrl}
             position="release_hero"
           >
-            Open Roblox page
+            Check Roblox page
           </TrackedExternalLink>
           <Link className="button secondary" href="/grow-a-garden-2-official-link">
-            Check official link details
+            Check the link
           </Link>
+          <Link className="button secondary" href="/">Open Calculator</Link>
         </div>
       </section>
       <section className="section section-tight">
         <p className="eyebrow">Answer first</p>
         <h2>Is Grow a Garden 2 Out?</h2>
         <p className="lead">
-          This page does not treat an exact Grow a Garden 2 release date as confirmed unless
-          it is backed by official Roblox or creator-visible sources. Players should use this
-          hub to check what exists, what changed, and what remains unknown before sharing a
-          launch claim.
+          Yes. The official Roblox experience is playable. Roblox lists May 21, 2026 as its creation date; that is not necessarily the same as a marketing launch announcement.
         </p>
       </section>
       <section className="section section-tight">
@@ -84,7 +81,10 @@ export default function ReleasePage() {
         </div>
       </section>
       <section className="section section-tight">
-        <h2>Confirmed Description Signals</h2>
+        <h2>What Roblox says about the game</h2>
+        <p className="muted">
+          These features appear in the official Roblox description checked on August 4, 2026. Game balance can still change.
+        </p>
         <div className="chips">
           {describedMechanics.map((item) => (
             <span className="chip" key={item}>
@@ -94,6 +94,18 @@ export default function ReleasePage() {
         </div>
       </section>
       <SourceList />
+      <section className="section section-tight">
+        <p className="eyebrow">FAQ</p>
+        <h2>Release status questions</h2>
+        <div className="grid">
+          {faqItems.map((item) => (
+            <article className="panel" key={item.question}>
+              <h3>{item.question}</h3>
+              <p>{item.answer}</p>
+            </article>
+          ))}
+        </div>
+      </section>
     </>
   );
 }

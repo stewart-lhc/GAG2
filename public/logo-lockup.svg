@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 96" role="img" aria-label="GAG2 Calculator">
+  <g transform="translate(8 8)">
+    <rect width="80" height="80" rx="20" fill="#fff8d7"/>
+    <path d="M14 30c0-6.6 5.4-12 12-12h28c6.6 0 12 5.4 12 12v33c0 4.7-3.8 8.5-8.5 8.5h-35C17.8 71.5 14 67.7 14 63V30Z" fill="#8cff4f" stroke="#11170f" stroke-width="5" stroke-linejoin="round"/>
+    <rect x="23" y="35" width="34" height="12" rx="3" fill="#11170f"/>
+    <g fill="#fff8d7" stroke="#11170f" stroke-width="2.5"><rect x="23" y="53" width="10" height="10" rx="2"/><rect x="37" y="53" width="10" height="10" rx="2"/><rect x="51" y="53" width="10" height="10" rx="2" fill="#ffe54d"/></g>
+    <path d="M40 28V10" stroke="#11170f" stroke-width="5" stroke-linecap="round"/>
+    <path d="M39.6 20.5c-10.4 0-13.2-8.1-13.2-12.5 7.9-.2 13.2 3.8 13.2 12.5Z" fill="#8cff4f" stroke="#11170f" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M40.4 20.5c10.4 0 13.2-8.1 13.2-12.5-7.9-.2-13.2 3.8-13.2 12.5Z" fill="#c8f650" stroke="#11170f" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+  <text x="108" y="48" fill="#11170f" font-family="Builder Sans, Arial, sans-serif" font-size="36" font-weight="800" letter-spacing="-1">GAG2</text>
+  <text x="108" y="72" fill="#47603a" font-family="Builder Sans, Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="3">CALCULATOR</text>
+</svg>

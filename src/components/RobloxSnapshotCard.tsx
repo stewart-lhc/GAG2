@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { formatCompactNumber, type RobloxSnapshot } from "@/data/robloxSnapshot";
+import {
+  formatCompactNumber,
+  getSnapshotStaticStatus,
+  getSnapshotStatus,
+  type RobloxSnapshot
+} from "@/data/robloxSnapshot";
 import { trackEvent } from "@/lib/clientAnalytics";
 
 type RobloxSnapshotCardProps = {
@@ -9,89 +14,80 @@ type RobloxSnapshotCardProps = {
   compact?: boolean;
 };
 
-type SnapshotFreshness = {
-  isStale: boolean;
-  lastSyncedLabel: string;
-};
-
-function calculateFreshness(snapshot: RobloxSnapshot): SnapshotFreshness {
-  const fetchedAtMs = Date.parse(snapshot.fetchedAt);
-  const ageMinutes = Number.isFinite(fetchedAtMs)
-    ? Math.max(0, Math.round((Date.now() - fetchedAtMs) / 60000))
-    : null;
-
-  const isStale = ageMinutes === null || ageMinutes > snapshot.staleAfterMinutes;
-  const lastSyncedLabel = ageMinutes === null
-    ? "Sync time unknown"
-    : ageMinutes < 1
-      ? "Synced just now"
-      : `Synced ${ageMinutes} min ago`;
-
-  return { isStale, lastSyncedLabel };
-}
-
 export function RobloxSnapshotCard({ snapshot, compact = false }: RobloxSnapshotCardProps) {
-  const [freshness, setFreshness] = useState<SnapshotFreshness>({
-    isStale: false,
-    lastSyncedLabel: "Checking sync age"
-  });
+  const [status, setStatus] = useState(() => getSnapshotStaticStatus(snapshot));
   const updatedAt = Date.parse(snapshot.robloxUpdatedAt);
+  const currentCheckAt = snapshot.currentCheckAt ? Date.parse(snapshot.currentCheckAt) : Number.NaN;
   const updatedLabel = Number.isFinite(updatedAt)
     ? new Date(updatedAt).toLocaleDateString("en", { month: "short", day: "numeric" })
     : "Unknown";
+  const currentCheckLabel = Number.isFinite(currentCheckAt)
+    ? new Date(currentCheckAt).toLocaleDateString("en", { month: "short", day: "numeric" })
+    : "Unknown";
 
   useEffect(() => {
-    function updateFreshness() {
-      setFreshness(calculateFreshness(snapshot));
+    function updateStatus() {
+      setStatus(getSnapshotStatus(snapshot));
     }
 
-    updateFreshness();
-    const interval = window.setInterval(updateFreshness, 60000);
+    updateStatus();
+    const interval = window.setInterval(updateStatus, 60000);
     return () => window.clearInterval(interval);
   }, [snapshot]);
 
   useEffect(() => {
     trackEvent("live_status_view", {
-      isStale: freshness.isStale,
+      fetchStatus: snapshot.fetchStatus,
+      isStale: status.isStale,
       playing: snapshot.playing
     });
-  }, [freshness.isStale, snapshot.playing]);
+  }, [snapshot.fetchStatus, snapshot.playing, status.isStale]);
 
   return (
     <article className="panel">
-      <span className={`badge ${freshness.isStale ? "badge-warning" : "badge-confirmed"}`}>
-        {freshness.isStale ? "Snapshot stale" : "Roblox API snapshot"}
+      <span className={`badge ${status.badgeTone === "confirmed" ? "badge-confirmed" : "badge-warning"}`}>
+        {status.badgeLabel}
       </span>
-      <h2 style={{ marginTop: 14 }}>Live Roblox Status</h2>
+      <h2 style={{ marginTop: 14 }}>
+        {status.isCurrentSuccess ? "Roblox status" : "Roblox status needs a fresh look"}
+      </h2>
       <p className="muted">
-        Source: Roblox public API. {freshness.lastSyncedLabel}. Exact release timing stays
-        unknown unless official sources confirm it.
+        {status.detail} {status.lastSyncedLabel}. For exact availability and player count, use the Roblox page.
       </p>
+      {status.isStale ? (
+        <p className="callout">
+          These numbers are from the last check, not a live player count.
+        </p>
+      ) : null}
       <div className="stat-grid">
         <div className="stat">
-          <span>Playing</span>
+          <span>{status.isStale ? "Last playing" : "Playing"}</span>
           <strong>{snapshot.playing.toLocaleString()}</strong>
         </div>
         <div className="stat">
-          <span>Visits</span>
+          <span>{status.isStale ? "Last visits" : "Visits"}</span>
           <strong>{formatCompactNumber(snapshot.visits)}</strong>
         </div>
         <div className="stat">
-          <span>Favorites</span>
+          <span>{status.isStale ? "Last favorites" : "Favorites"}</span>
           <strong>{formatCompactNumber(snapshot.favorites)}</strong>
         </div>
         <div className="stat">
-          <span>Updated</span>
+          <span>Last game update</span>
           <strong>{updatedLabel}</strong>
+        </div>
+        <div className="stat">
+          <span>Last checked</span>
+          <strong>{currentCheckLabel}</strong>
         </div>
         {!compact ? (
           <>
             <div className="stat">
-              <span>Place ID</span>
+              <span>Roblox place ID</span>
               <strong>{snapshot.placeId}</strong>
             </div>
             <div className="stat">
-              <span>Universe ID</span>
+              <span>Game ID</span>
               <strong>{snapshot.universeId}</strong>
             </div>
           </>
