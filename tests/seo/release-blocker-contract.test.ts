@@ -52,7 +52,9 @@ describe("release blocker SEO and disclosure contract", () => {
     };
     expect(config.redirects).toEqual(expect.arrayContaining([
       { source: "/grow-a-garden-2-calculator", destination: "/", permanent: true },
-      { source: "/grow-a-garden-2-calculator/:path*", destination: "/", permanent: true }
+      { source: "/grow-a-garden-2-calculator/", destination: "/", permanent: true },
+      { source: "/grow-a-garden-2-calculator/:path*", destination: "/", permanent: true },
+      { source: "/grow-a-garden-2-calculator/:path*/", destination: "/", permanent: true }
     ]));
   });
 });

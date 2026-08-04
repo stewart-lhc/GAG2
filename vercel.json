@@ -7,7 +7,17 @@
       "permanent": true
     },
     {
+      "source": "/grow-a-garden-2-calculator/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/grow-a-garden-2-calculator/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/grow-a-garden-2-calculator/:path*/",
       "destination": "/",
       "permanent": true
     }
