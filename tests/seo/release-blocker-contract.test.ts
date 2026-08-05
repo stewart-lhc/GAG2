@@ -29,7 +29,7 @@ describe("release blocker SEO and disclosure contract", () => {
     const calculator = await source("src/components/CalculatorTool.tsx");
     expect(calculator).toMatch(/<h1[^>]*>Grow a Garden 2 Calculator<\/h1>/);
     expect(calculator.match(/<h1\b/g)).toHaveLength(1);
-    for (const label of ["Plant", "Weight", "Target", "Quantity", "Fruit Price", "Mutation", "Friends", "Decay", "Formula:", "Data:", "Verified:", "Confidence and limits:"]) {
+    for (const label of ["Plant", "Weight", "Target", "Quantity", "Fruit Price", "Mutation", "Friends", "Decay", "Estimate note:"]) {
       expect(calculator).toContain(label);
     }
   });

@@ -109,6 +109,10 @@
   grid-column: span 2;
 }
 
+.fruitPriceField {
+  min-width: 0;
+}
+
 .field label,
 .plantLabel {
   color: var(--ink);
@@ -305,6 +309,23 @@
   font-weight: 800;
 }
 
+.cartLineTotal {
+  display: block;
+  margin-top: 3px;
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 1000;
+}
+
+.cartQuantity {
+  display: grid;
+  gap: 4px;
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
 .remove {
   min-height: 38px;
   border: 3px solid var(--ink);
@@ -343,11 +364,15 @@
 
 @media (max-width: 640px) {
   .shell { gap: 10px; }
-  .topbar { gap: 9px; padding: 11px; border-width: 3px; box-shadow: 5px 5px 0 var(--ink); }
+  .topbar { grid-template-columns: 1fr; gap: 9px; padding: 11px; border-width: 3px; box-shadow: 5px 5px 0 var(--ink); }
   .heading { font-size: 30px; }
   .headingSubtext { font-size: 10px; }
+  .heading,
+  .modes,
+  .cartButton { grid-column: 1; }
+  .cartButton { width: 100%; }
   .controls { grid-template-columns: 1fr 1fr; padding: 10px; border-width: 3px; box-shadow: 5px 5px 0 var(--ink); }
-  .plantField, .fieldWide { grid-column: 1 / -1; }
+  .plantField, .fieldWide, .fruitPriceField { grid-column: 1 / -1; }
   .result, .cart, .details { border-width: 3px; box-shadow: 5px 5px 0 var(--ink); }
   .answer { font-size: 56px; }
   .actions { grid-template-columns: repeat(3, 1fr); }
