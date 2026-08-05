@@ -150,10 +150,12 @@ export function CalculatorTool({ plants, mutations, sourceLabel, sourceUrl }: Ca
           </div>
           <div className={`${styles.field} ${styles.fruitPriceField}`}>
             <label>Fruit price</label>
-            <div className={styles.presets}>
-              {[1, 2, 4].map((preset) => <button aria-pressed={Number(inputs.fruitStockMultiplier) === preset} className={`${styles.preset} ${Number(inputs.fruitStockMultiplier) === preset ? styles.presetActive : ""}`} key={preset} onClick={() => setInput("fruitStockMultiplier", String(preset))} type="button">{preset === 1 ? "Normal" : preset === 2 ? "Big" : "Mega"} {preset}×</button>)}
+            <div className={styles.fruitControls}>
+              <div className={styles.presets}>
+                {[1, 2, 4].map((preset) => <button aria-pressed={Number(inputs.fruitStockMultiplier) === preset} className={`${styles.preset} ${Number(inputs.fruitStockMultiplier) === preset ? styles.presetActive : ""}`} key={preset} onClick={() => setInput("fruitStockMultiplier", String(preset))} type="button">{preset === 1 ? "Normal" : preset === 2 ? "Big" : "Mega"} {preset}×</button>)}
+              </div>
+              <input aria-label="Custom fruit price multiplier" aria-invalid={Boolean(errorFor(errors, "fruitStockMultiplier"))} className={styles.input} max="4" min="0.8" onChange={(event) => setInput("fruitStockMultiplier", event.target.value)} step="0.1" type="number" value={inputs.fruitStockMultiplier} />
             </div>
-            <input aria-label="Custom fruit price multiplier" aria-invalid={Boolean(errorFor(errors, "fruitStockMultiplier"))} className={styles.input} max="4" min="0.8" onChange={(event) => setInput("fruitStockMultiplier", event.target.value)} step="0.1" type="number" value={inputs.fruitStockMultiplier} />
           </div>
           <div className={`${styles.field} ${styles.mutationField}`}>
             <label htmlFor="mutation">Mutation</label>
