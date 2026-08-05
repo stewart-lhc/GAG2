@@ -13,10 +13,13 @@ describe("calculator layout and harvest contracts", () => {
     expect(component).toContain("styles.mutationField");
     expect(component).toContain("styles.friendsField");
     expect(component).toContain("styles.decayField");
-    expect(styles).toContain('"plant plant plant"');
-    expect(styles).toContain('"target quantity fruit"');
-    expect(styles).toContain('"mutation friends decay"');
+    expect(component).toContain("styles.fruitControls");
+    expect(styles).toContain('"plant plant"');
+    expect(styles).toContain('"target quantity"');
     expect(styles).toContain('"fruit fruit"');
+    expect(styles).toContain('"mutation mutation"');
+    expect(styles).toContain('"friends decay"');
+    expect(styles).toContain("align-content: start");
     expect(styles).not.toContain("nth-child");
   });
 
