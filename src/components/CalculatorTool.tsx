@@ -41,6 +41,7 @@ export function CalculatorTool({ plants, mutations, sourceLabel, sourceUrl }: Ca
   const [inputs, setInputs] = useState(inputDefaults);
   const [selectedPlantId, setSelectedPlantId] = useState(plants[0]?.id ?? "");
   const [cart, setCart] = useState<CartEntry[]>([]);
+  const [harvestOpen, setHarvestOpen] = useState(false);
   const [copyStatus, setCopyStatus] = useState("");
   const selectedPlant = plants.find((plant) => plant.id === selectedPlantId) ?? plants[0];
   const availableMutations = mutations.filter((mutation) => mutation.multiplier > 1);
@@ -82,7 +83,7 @@ export function CalculatorTool({ plants, mutations, sourceLabel, sourceUrl }: Ca
   }
 
   function reset() {
-    setMode("value"); setInputs(inputDefaults); setSelectedPlantId(plants[0]?.id ?? ""); setCart([]); setCopyStatus("");
+    setMode("value"); setInputs(inputDefaults); setSelectedPlantId(plants[0]?.id ?? ""); setCart([]); setCopyStatus(""); setHarvestOpen(false);
   }
 
   function addToList() {
@@ -93,6 +94,7 @@ export function CalculatorTool({ plants, mutations, sourceLabel, sourceUrl }: Ca
       quantity: Number(inputs.quantity), unitValue: valueResult.unitValue,
       weight: Number(inputs.weight), mutationName: selectedMutation?.name ?? "None"
     }]);
+    setHarvestOpen(true);
   }
 
   async function copyResult() {
@@ -136,12 +138,12 @@ export function CalculatorTool({ plants, mutations, sourceLabel, sourceUrl }: Ca
             <span className={styles.plantLabel}>Plant</span>
             <PlantPicker onSelect={setSelectedPlantId} plants={plants} selectedPlantId={selectedPlantId} />
           </div>
-          <div className={styles.field}>
+          <div className={`${styles.field} ${styles.targetField}`}>
             <label htmlFor={targetField}>{mode === "value" ? "Weight (kg)" : "Wanted Sheckles"}</label>
             <input aria-invalid={Boolean(targetError)} className={styles.input} id={targetField} min="0" onChange={(event) => setInput(targetField, event.target.value)} step={mode === "value" ? "0.01" : "1"} type="number" value={inputs[targetField]} />
             {targetError ? <p className={styles.error} role="alert">{targetError}</p> : null}
           </div>
-          <div className={styles.field}>
+          <div className={`${styles.field} ${styles.quantityField}`}>
             <label htmlFor="quantity">How many?</label>
             <input aria-invalid={Boolean(errorFor(errors, "quantity"))} className={styles.input} id="quantity" min="1" onChange={(event) => setInput("quantity", event.target.value)} step="1" type="number" value={inputs.quantity} />
             {errorFor(errors, "quantity") ? <p className={styles.error} role="alert">{errorFor(errors, "quantity")}</p> : null}
@@ -153,7 +155,7 @@ export function CalculatorTool({ plants, mutations, sourceLabel, sourceUrl }: Ca
             </div>
             <input aria-label="Custom fruit price multiplier" aria-invalid={Boolean(errorFor(errors, "fruitStockMultiplier"))} className={styles.input} max="4" min="0.8" onChange={(event) => setInput("fruitStockMultiplier", event.target.value)} step="0.1" type="number" value={inputs.fruitStockMultiplier} />
           </div>
-          <div className={`${styles.field} ${styles.fieldWide}`}>
+          <div className={`${styles.field} ${styles.mutationField}`}>
             <label htmlFor="mutation">Mutation</label>
             <select className={styles.select} id="mutation" onChange={(event) => setInput("mutationId", event.target.value)} value={inputs.mutationId}>
               <option value="none">No mutation</option>
@@ -161,11 +163,11 @@ export function CalculatorTool({ plants, mutations, sourceLabel, sourceUrl }: Ca
             </select>
             <p className={styles.hint}>{selectedPlant?.singleHarvest ? "Single-harvest plants only get part of a mutation bonus." : "Choose the mutation currently on your plant."}</p>
           </div>
-          <div className={styles.field}>
+          <div className={`${styles.field} ${styles.friendsField}`}>
             <label htmlFor="friend-count">Friends here</label>
             <input aria-invalid={Boolean(errorFor(errors, "friendCount"))} className={styles.input} id="friend-count" min="0" onChange={(event) => setInput("friendCount", event.target.value)} step="1" type="number" value={inputs.friendCount} />
           </div>
-          <div className={styles.field}>
+          <div className={`${styles.field} ${styles.decayField}`}>
             <label htmlFor="decay">Decay {inputs.decayPercent || "0"}%</label>
             <input aria-invalid={Boolean(errorFor(errors, "decayFraction"))} className={styles.input} id="decay" max="100" min="0" onChange={(event) => setInput("decayPercent", event.target.value)} step="1" type="number" value={inputs.decayPercent} />
           </div>
@@ -191,14 +193,16 @@ export function CalculatorTool({ plants, mutations, sourceLabel, sourceUrl }: Ca
         </aside>
       </div>
 
-      <details className={styles.cart}>
+      <details className={styles.cart} onToggle={(event) => setHarvestOpen(event.currentTarget.open)} open={harvestOpen}>
         <summary>Harvest list · {cart.length ? `${cart.length} entries · ${formatCropValue(cartTotal)} Sheckles` : "nothing added yet"}</summary>
         <div className={styles.cartBody}>
           {cart.length === 0 ? <p className={styles.hint}>Tap “Add harvest” when you want to total more plants.</p> : cart.map((item) => (
             <article className={styles.cartItem} key={item.id}>
               <div><strong>{item.plantName}</strong><span className={styles.cartMeta}>Unit: {formatCropValue(item.unitValue)} Sheckles · Weight: {formatWeight(item.weight)} kg · Mutation: {item.mutationName}</span><span className={styles.cartLineTotal}>Line total: {formatCropValue(item.unitValue * item.quantity)} Sheckles</span></div>
-              <label className={styles.cartQuantity}><span>Quantity</span><input aria-label={`${item.plantName} quantity`} className={styles.input} min="1" onChange={(event) => { const quantity = Number(event.target.value); if (Number.isInteger(quantity) && quantity > 0) setCart((current) => current.map((entry) => entry.id === item.id ? { ...entry, quantity } : entry)); }} step="1" type="number" value={item.quantity} /></label>
-              <button className={styles.remove} onClick={() => setCart((current) => current.filter((entry) => entry.id !== item.id))} type="button">Remove item</button>
+              <div className={styles.cartActions}>
+                <label className={styles.cartQuantity}><span>Quantity</span><input aria-label={`${item.plantName} quantity`} className={styles.input} min="1" onChange={(event) => { const quantity = Number(event.target.value); if (Number.isInteger(quantity) && quantity > 0) setCart((current) => current.map((entry) => entry.id === item.id ? { ...entry, quantity } : entry)); }} step="1" type="number" value={item.quantity} /></label>
+                <button className={styles.remove} onClick={() => setCart((current) => current.filter((entry) => entry.id !== item.id))} type="button">Remove item</button>
+              </div>
             </article>
           ))}
         </div>
