@@ -4,16 +4,12 @@ import { useMemo, useState } from "react";
 import { PlantPicker } from "./PlantPicker";
 import styles from "./CalculatorTool.module.css";
 import {
-  CORE_CALCULATOR_DATA_VERSION,
-  CORE_CALCULATOR_FORMULA_VERSION,
   calculateCropValue,
   calculateWeightFromValue,
   formatCropValue,
   formatWeight,
   type CoreCalculatorField
 } from "@/lib/calculators/core";
-import { evidenceRecords } from "@/data/game/evidence";
-import { gameDataManifest } from "@/data/game/manifest";
 
 export type CalculatorPlant = {
   id: string;
@@ -35,8 +31,6 @@ type CartEntry = { id: string; plantName: string; quantity: number; unitValue: n
 
 const inputDefaults = { weight: "1", targetValue: "1000", quantity: "1", fruitStockMultiplier: "1", mutationId: "none", friendCount: "0", decayPercent: "0" };
 const asNumber = (value: string) => (value.trim() === "" ? Number.NaN : Number(value));
-const mechanicsEvidence = evidenceRecords.find((evidence) => evidence.id === "fandom-mechanics-r6865");
-const mechanicsVerifiedOn = mechanicsEvidence?.verifiedAt.slice(0, 10) ?? "Not recorded";
 
 function errorFor(errors: Partial<Record<CoreCalculatorField | "result", string>>, field: CoreCalculatorField) {
   return errors[field];
@@ -47,6 +41,7 @@ export function CalculatorTool({ plants, mutations, sourceLabel, sourceUrl }: Ca
   const [inputs, setInputs] = useState(inputDefaults);
   const [selectedPlantId, setSelectedPlantId] = useState(plants[0]?.id ?? "");
   const [cart, setCart] = useState<CartEntry[]>([]);
+  const [harvestOpen, setHarvestOpen] = useState(false);
   const [copyStatus, setCopyStatus] = useState("");
   const selectedPlant = plants.find((plant) => plant.id === selectedPlantId) ?? plants[0];
   const availableMutations = mutations.filter((mutation) => mutation.multiplier > 1);
@@ -88,7 +83,7 @@ export function CalculatorTool({ plants, mutations, sourceLabel, sourceUrl }: Ca
   }
 
   function reset() {
-    setMode("value"); setInputs(inputDefaults); setSelectedPlantId(plants[0]?.id ?? ""); setCart([]); setCopyStatus("");
+    setMode("value"); setInputs(inputDefaults); setSelectedPlantId(plants[0]?.id ?? ""); setCart([]); setCopyStatus(""); setHarvestOpen(false);
   }
 
   function addToList() {
@@ -99,6 +94,7 @@ export function CalculatorTool({ plants, mutations, sourceLabel, sourceUrl }: Ca
       quantity: Number(inputs.quantity), unitValue: valueResult.unitValue,
       weight: Number(inputs.weight), mutationName: selectedMutation?.name ?? "None"
     }]);
+    setHarvestOpen(true);
   }
 
   async function copyResult() {
@@ -142,24 +138,24 @@ export function CalculatorTool({ plants, mutations, sourceLabel, sourceUrl }: Ca
             <span className={styles.plantLabel}>Plant</span>
             <PlantPicker onSelect={setSelectedPlantId} plants={plants} selectedPlantId={selectedPlantId} />
           </div>
-          <div className={styles.field}>
+          <div className={`${styles.field} ${styles.targetField}`}>
             <label htmlFor={targetField}>{mode === "value" ? "Weight (kg)" : "Wanted Sheckles"}</label>
             <input aria-invalid={Boolean(targetError)} className={styles.input} id={targetField} min="0" onChange={(event) => setInput(targetField, event.target.value)} step={mode === "value" ? "0.01" : "1"} type="number" value={inputs[targetField]} />
             {targetError ? <p className={styles.error} role="alert">{targetError}</p> : null}
           </div>
-          <div className={styles.field}>
+          <div className={`${styles.field} ${styles.quantityField}`}>
             <label htmlFor="quantity">How many?</label>
             <input aria-invalid={Boolean(errorFor(errors, "quantity"))} className={styles.input} id="quantity" min="1" onChange={(event) => setInput("quantity", event.target.value)} step="1" type="number" value={inputs.quantity} />
             {errorFor(errors, "quantity") ? <p className={styles.error} role="alert">{errorFor(errors, "quantity")}</p> : null}
           </div>
-          <div className={styles.field}>
+          <div className={`${styles.field} ${styles.fruitPriceField}`}>
             <label>Fruit price</label>
             <div className={styles.presets}>
               {[1, 2, 4].map((preset) => <button aria-pressed={Number(inputs.fruitStockMultiplier) === preset} className={`${styles.preset} ${Number(inputs.fruitStockMultiplier) === preset ? styles.presetActive : ""}`} key={preset} onClick={() => setInput("fruitStockMultiplier", String(preset))} type="button">{preset === 1 ? "Normal" : preset === 2 ? "Big" : "Mega"} {preset}×</button>)}
             </div>
             <input aria-label="Custom fruit price multiplier" aria-invalid={Boolean(errorFor(errors, "fruitStockMultiplier"))} className={styles.input} max="4" min="0.8" onChange={(event) => setInput("fruitStockMultiplier", event.target.value)} step="0.1" type="number" value={inputs.fruitStockMultiplier} />
           </div>
-          <div className={`${styles.field} ${styles.fieldWide}`}>
+          <div className={`${styles.field} ${styles.mutationField}`}>
             <label htmlFor="mutation">Mutation</label>
             <select className={styles.select} id="mutation" onChange={(event) => setInput("mutationId", event.target.value)} value={inputs.mutationId}>
               <option value="none">No mutation</option>
@@ -167,11 +163,11 @@ export function CalculatorTool({ plants, mutations, sourceLabel, sourceUrl }: Ca
             </select>
             <p className={styles.hint}>{selectedPlant?.singleHarvest ? "Single-harvest plants only get part of a mutation bonus." : "Choose the mutation currently on your plant."}</p>
           </div>
-          <div className={styles.field}>
+          <div className={`${styles.field} ${styles.friendsField}`}>
             <label htmlFor="friend-count">Friends here</label>
             <input aria-invalid={Boolean(errorFor(errors, "friendCount"))} className={styles.input} id="friend-count" min="0" onChange={(event) => setInput("friendCount", event.target.value)} step="1" type="number" value={inputs.friendCount} />
           </div>
-          <div className={styles.field}>
+          <div className={`${styles.field} ${styles.decayField}`}>
             <label htmlFor="decay">Decay {inputs.decayPercent || "0"}%</label>
             <input aria-invalid={Boolean(errorFor(errors, "decayFraction"))} className={styles.input} id="decay" max="100" min="0" onChange={(event) => setInput("decayPercent", event.target.value)} step="1" type="number" value={inputs.decayPercent} />
           </div>
@@ -186,10 +182,7 @@ export function CalculatorTool({ plants, mutations, sourceLabel, sourceUrl }: Ca
             {inputSummary.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}
           </dl>
           <div className={styles.disclosure}>
-            <p><strong>Formula:</strong> {CORE_CALCULATOR_FORMULA_VERSION}</p>
-            <p><strong>Data:</strong> {CORE_CALCULATOR_DATA_VERSION} · {gameDataManifest.gameVersion}</p>
-            <p><strong>Verified:</strong> {mechanicsVerifiedOn} · community cross-checked source revision</p>
-            <p><strong>Confidence and limits:</strong> The estimate uses versioned community data, not a live game feed or a trade guarantee. Re-check the bonuses shown in your own game after updates.</p>
+            <p><strong>Estimate note:</strong> This is a fan-made estimate, not a live price checker or trade guarantee. Re-check the bonuses shown in your own game after updates.</p>
           </div>
           <div className={styles.actions}>
             <button className={`${styles.action} ${styles.actionBlue}`} disabled={!activeResult.ok} onClick={copyResult} type="button">Copy</button>
@@ -200,14 +193,16 @@ export function CalculatorTool({ plants, mutations, sourceLabel, sourceUrl }: Ca
         </aside>
       </div>
 
-      <details className={styles.cart}>
+      <details className={styles.cart} onToggle={(event) => setHarvestOpen(event.currentTarget.open)} open={harvestOpen}>
         <summary>Harvest list · {cart.length ? `${cart.length} entries · ${formatCropValue(cartTotal)} Sheckles` : "nothing added yet"}</summary>
         <div className={styles.cartBody}>
           {cart.length === 0 ? <p className={styles.hint}>Tap “Add harvest” when you want to total more plants.</p> : cart.map((item) => (
             <article className={styles.cartItem} key={item.id}>
-              <div><strong>{item.plantName}</strong><span className={styles.cartMeta}>{formatWeight(item.weight)} kg · {item.mutationName} · {formatCropValue(item.unitValue)} each</span></div>
-              <input aria-label={`${item.plantName} quantity`} className={styles.input} min="1" onChange={(event) => { const quantity = Number(event.target.value); if (Number.isInteger(quantity) && quantity > 0) setCart((current) => current.map((entry) => entry.id === item.id ? { ...entry, quantity } : entry)); }} step="1" type="number" value={item.quantity} />
-              <button className={styles.remove} onClick={() => setCart((current) => current.filter((entry) => entry.id !== item.id))} type="button">Remove</button>
+              <div><strong>{item.plantName}</strong><span className={styles.cartMeta}>Unit: {formatCropValue(item.unitValue)} Sheckles · Weight: {formatWeight(item.weight)} kg · Mutation: {item.mutationName}</span><span className={styles.cartLineTotal}>Line total: {formatCropValue(item.unitValue * item.quantity)} Sheckles</span></div>
+              <div className={styles.cartActions}>
+                <label className={styles.cartQuantity}><span>Quantity</span><input aria-label={`${item.plantName} quantity`} className={styles.input} min="1" onChange={(event) => { const quantity = Number(event.target.value); if (Number.isInteger(quantity) && quantity > 0) setCart((current) => current.map((entry) => entry.id === item.id ? { ...entry, quantity } : entry)); }} step="1" type="number" value={item.quantity} /></label>
+                <button className={styles.remove} onClick={() => setCart((current) => current.filter((entry) => entry.id !== item.id))} type="button">Remove item</button>
+              </div>
             </article>
           ))}
         </div>

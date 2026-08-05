@@ -110,7 +110,7 @@ export function ValueList() {
           </p>
         </div>
       ) : (
-        <div className="table-wrap" style={{ marginTop: 18 }}>
+        <div className="table-wrap value-results-table-wrap" style={{ marginTop: 18 }}>
           <table>
             <thead>
               <tr>
@@ -120,12 +120,12 @@ export function ValueList() {
             <tbody>
               {filteredRows.map(({ entity, observation, evidence }) => (
                 <tr id={`value-row-${entity.id}-${observation.valueType}`} key={`${entity.id}-${observation.valueType}`}>
-                  <td>{entity.name}</td>
-                  <td>{entity.entityType}</td>
-                  <td>{observation.valueType === "base_value" ? "Base sell value" : observation.valueType === "relative_trade_value" ? "Trade reference" : observation.valueType === "weight" ? "Weight" : observation.valueType.replaceAll("_", " ")}</td>
-                  <td>{observation.value.toLocaleString()} {observation.unit ?? "in-game units"}</td>
-                  <td>{observation.verifiedAt}</td>
-                  <td>{evidence.map((item, index) => item ? <span key={item.id}>{index > 0 ? ", " : ""}<a href={item.sourceUrl} rel="noreferrer" target="_blank">Open source</a></span> : null)}</td>
+                  <td data-label="Name">{entity.name}</td>
+                  <td data-label="Type">{entity.entityType}</td>
+                  <td data-label="Value type">{observation.valueType === "base_value" ? "Base sell value" : observation.valueType === "relative_trade_value" ? "Trade reference" : observation.valueType === "weight" ? "Weight" : observation.valueType.replaceAll("_", " ")}</td>
+                  <td data-label="Value">{observation.value.toLocaleString()} {observation.unit ?? "in-game units"}</td>
+                  <td data-label="Updated">{observation.verifiedAt}</td>
+                  <td data-label="Source">{evidence.map((item, index) => item ? <span key={item.id}>{index > 0 ? ", " : ""}<a href={item.sourceUrl} rel="noreferrer" target="_blank">Open source</a></span> : null)}</td>
                 </tr>
               ))}
             </tbody>

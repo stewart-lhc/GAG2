@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/data/site";
 
 const navItems = [
@@ -60,9 +63,32 @@ function NavIcon({ name }: { name: NavIconName }) {
 }
 
 export function SiteHeader() {
+  const [isHidden, setIsHidden] = useState(false);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    lastScrollY.current = window.scrollY;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const delta = currentScrollY - lastScrollY.current;
+
+      if (currentScrollY <= 24 || delta < -6) {
+        setIsHidden(false);
+      } else if (delta > 6 && currentScrollY > 72) {
+        setIsHidden(true);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <>
-      <header className="site-header">
+      <header className={`site-header${isHidden ? " site-header--hidden" : ""}`} onFocusCapture={() => setIsHidden(false)}>
         <Link className="brand" href="/">
           <img src="/logo-mark.svg" alt="" width="32" height="32" />
           <span>{siteConfig.shortName}</span>

@@ -89,14 +89,18 @@
 
 .controls {
   display: grid;
-  grid-template-columns: minmax(220px, 1.45fr) repeat(2, minmax(118px, 0.75fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-areas:
+    "plant plant plant"
+    "target quantity fruit"
+    "mutation friends decay";
   gap: 10px;
   padding: 12px;
   background: rgba(255, 252, 238, 0.96);
 }
 
 .plantField {
-  grid-column: 1 / -1;
+  grid-area: plant;
 }
 
 .field {
@@ -105,8 +109,29 @@
   gap: 5px;
 }
 
-.fieldWide {
-  grid-column: span 2;
+.targetField {
+  grid-area: target;
+}
+
+.quantityField {
+  grid-area: quantity;
+}
+
+.fruitPriceField {
+  grid-area: fruit;
+  min-width: 0;
+}
+
+.mutationField {
+  grid-area: mutation;
+}
+
+.friendsField {
+  grid-area: friends;
+}
+
+.decayField {
+  grid-area: decay;
 }
 
 .field label,
@@ -289,7 +314,7 @@
 
 .cartItem {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 105px 86px;
+  grid-template-columns: minmax(0, 1fr) minmax(190px, auto);
   gap: 9px;
   align-items: center;
   padding: 9px;
@@ -303,6 +328,31 @@
   color: #53604f;
   font-size: 11px;
   font-weight: 800;
+}
+
+.cartLineTotal {
+  display: block;
+  margin-top: 3px;
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 1000;
+}
+
+.cartActions {
+  display: flex;
+  align-items: end;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.cartQuantity {
+  display: grid;
+  width: 105px;
+  gap: 4px;
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 1000;
+  text-transform: uppercase;
 }
 
 .remove {
@@ -343,14 +393,30 @@
 
 @media (max-width: 640px) {
   .shell { gap: 10px; }
-  .topbar { gap: 9px; padding: 11px; border-width: 3px; box-shadow: 5px 5px 0 var(--ink); }
+  .topbar { grid-template-columns: 1fr; gap: 9px; padding: 11px; border-width: 3px; box-shadow: 5px 5px 0 var(--ink); }
   .heading { font-size: 30px; }
   .headingSubtext { font-size: 10px; }
-  .controls { grid-template-columns: 1fr 1fr; padding: 10px; border-width: 3px; box-shadow: 5px 5px 0 var(--ink); }
-  .plantField, .fieldWide { grid-column: 1 / -1; }
+  .heading,
+  .modes,
+  .cartButton { grid-column: 1; }
+  .cartButton { width: 100%; }
+  .controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "plant plant"
+      "target quantity"
+      "fruit fruit"
+      "mutation mutation"
+      "friends decay";
+    padding: 10px;
+    border-width: 3px;
+    box-shadow: 5px 5px 0 var(--ink);
+  }
   .result, .cart, .details { border-width: 3px; box-shadow: 5px 5px 0 var(--ink); }
   .answer { font-size: 56px; }
   .actions { grid-template-columns: repeat(3, 1fr); }
   .action { padding-inline: 4px; font-size: 9px; }
   .cartItem { grid-template-columns: 1fr; }
+  .cartActions { display: grid; grid-template-columns: 1fr; }
+  .cartQuantity { width: auto; }
 }
